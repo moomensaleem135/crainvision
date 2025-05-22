@@ -1,13 +1,13 @@
 "use client";
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
 const carouselSlides = [
   "Enjoy peace of mind with mandatory login and session protection from the first screen.",
-  "Our secure platform ensures your data is protected with industry-leading encryption standards.",
-  "Two-factor authentication available for enhanced account security and protection.",
-  "Regular security audits and compliance checks keep your information safe at all times.",
+  "Upload a profile photo, pick your favorite layout, and switch between dark or light mode.",
+  "Only see the data that matters — filtered by your assigned stores or corporate groups.",
+  "Find dashboards by name or business use through a central search bar.",
 ];
 export default function RightSide() {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -25,6 +25,14 @@ export default function RightSide() {
   const goToSlide = (index: SetStateAction<number>) => {
     setCurrentSlide(index);
   };
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      nextSlide();
+    }, 5000); 
+
+    return () => clearInterval(interval);
+  }, []);
   return (
     <div className="hidden lg:block w-2/4 relative bg-gradient-to-br from-purple-700 via-purple-600 to-purple-800 overflow-hidden rounded-l-[3rem]">
       <div className="absolute inset-0 bg-[url('/svgs/bg-image.svg')] bg-cover bg-center opacity-50"></div>
@@ -33,7 +41,7 @@ export default function RightSide() {
         <div></div>
 
         <Card className="bg-white/10 backdrop-blur-sm border-0 p-8 mx-auto w-full max-w-lg text-white rounded-2xl">
-          <h2 className="text-3xl font-bold mb-4">
+          <h2 className="text-4xl font-bold mb-4">
             Powering the Future of Automotive
           </h2>
           <p className="mb-4">
