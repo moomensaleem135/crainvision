@@ -5,10 +5,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import PasswordStrengthBar from "react-password-strength-bar";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, EyeOff } from "lucide-react";
-import PasswordStrengthBar from "react-password-strength-bar";
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
