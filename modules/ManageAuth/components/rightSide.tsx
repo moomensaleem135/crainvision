@@ -36,10 +36,8 @@ export default function RightSide() {
   return (
     <div className="hidden lg:block w-2/4 relative bg-gradient-to-br from-purple-700 via-purple-600 to-purple-800 overflow-hidden rounded-l-[3rem]">
       <div className="absolute inset-0 bg-[url('/svgs/bg-image.svg')] bg-cover bg-center opacity-50"></div>
-
       <div className="absolute inset-0 flex flex-col justify-between p-12">
         <div></div>
-
         <Card className="bg-white/10 backdrop-blur-sm border-0 p-8 mx-auto w-full max-w-lg text-white rounded-2xl">
           <h2 className="text-4xl font-bold mb-4">
             Powering the Future of Automotive

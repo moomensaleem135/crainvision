@@ -8,9 +8,11 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Eye, EyeOff } from "lucide-react";
-
+import PasswordStrengthBar from "react-password-strength-bar";
 export function RegisterForm() {
   const [isLoading, setIsLoading] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordScore, setPasswordScore] = useState(0);
   const router = useRouter();
   const { toast } = useToast();
 
@@ -68,7 +70,7 @@ export function RegisterForm() {
                 required
               />
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                <Image src={"/svgs/user.svg"} alt="" height={23} width={23} />
+                <Image src={"/svgs/user.svg"} alt="" height={24} width={24} />
               </div>
             </div>
           </div>
@@ -101,6 +103,8 @@ export function RegisterForm() {
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter Password"
                 className="pl-10 pr-10 border border-gray-200 rounded-md focus:border-[#7B57E0] focus:ring-[#7B57E0]"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
               />
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -111,13 +115,18 @@ export function RegisterForm() {
                 onClick={togglePasswordVisibility}
                 className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-500"
               >
-                {showPassword ? (
-                  <EyeOff className="h-5 w-5" />
-                ) : (
-                  <Eye className="h-5 w-5" />
-                )}
+                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
             </div>
+
+            {password.length > 0 && (
+              <PasswordStrengthBar
+                password={password}
+                barColors={["#ddd", "#ef4836", "#f6b44d", "#2D1B81", "#25c281"]}
+                onChangeScore={(score) => setPasswordScore(score)}
+                style={{ marginTop: "12px" }}
+              />
+            )}
           </div>
 
           <button
