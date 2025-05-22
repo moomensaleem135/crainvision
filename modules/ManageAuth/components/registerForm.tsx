@@ -37,9 +37,9 @@ export function RegisterForm() {
 
   return (
     <div className="flex-1 flex flex-col p-8 md:p-12 lg:p-16 justify-center">
-      <div className="max-w-md mx-auto w-full">
+      <div className="max-w-xl mx-auto w-full">
         {/* Logo */}
-        <div className="mb-8">
+        <div className="mb-16">
           <Image src={"/svgs/logo.svg"} alt={""} height={250} width={250} />
         </div>
 
