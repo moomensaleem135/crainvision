@@ -9,7 +9,6 @@ import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -30,6 +29,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import CameraImage from "@/public/assests/tsx/cameraIcon";
 import UserIcon from "@/public/assests/tsx/userIcon";
 import EmailIcon from "@/public/assests/tsx/emailIcon";
+import AvatarIcon from "@/public/assests/tsx/avatar";
 
 export function PreferencesForm() {
   const [isLoading, setIsLoading] = useState(false);
@@ -67,23 +67,20 @@ export function PreferencesForm() {
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle>Profile Information</CardTitle>
+            <CardTitle className="text-[#7B57E0]">Profile Information</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-4">
               <div className="flex flex-col items-center space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
                 <div className="relative">
                   <Avatar className="h-24 w-24">
-                    <AvatarImage
-                      src={
-                        profileImage || "/placeholder.svg?height=96&width=96"
-                      }
-                      alt="Profile"
-                    />
-                    <AvatarFallback className="text-lg">JD</AvatarFallback>
+                    <AvatarImage src={profileImage || ""} alt="Profile" />
+                    <AvatarFallback className="text-lg bg-[#F4F0FF]">
+                      <AvatarIcon />
+                    </AvatarFallback>
                   </Avatar>
                   <label htmlFor="profile-image">
-                    <CameraImage className="absolute bottom-0 right-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full " />
+                    <CameraImage className="absolute bottom-0 right-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-[#F4F0FF] text-white" />
                   </label>
                   <Input
                     id="profile-image"
@@ -122,138 +119,146 @@ export function PreferencesForm() {
                   />
                 </div>
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="default-language">Language:</Label>
+                <Select defaultValue="English">
+                  <SelectTrigger id="default-language" className="py-6">
+                    <SelectValue placeholder="Select a language" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="English">English</SelectItem>
+                    <SelectItem value="French">French</SelectItem>
+                    <SelectItem value="Spanish">Spanish</SelectItem>
+                    <SelectItem value="German">German</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Appearance</CardTitle>
-            <CardDescription>
-              Customize the appearance of the dashboard
-            </CardDescription>
+            <CardTitle className="text-[#7B57E0]">Appearance & Preferences</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
-            <div className="space-y-2">
-              <Label>Theme</Label>
-              <RadioGroup
-                defaultValue="light"
-                className="grid grid-cols-3 gap-4"
-              >
-                <Label
-                  htmlFor="theme-light"
-                  className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
-                >
-                  <RadioGroupItem
-                    value="light"
-                    id="theme-light"
-                    className="sr-only"
-                  />
-                  <div className="mb-3 h-10 w-10 rounded-full border-2 border-muted bg-background"></div>
-                  <span className="text-center text-sm font-medium">Light</span>
-                </Label>
-                <Label
-                  htmlFor="theme-dark"
-                  className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
-                >
-                  <RadioGroupItem
-                    value="dark"
-                    id="theme-dark"
-                    className="sr-only"
-                  />
-                  <div className="mb-3 h-10 w-10 rounded-full border-2 border-muted bg-black"></div>
-                  <span className="text-center text-sm font-medium">Dark</span>
-                </Label>
-                <Label
-                  htmlFor="theme-system"
-                  className="flex cursor-pointer flex-col items-center justify-between rounded-md border-2 border-muted bg-popover p-4 hover:bg-accent hover:text-accent-foreground [&:has([data-state=checked])]:border-primary"
-                >
-                  <RadioGroupItem
-                    value="system"
-                    id="theme-system"
-                    className="sr-only"
-                  />
-                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-full border-2 border-muted">
-                    <div className="h-full w-1/2 rounded-l-full bg-background"></div>
-                    <div className="h-full w-1/2 rounded-r-full bg-black"></div>
+            <div className="space-y-4">
+              <div className="flex flex-wrap gap-6">
+                <RadioGroup defaultValue="system" className="flex">
+                  <div className="flex-1">
+                    <div className="mb-3">
+                      <img
+                        src="/system-preferences.svg"
+                        alt="System theme preview"
+                        className="h-32 w-full"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2">
+                        <RadioGroupItem
+                          value="system"
+                          id="system-preference"
+                          className="text-[#7B57E0]"
+                        />
+                        <Label htmlFor="system-preference">
+                          System Preference
+                        </Label>
+                      </div>
+                    </div>
                   </div>
-                  <span className="text-center text-sm font-medium">
-                    System
-                  </span>
-                </Label>
-              </RadioGroup>
+
+                  <div className="flex-1">
+                    <div className="mb-3">
+                      <img
+                        src="/light-theme.svg"
+                        alt="Light theme preview"
+                        className="h-32 w-full"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2">
+                        <RadioGroupItem
+                          value="light"
+                          id="light"
+                          className="text-[#7B57E0]"
+                        />
+                        <Label htmlFor="light">Light</Label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="flex-1">
+                    <div className="mb-3">
+                      <img
+                        src="/dark-theme.svg"
+                        alt="Dark theme preview"
+                        className="h-32 w-full"
+                      />
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="flex items-center gap-2">
+                        <RadioGroupItem
+                          value="dark"
+                          id="dark"
+                          className="text-[#7B57E0]"
+                        />
+                        <Label htmlFor="dark">Dark</Label>
+                      </div>
+                    </div>
+                  </div>
+                </RadioGroup>
+              </div>
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="default-dashboard">Default Dashboard</Label>
-              <Select defaultValue="home">
-                <SelectTrigger id="default-dashboard">
+              <Label htmlFor="default-dashboard">Favorite Dashboard:</Label>
+              <Select defaultValue="Overview">
+                <SelectTrigger id="default-dashboard" className="py-6">
                   <SelectValue placeholder="Select a dashboard" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="home">Home</SelectItem>
+                  <SelectItem value="Overview">Overview</SelectItem>
                   <SelectItem value="inventory">Inventory</SelectItem>
                   <SelectItem value="sales">Sales</SelectItem>
                   <SelectItem value="customers">Customers</SelectItem>
                 </SelectContent>
               </Select>
             </div>
-
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label htmlFor="compact-view">Compact View</Label>
-                <p className="text-sm text-muted-foreground">
-                  Display more content with less spacing
-                </p>
-              </div>
-              <Switch id="compact-view" />
-            </div>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle>Notifications</CardTitle>
-            <CardDescription>
-              Configure how you receive notifications
-            </CardDescription>
+            <CardTitle className="text-[#7B57E0]">Additional Settings</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
                 <Label htmlFor="email-notifications">Email Notifications</Label>
                 <p className="text-sm text-muted-foreground">
-                  Receive notifications via email
+                  Get email to find out what's going on when you're not online.
                 </p>
               </div>
-              <Switch id="email-notifications" defaultChecked />
+              <Switch
+                id="email-notifications"
+                defaultChecked
+                thumbClassName="data-[state=checked]:bg-[#7B57E0] data-[state=unchecked]:bg-[#C0C0C0]"
+                className="data-[state=unchecked]:bg-[#DCDCDD] data-[state=checked]:bg-[#DCDCDD]"
+              />
             </div>
             <div className="flex items-center justify-between">
               <div className="space-y-0.5">
-                <Label htmlFor="push-notifications">Push Notifications</Label>
+                <Label htmlFor="push-notifications">Enable Notifications</Label>
                 <p className="text-sm text-muted-foreground">
-                  Receive notifications in the dashboard
+                  Receive notifications about updates and alerts
                 </p>
               </div>
-              <Switch id="push-notifications" defaultChecked />
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label htmlFor="sales-alerts">Sales Alerts</Label>
-                <p className="text-sm text-muted-foreground">
-                  Get notified about new sales
-                </p>
-              </div>
-              <Switch id="sales-alerts" defaultChecked />
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="space-y-0.5">
-                <Label htmlFor="inventory-alerts">Inventory Alerts</Label>
-                <p className="text-sm text-muted-foreground">
-                  Get notified about inventory changes
-                </p>
-              </div>
-              <Switch id="inventory-alerts" defaultChecked />
+              <Switch
+                id="push-notifications"
+                defaultChecked
+                thumbClassName="data-[state=checked]:bg-[#7B57E0] data-[state=unchecked]:bg-[#C0C0C0]"
+                className="data-[state=unchecked]:bg-[#DCDCDD] data-[state=checked]:bg-[#DCDCDD]"
+              />
             </div>
           </CardContent>
           <CardFooter className="flex justify-between">
@@ -262,11 +267,15 @@ export function PreferencesForm() {
               onClick={() => router.back()}
               disabled={isLoading}
             >
-              Cancel
+              Skip for Now
             </Button>
-            <Button type="submit" disabled={isLoading}>
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="bg-[#7B57E0] text-white"
+            >
               {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-              Save Changes
+              Save Preferences
             </Button>
           </CardFooter>
         </Card>
