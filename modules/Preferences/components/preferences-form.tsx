@@ -145,7 +145,7 @@ export function PreferencesForm({
     <form onSubmit={handleSubmit} className="flex-1 p-4 md:p-6">
       <div
         className={`flex-1 p-4 md:p-6 ${
-          comeFrom === "register" && "border border-[#DCDCDD]"
+          comeFrom === "register" && "border-t border-l border-r rounded-tl-md rounded-tr-md"
         }`}
       >
         <h1 className="text-2xl font-bold tracking-tight text-[#7B57E0]">
@@ -153,8 +153,8 @@ export function PreferencesForm({
         </h1>
         <p className="text-muted-foreground">{description}</p>
       </div>
-      <Card className="overflow-hidden">
-        <CardContent className="p-6">
+      <Card className="overflow-hidden rounded-tl-none rounded-tr-none">
+        <CardContent className="p-6 ">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-[#7B57E0]">
