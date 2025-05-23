@@ -27,7 +27,7 @@ export function RegisterForm() {
         title: "Registration successful",
         description: "Welcome to CrainVision",
       });
-      router.push("/dashboard");
+      router.push("/preferences");
     }, 1500);
   };
 
@@ -115,7 +115,11 @@ export function RegisterForm() {
                 onClick={togglePasswordVisibility}
                 className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-500"
               >
-                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
               </button>
             </div>
 

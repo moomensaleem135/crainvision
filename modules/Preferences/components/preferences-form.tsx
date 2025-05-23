@@ -1,56 +1,86 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
+import { useEffect, useState } from "react";
+import { Loader2 } from "lucide-react";
+import { useTheme } from "next-themes";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Loader2 } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Switch } from "@/components/ui/switch"
-import { useToast } from "@/hooks/use-toast"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import CameraImage from "@/public/assests/tsx/cameraIcon"
-import UserIcon from "@/public/assests/tsx/userIcon"
-import EmailIcon from "@/public/assests/tsx/emailIcon"
-import AvatarIcon from "@/public/assests/tsx/avatar"
-import { useTheme } from "next-themes"
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Switch } from "@/components/ui/switch";
+import { useToast } from "@/hooks/use-toast";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import CameraImage from "@/public/assests/tsx/cameraIcon";
+import UserIcon from "@/public/assests/tsx/userIcon";
+import EmailIcon from "@/public/assests/tsx/emailIcon";
+import AvatarIcon from "@/public/assests/tsx/avatar";
 
 export function PreferencesForm() {
-  const [isLoading, setIsLoading] = useState(false)
-  const [profileImage, setProfileImage] = useState<string | null>(null)
-  const { setTheme, theme } = useTheme()
-  const router = useRouter()
-  const { toast } = useToast()
+  const [isLoading, setIsLoading] = useState(false);
+  const [profileImage, setProfileImage] = useState<string | null>(null);
+  const { setTheme, theme } = useTheme();
+  const [tempTheme, setTempTheme] = useState<string>("system");
+  const { toast } = useToast();
+
+  // Initialize theme when component mounts
+  useEffect(() => {
+    // Use the current theme or system preference
+    const currentTheme = theme || "system";
+    setTempTheme(currentTheme);
+  }, [theme]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
-    // Simulate saving preferences
-    setTimeout(() => {
-      setIsLoading(false)
+    try {
+      // Persist theme in localStorage
+      localStorage.setItem("theme", tempTheme);
+      setTheme(tempTheme);
+
+      setTimeout(() => {
+        setIsLoading(false);
+        toast({
+          title: "Preferences updated",
+          description: "Your preferences have been saved successfully",
+        });
+      }, 1500);
+    } catch (error) {
+      setIsLoading(false);
       toast({
-        title: "Preferences updated",
-        description: "Your preferences have been saved successfully",
-      })
-    }, 1500)
-  }
+        title: "Error",
+        description: "Failed to update preferences",
+        variant: "destructive",
+      });
+    }
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
+    const file = e.target.files?.[0];
     if (file) {
-      const reader = new FileReader()
+      const reader = new FileReader();
       reader.onload = (event) => {
-        setProfileImage(event.target?.result as string)
-      }
-      reader.readAsDataURL(file)
+        setProfileImage(event.target?.result as string);
+      };
+      reader.readAsDataURL(file);
     }
-  }
+  };
+
+  const handleThemeChange = (value: string) => {
+    setTempTheme(value);
+    // Show preview of theme immediately
+    setTheme(value);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="flex-1 p-4 md:p-6">
@@ -61,7 +91,9 @@ export function PreferencesForm() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Left Column - Profile Information */}
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-[#7B57E0]">Profile Information</h2>
+              <h2 className="text-xl font-semibold text-[#7B57E0]">
+                Profile Information
+              </h2>
 
               <div className="flex flex-col items-center space-y-4">
                 <div className="relative">
@@ -136,14 +168,16 @@ export function PreferencesForm() {
             <div className="space-y-4">
               {/* Appearance & Preferences Section */}
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold text-[#7B57E0]">Appearance & Preferences</h2>
+                <h2 className="text-xl font-semibold text-[#7B57E0]">
+                  Appearance & Preferences
+                </h2>
 
                 <div className="space-y-4">
                   <RadioGroup
-                    defaultValue={theme}
-                    value={theme}
+                    defaultValue="system"
+                    value={tempTheme}
                     className="grid grid-cols-3 gap-4"
-                    onValueChange={(value) => setTheme(value)}
+                    onValueChange={handleThemeChange}
                   >
                     <div className="space-y-2">
                       <div className="border rounded-lg p-2">
@@ -154,7 +188,11 @@ export function PreferencesForm() {
                         />
                       </div>
                       <div className="flex items-center gap-2">
-                        <RadioGroupItem value="system" id="system-preference" className="text-[#7B57E0]" />
+                        <RadioGroupItem
+                          value="system"
+                          id="system-preference"
+                          className="text-[#7B57E0]"
+                        />
                         <Label htmlFor="system-preference" className="text-sm">
                           System Preference
                         </Label>
@@ -170,7 +208,11 @@ export function PreferencesForm() {
                         />
                       </div>
                       <div className="flex items-center gap-2">
-                        <RadioGroupItem value="light" id="light" className="text-[#7B57E0]" />
+                        <RadioGroupItem
+                          value="light"
+                          id="light"
+                          className="text-[#7B57E0]"
+                        />
                         <Label htmlFor="light" className="text-sm">
                           Light
                         </Label>
@@ -186,7 +228,11 @@ export function PreferencesForm() {
                         />
                       </div>
                       <div className="flex items-center gap-2">
-                        <RadioGroupItem value="dark" id="dark" className="text-[#7B57E0]" />
+                        <RadioGroupItem
+                          value="dark"
+                          id="dark"
+                          className="text-[#7B57E0]"
+                        />
                         <Label htmlFor="dark" className="text-sm">
                           Dark
                         </Label>
@@ -208,19 +254,27 @@ export function PreferencesForm() {
                       <SelectItem value="customers">Customers</SelectItem>
                     </SelectContent>
                   </Select>
-                  <p className="text-sm text-[#7B57E0]">This dashboard will be shown first when you log in.</p>
+                  <p className="text-sm text-[#7B57E0]">
+                    This dashboard will be shown first when you log in.
+                  </p>
                 </div>
               </div>
 
               {/* Additional Settings Section */}
               <div className="space-y-4 mt-6">
-                <h2 className="text-xl font-semibold text-[#7B57E0]">Additional Settings</h2>
+                <h2 className="text-xl font-semibold text-[#7B57E0]">
+                  Additional Settings
+                </h2>
 
                 <div className="space-y-4">
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label htmlFor="push-notifications">Enable Notifications</Label>
-                      <p className="text-sm text-muted-foreground">Receive notifications about updates and alerts</p>
+                      <Label htmlFor="push-notifications">
+                        Enable Notifications
+                      </Label>
+                      <p className="text-sm text-muted-foreground">
+                        Receive notifications about updates and alerts
+                      </p>
                     </div>
                     <Switch
                       id="push-notifications"
@@ -232,9 +286,12 @@ export function PreferencesForm() {
 
                   <div className="flex items-center justify-between">
                     <div className="space-y-0.5">
-                      <Label htmlFor="email-notifications">Email Notifications</Label>
+                      <Label htmlFor="email-notifications">
+                        Email Notifications
+                      </Label>
                       <p className="text-sm text-muted-foreground">
-                        Get email to find out what's going on when you're not online.
+                        Get email to find out what's going on when you're not
+                        online.
                       </p>
                     </div>
                     <Switch
@@ -255,12 +312,16 @@ export function PreferencesForm() {
 
         {/* Button area */}
         <div className="p-6 flex justify-end">
-          <Button type="submit" disabled={isLoading} className="bg-[#7B57E0] text-white px-6">
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="bg-[#7B57E0] text-white px-6"
+          >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Save Preferences
           </Button>
         </div>
       </Card>
     </form>
-  )
+  );
 }
