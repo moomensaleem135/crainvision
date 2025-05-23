@@ -15,16 +15,17 @@ export default function DashboardContainer() {
   return (
     <div className="flex min-h-screen flex-col">
       {/* Header */}
-      <header className="flex h-16 items-center justify-between border-b bg-background px-4">
-        <div className="relative hidden w-full max-w-md md:flex">
-          <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+       <header className="flex h-16 items-center justify-between border-b bg-background px-4 md:px-6">
+        <div className="flex-1"></div>
+        <div className="relative w-full max-w-md">
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             type="search"
             placeholder="Search Dashboard"
-            className="w-full bg-background pl-8 md:w-[300px] lg:w-[400px]"
+            className="w-full border-gray-200 pl-9 pr-4 py-2 rounded-md"
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4 ml-4 flex-1 justify-end">
           <Button
             variant="ghost"
             size="icon"
@@ -38,8 +39,29 @@ export default function DashboardContainer() {
             <span className="sr-only">Notifications</span>
           </Button>
           <Button variant="ghost" size="icon" className="rounded-full">
-            <User className="h-5 w-5" />
-            <span className="sr-only">Profile</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="h-5 w-5"
+            >
+              <circle cx="12" cy="12" r="4" />
+              <path d="M12 2v2" />
+              <path d="M12 20v2" />
+              <path d="m4.93 4.93 1.41 1.41" />
+              <path d="m17.66 17.66 1.41 1.41" />
+              <path d="M2 12h2" />
+              <path d="M20 12h2" />
+              <path d="m6.34 17.66-1.41 1.41" />
+              <path d="m19.07 4.93-1.41 1.41" />
+            </svg>
+            <span className="sr-only">Toggle theme</span>
           </Button>
           <div className="h-8 w-8 overflow-hidden rounded-full">
             <img src="/diverse-avatars.png" alt="User avatar" className="h-full w-full object-cover" />
