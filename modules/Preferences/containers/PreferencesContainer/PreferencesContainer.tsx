@@ -4,11 +4,13 @@ import { PreferencesForm } from "../../components/preferences-form";
 interface PreferencesContainerProps {
   title: string;
   description: string;
+  comeFrom: string;
 }
 
 const PreferencesContainer = ({
   title,
   description,
+  comeFrom = "dashboard",
 }: PreferencesContainerProps) => {
   return (
     <div>
@@ -18,7 +20,7 @@ const PreferencesContainer = ({
         </h1>
         <p className="text-muted-foreground">{description}</p>
       </div>
-      <PreferencesForm />
+      <PreferencesForm comeFrom={comeFrom} />
     </div>
   );
 };

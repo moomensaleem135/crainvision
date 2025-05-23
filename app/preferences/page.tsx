@@ -6,6 +6,7 @@ export default function PreferencesPage() {
       <PreferencesContainer
         title="👋 Welcome to Crain Vision"
         description="Let's set up your preferences to personalize your experience. You can always change these later."
+        comeFrom={"register"}
       />
     </div>
   );
