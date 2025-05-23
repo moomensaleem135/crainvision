@@ -1,8 +1,6 @@
 "use client"
-
-import { DashboardSidebar } from "@/modules/dashboard/components/dashboard-sidebar"
-import type React from "react"
 import { useState, useEffect } from "react"
+import { DashboardSidebar } from "@/modules/dashboard/components/dashboard-sidebar"
 
 function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
@@ -10,7 +8,9 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
   // Check if sidebar is collapsed by checking its width
   useEffect(() => {
     const checkSidebarState = () => {
-      const sidebarElement = document.querySelector('[class*="w-16"]')
+      const sidebarElement = document.querySelector('[class*="w-20"]')
+      console.log({sidebarElement});
+      
       setSidebarCollapsed(!!sidebarElement)
     }
 
@@ -27,12 +27,12 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
 
     return () => observer.disconnect()
   }, [])
-console.log({sidebarCollapsed});
+  console.log({ sidebarCollapsed });
 
   return (
     <div className="flex min-h-screen">
       <DashboardSidebar />
-      <div className={`flex-1 transition-all duration-300 ${sidebarCollapsed ? "md:ml-16" : "md:ml-64"}`}>
+      <div className={`flex-1 ${sidebarCollapsed ? "ml-16" : "ml-64"}`}>
         {children}
       </div>
     </div>
