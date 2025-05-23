@@ -13,15 +13,8 @@ const PreferencesContainer = ({
   comeFrom = "dashboard",
 }: PreferencesContainerProps) => {
   return (
-    <div>
-      <div className="flex-1 p-4 md:p-6">
-        <h1 className="text-2xl font-bold tracking-tight text-[#7B57E0]">
-          {title}
-        </h1>
-        <p className="text-muted-foreground">{description}</p>
-      </div>
-      <PreferencesForm comeFrom={comeFrom} />
-    </div>
+ 
+      <PreferencesForm comeFrom={comeFrom} title={title} description={description}/>
   );
 };
 

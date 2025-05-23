@@ -40,11 +40,18 @@ export function RegisterForm({ userData, handleApiCall, setUserData }: { userDat
   };
 
   return (
-    <div className="flex-1 flex flex-col p-8 md:p-12 lg:p-16 justify-center">
+    <div className="flex-1 flex flex-col p-8 md:p-12 lg:p-16 justify-center h-[100vh]">
       <div className="max-w-xl mx-auto w-full">
         {/* Logo */}
         <div className="mb-16">
-          <Image src={"/svgs/logo.svg"} alt={""} height={250} width={250} />
+          <Image
+            src="/svgs/logo.svg"
+            alt="CrainVision Logo"
+            width={250}
+            height={80}
+            style={{ width: "auto", height: "auto" }}
+            priority
+          />
         </div>
 
         {/* Welcome Text */}
@@ -52,7 +59,7 @@ export function RegisterForm({ userData, handleApiCall, setUserData }: { userDat
           <h1 className="text-3xl font-bold mb-2">
             👋 Welcome to <span className="text-[#7B57E0]">Crain Vision</span>
           </h1>
-          <p className="text-gray-600 text-sm">
+          <p className="text-black text-md">
             Kindly fill in your details below to create an account
           </p>
         </div>
@@ -71,6 +78,7 @@ export function RegisterForm({ userData, handleApiCall, setUserData }: { userDat
                 className="pl-10 border border-gray-200 rounded-md focus:border-[#7B57E0] focus:ring-[#7B57E0]"
                 onChange={(e) => setUserData({ ...userData, full_name: e.target.value })}
                 required
+                
               />
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <Image src={"/svgs/user.svg"} alt="" height={24} width={24} />
@@ -106,7 +114,7 @@ export function RegisterForm({ userData, handleApiCall, setUserData }: { userDat
                 id="password"
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter Password"
-                className="pl-10 pr-10 border border-gray-200 rounded-md focus:border-[#7B57E0] focus:ring-[#7B57E0]"
+                className="pl-10 pr-10"
                 value={password}
                 onChange={(e) => {
                   setPassword(e.target.value);
@@ -120,7 +128,7 @@ export function RegisterForm({ userData, handleApiCall, setUserData }: { userDat
               <button
                 type="button"
                 onClick={togglePasswordVisibility}
-                className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-500"
+                className="absolute inset-y-0 right-0 flex items-center pr-3 text-[#7B57E0] hover:text-[#7B57E0]"
               >
                 {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
               </button>
@@ -146,7 +154,7 @@ export function RegisterForm({ userData, handleApiCall, setUserData }: { userDat
         </form>
 
         <div className="mt-4 text-center">
-          <p className="text-sm text-gray-600">
+          <p className="text-sm text-black">
             Already have an account?{" "}
             <Link
               href="/dashboard"

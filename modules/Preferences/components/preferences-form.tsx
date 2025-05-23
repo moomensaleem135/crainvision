@@ -28,10 +28,16 @@ import { usePathname, useRouter } from "next/navigation";
 import RightArrowIcon from "@/public/assests/tsx/rightArrowIcon";
 
 interface PreferencesFormProps {
-  comeFrom: string;
+  comeFrom?: string;
+  title?: string;
+  description?: string;
 }
 
-export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
+export function PreferencesForm({
+  comeFrom,
+  title,
+  description,
+}: PreferencesFormProps) {
   const { setTheme, theme } = useTheme();
   const { toast } = useToast();
   const router = useRouter();
@@ -39,11 +45,9 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
   const [isSaving, setIsSaving] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [tempTheme, setTempTheme] = useState<string>("system");
-  const [selectedDashboard, setSelectedDashboard] = useState("automotive")
+  const [selectedDashboard, setSelectedDashboard] = useState("automative")
   const [hasChanges, setHasChanges] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const [userData, setUserData] = useState<{ full_name?: string; email?: string }>({});
-
   // Initialize theme when component mounts
   useEffect(() => {
     // Use the current theme or system preference
@@ -52,33 +56,33 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
   }, [theme]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     try {
       // Save preferences to localStorage
-      localStorage.setItem("theme", tempTheme)
-      localStorage.setItem("selectedDashboard", selectedDashboard)
-      setTheme(tempTheme)
+      localStorage.setItem("theme", tempTheme);
+      localStorage.setItem("selectedDashboard", selectedDashboard);
+      setTheme(tempTheme);
 
       setTimeout(() => {
-        setIsLoading(false)
+        setIsLoading(false);
         toast({
           title: "Preferences updated",
           description: "Your preferences have been saved successfully",
-        })
+        });
         // Navigate to dashboard
-        router.push("/dashboard")
-      }, 1500)
+        router.push("/dashboard");
+      }, 1500);
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
       toast({
         title: "Error",
         description: "Failed to update preferences",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -91,56 +95,25 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
     }
   };
 
- const handleThemeChange = (value: string) => {
-  setTempTheme(value);
-  setTheme(value);
-  localStorage.setItem("theme", value);  // Save immediately
-  setHasChanges(true);
-};
+  const handleThemeChange = (value: string) => {
+    setTempTheme(value)
+    setTheme(value)
+    setHasChanges(true)
+  }
 
   const handleDashboardChange = (value: string) => {
-    if(value != ''){
-      setSelectedDashboard(value);
-      localStorage.setItem("selectedDashboard", value); // Save immediately
-      setHasChanges(true);
-    }
-};
-
- useEffect(() => {
-  if (pathname === "/dashboard/preferences") {
-    const storedTheme = localStorage.getItem("theme");
-    const storedDashboard = localStorage.getItem("selectedDashboard");
-
-    if (storedTheme) {
-      setTempTheme(storedTheme);
-      setTheme(storedTheme);
-    }
-    if (storedDashboard) {
-      setSelectedDashboard(storedDashboard);
-    } else {
-      // If nothing in localStorage, fallback to default
-      setSelectedDashboard("automotive");
-    }
-  } else {
-    const currentTheme = theme || "system";
-    setTempTheme(currentTheme);
+    setSelectedDashboard(value)
+    setHasChanges(true)
   }
-}, [pathname, setTheme, theme]);
-
-useEffect(() => {
-  const storedUserData = localStorage.getItem("userData");
-  if (storedUserData) {
-    try {
-      setUserData(JSON.parse(storedUserData));
-    } catch {
-      // ignore JSON parse errors
-    }
-  }
-}, []);
-
 
   return (
     <form onSubmit={handleSubmit} className="flex-1 p-4 md:p-6">
+      <div className={`flex-1 p-4 md:p-6 ${comeFrom === 'register' && 'border border-[#DCDCDD]'}`}>
+        <h1 className="text-2xl font-bold tracking-tight text-[#7B57E0]">
+          {title}
+        </h1>
+        <p className="text-muted-foreground">{description}</p>
+      </div>
       {/* Single Card containing everything */}
       <Card className="overflow-hidden">
         {/* Main content area */}
@@ -239,11 +212,11 @@ useEffect(() => {
                     onValueChange={handleThemeChange}
                   >
                     <div className="space-y-2">
-                      <div className="border rounded-lg p-2">
+                      <div>
                         <img
                           src="/system-preferences.svg"
                           alt="System theme preview"
-                          className="h-12 w-full object-cover rounded"
+                          className="h-full w-full object-contain rounded"
                         />
                       </div>
                       <div className="flex items-center gap-2">
@@ -259,11 +232,11 @@ useEffect(() => {
                     </div>
 
                     <div className="space-y-2">
-                      <div className="border rounded-lg p-2">
+                      <div>
                         <img
                           src="/light-theme.svg"
                           alt="Light theme preview"
-                          className="h-12 w-full object-cover rounded"
+                          className="h-full w-full object-contain rounded"
                         />
                       </div>
                       <div className="flex items-center gap-2">
@@ -279,11 +252,11 @@ useEffect(() => {
                     </div>
 
                     <div className="space-y-2">
-                      <div className="border rounded-lg p-2">
+                      <div>
                         <img
                           src="/dark-theme.svg"
                           alt="Dark theme preview"
-                          className="h-12 w-full object-cover rounded"
+                          className="h-full w-full object-contain rounded"
                         />
                       </div>
                       <div className="flex items-center gap-2">
@@ -302,7 +275,10 @@ useEffect(() => {
 
                 <div className="space-y-2">
                   <Label htmlFor="default-dashboard">Favorite Dashboard:</Label>
-                  <Select value={selectedDashboard} onValueChange={handleDashboardChange}>
+                  <Select
+                    value={selectedDashboard}
+                    onValueChange={handleDashboardChange}
+                  >
                     <SelectTrigger id="default-dashboard" className="py-6">
                       <SelectValue placeholder="Select a dashboard" />
                     </SelectTrigger>
@@ -390,7 +366,7 @@ useEffect(() => {
             disabled={isLoading || !hasChanges}
             className="bg-[#7B57E0] text-white px-6"
           >
-           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Save Preferences
             <RightArrowIcon className="!h-6 !w-6" />
           </Button>

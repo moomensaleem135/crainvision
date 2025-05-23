@@ -39,7 +39,7 @@ export default function RightSide() {
       <div className="absolute inset-0 flex flex-col justify-between p-12">
         <div></div>
         <Card className="bg-white/10 backdrop-blur-sm border-0 p-8 mx-auto w-full max-w-lg text-white rounded-2xl">
-          <h2 className="text-4xl font-bold mb-4">
+          <h2 className="text-4xl font-bold mb-4 leading-tight">
             Powering the Future of Automotive
           </h2>
           <p className="mb-4">
