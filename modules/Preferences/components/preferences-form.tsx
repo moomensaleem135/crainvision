@@ -24,13 +24,19 @@ import CameraImage from "@/public/assests/tsx/cameraIcon";
 import UserIcon from "@/public/assests/tsx/userIcon";
 import EmailIcon from "@/public/assests/tsx/emailIcon";
 import AvatarIcon from "@/public/assests/tsx/avatar";
+import { useRouter } from "next/navigation";
 
-export function PreferencesForm() {
+interface PreferencesFormProps {
+  comeFrom: string;
+}
+
+export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
+  const { setTheme, theme } = useTheme();
+  const { toast } = useToast();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
-  const { setTheme, theme } = useTheme();
   const [tempTheme, setTempTheme] = useState<string>("system");
-  const { toast } = useToast();
 
   // Initialize theme when component mounts
   useEffect(() => {
@@ -311,7 +317,22 @@ export function PreferencesForm() {
         <div className="border-t border-gray-200"></div>
 
         {/* Button area */}
-        <div className="p-6 flex justify-end">
+        <div
+          className={`${
+            comeFrom === "register"
+              ? "p-6 flex justify-between w-full max-sm:flex-col max-sm:gap-4"
+              : "p-6 flex justify-end"
+          }`}
+        >
+          {comeFrom === "register" && (
+            <Button
+              variant="outline"
+              onClick={() => router.push("/dashboard")}
+              disabled={isLoading}
+            >
+              Skip for Now
+            </Button>
+          )}
           <Button
             type="submit"
             disabled={isLoading}
