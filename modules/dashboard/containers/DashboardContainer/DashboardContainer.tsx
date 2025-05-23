@@ -1,18 +1,11 @@
 "use client"
-
-import { useState } from "react"
 import { StatCard } from "../../components/stat-card"
 import { DashboardCard } from "../../components/dashboard-card"
-import { NotificationsSidebar } from "../../components/notification-sidebar"
-import { Header } from "../../components/header"
 
 export default function DashboardContainer() {
-      const [notificationsOpen, setNotificationsOpen] = useState(false)
 
   return (
     <div className="flex min-h-screen flex-col">
-      {/* Header */}
-      <Header setNotificationsOpen={setNotificationsOpen} />
       <main className="flex-1 p-4 md:p-6 ">
         <div className="mb-6">
           <h1 className="text-4xl font-bold text-[#7B57E0]">Automotive Dashboard</h1>
@@ -128,9 +121,6 @@ export default function DashboardContainer() {
           />
         </div>
       </main>
-
-      {/* Notifications Sidebar */}
-      <NotificationsSidebar open={notificationsOpen} onOpenChange={setNotificationsOpen} />
     </div>
   )
 }
