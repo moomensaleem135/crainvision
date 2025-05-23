@@ -38,7 +38,9 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
   const [isSaving, setIsSaving] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [tempTheme, setTempTheme] = useState<string>("system");
-
+  const [selectedDashboard, setSelectedDashboard] = useState("automative")
+  const [hasChanges, setHasChanges] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   // Initialize theme when component mounts
   useEffect(() => {
     // Use the current theme or system preference
@@ -47,30 +49,33 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
   }, [theme]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsSaving(true);
+    e.preventDefault()
+    setIsLoading(true)
 
     try {
-      // Persist theme in localStorage
-      localStorage.setItem("theme", tempTheme);
-      setTheme(tempTheme);
+      // Save preferences to localStorage
+      localStorage.setItem("theme", tempTheme)
+      localStorage.setItem("selectedDashboard", selectedDashboard)
+      setTheme(tempTheme)
 
       setTimeout(() => {
-        setIsSaving(false);
+        setIsLoading(false)
         toast({
           title: "Preferences updated",
           description: "Your preferences have been saved successfully",
-        });
-      }, 1500);
+        })
+        // Navigate to dashboard
+        router.push("/dashboard")
+      }, 1500)
     } catch (error) {
-      setIsSaving(false);
+      setIsLoading(false)
       toast({
         title: "Error",
         description: "Failed to update preferences",
         variant: "destructive",
-      });
+      })
     }
-  };
+  }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -84,10 +89,15 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
   };
 
   const handleThemeChange = (value: string) => {
-    setTempTheme(value);
-    // Show preview of theme immediately
-    setTheme(value);
-  };
+    setTempTheme(value)
+    setTheme(value)
+    setHasChanges(true)
+  }
+
+  const handleDashboardChange = (value: string) => {
+    setSelectedDashboard(value)
+    setHasChanges(true)
+  }
 
   return (
     <form onSubmit={handleSubmit} className="flex-1 p-4 md:p-6">
@@ -250,15 +260,14 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
 
                 <div className="space-y-2">
                   <Label htmlFor="default-dashboard">Favorite Dashboard:</Label>
-                  <Select defaultValue="Overview">
+                  <Select value={selectedDashboard} onValueChange={handleDashboardChange}>
                     <SelectTrigger id="default-dashboard" className="py-6">
                       <SelectValue placeholder="Select a dashboard" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="Overview">Overview</SelectItem>
+                      <SelectItem value="automative">Automative</SelectItem>
                       <SelectItem value="inventory">Inventory</SelectItem>
-                      <SelectItem value="sales">Sales</SelectItem>
-                      <SelectItem value="customers">Customers</SelectItem>
+                      <SelectItem value="service">Services</SelectItem>
                     </SelectContent>
                   </Select>
                   <p className="text-sm text-[#7B57E0]">
@@ -336,10 +345,10 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
           )}
           <Button
             type="submit"
-            disabled={isSaving}
+            disabled={isLoading || !hasChanges}
             className="bg-[#7B57E0] text-white px-6"
           >
-            {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+           {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Save Preferences
             <RightArrowIcon className="!h-6 !w-6" />
           </Button>

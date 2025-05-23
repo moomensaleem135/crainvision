@@ -4,7 +4,7 @@ import { PreferencesForm } from "../../components/preferences-form";
 interface PreferencesContainerProps {
   title: string;
   description: string;
-  comeFrom: string;
+  comeFrom?: string;
 }
 
 const PreferencesContainer = ({

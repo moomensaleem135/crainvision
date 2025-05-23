@@ -1,9 +1,28 @@
 "use client"
 import { StatCard } from "../../components/stat-card"
 import { DashboardCard } from "../../components/dashboard-card"
+import InventoryDashboardContainer from "../InventoryDashboardContainer/InventoryDashboardContainer"
+import { useEffect, useState } from "react"
 
 export default function DashboardContainer() {
+  const [selectedDashboard, setSelectedDashboard] = useState("automotive")
 
+  useEffect(() => {
+    // Get selected dashboard from localStorage
+    const savedDashboard = localStorage.getItem("selectedDashboard")
+    if (savedDashboard) {
+      setSelectedDashboard(savedDashboard)
+    }
+  }, [])
+
+  // If inventory dashboard is selected, show inventory dashboard
+  if (selectedDashboard === "inventory") {
+    return (
+      <div className="flex min-h-screen flex-col">
+        <InventoryDashboardContainer />
+      </div>
+    )
+  }
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1 p-4 md:p-6 ">
@@ -74,49 +93,49 @@ export default function DashboardContainer() {
             title="Service Department"
             description="Service appointments and revenue"
             icon={'svgs/s-rench.svg'}
-             height={70}
+            height={70}
             width={70}
           />
           <DashboardCard
             title="Parts Inventory"
             description="Parts stock levels and orders"
             icon={'/svgs/system.svg'}
-             height={70}
+            height={70}
             width={70}
           />
           <DashboardCard
             title="Dealerships"
             description="Dealership performance and comparison"
             icon={'svgs/home.svg'}
-             height={70}
+            height={70}
             width={70}
           />
           <DashboardCard
             title="Customer CRM"
             description="Customer relationship management"
             icon={'/svgs/people.svg'}
-             height={70}
+            height={70}
             width={70}
           />
           <DashboardCard
             title="Financial Performance"
             description="Revenue, expenses and profitability"
             icon={'/svgs/doller.svg'}
-             height={70}
+            height={70}
             width={70}
           />
           <DashboardCard
             title="Market Analysis"
             description="Industry trends and market share"
             icon={'/svgs/s-wave.svg'}
-             height={70}
+            height={70}
             width={70}
           />
           <DashboardCard
             title="Fleet Management"
             description="Fleet sales and management"
             icon={'/svgs/s-truck.svg'}
-              height={70}
+            height={70}
             width={70}
           />
         </div>
