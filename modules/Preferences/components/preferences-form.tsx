@@ -67,29 +67,33 @@ export function PreferencesForm() {
       <div className="space-y-6">
         <Card>
           <CardHeader>
-            <CardTitle className="text-[#7B57E0]">Profile Information</CardTitle>
+            <CardTitle className="text-[#7B57E0]">
+              Profile Information
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-4">
               <div className="flex flex-col items-center space-y-2 sm:flex-row sm:space-x-4 sm:space-y-0">
-                <div className="relative">
-                  <Avatar className="h-24 w-24">
-                    <AvatarImage src={profileImage || ""} alt="Profile" />
-                    <AvatarFallback className="text-lg bg-[#F4F0FF]">
-                      <AvatarIcon />
-                    </AvatarFallback>
-                  </Avatar>
-                  <label htmlFor="profile-image">
-                    <CameraImage className="absolute bottom-0 right-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-[#F4F0FF] text-white" />
-                  </label>
-                  <Input
-                    id="profile-image"
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleImageChange}
-                    disabled={isLoading}
-                  />
+                <div className="w-full flex justify-center">
+                  <div className="relative">
+                    <Avatar className="h-24 w-24">
+                      <AvatarImage src={profileImage || ""} alt="Profile" />
+                      <AvatarFallback className="text-lg bg-[#F4F0FF]">
+                        <AvatarIcon />
+                      </AvatarFallback>
+                    </Avatar>
+                    <label htmlFor="profile-image">
+                      <CameraImage className="absolute bottom-0 right-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-[#F4F0FF] text-white" />
+                    </label>
+                    <Input
+                      id="profile-image"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageChange}
+                      disabled={isLoading}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="grid gap-2">
@@ -139,12 +143,14 @@ export function PreferencesForm() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-[#7B57E0]">Appearance & Preferences</CardTitle>
+            <CardTitle className="text-[#7B57E0]">
+              Appearance & Preferences
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-4">
               <div className="flex flex-wrap gap-6">
-                <RadioGroup defaultValue="system" className="flex">
+                <RadioGroup defaultValue="system" className="flex w-full">
                   <div className="flex-1">
                     <div className="mb-3">
                       <img
@@ -229,7 +235,9 @@ export function PreferencesForm() {
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-[#7B57E0]">Additional Settings</CardTitle>
+            <CardTitle className="text-[#7B57E0]">
+              Additional Settings
+            </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
