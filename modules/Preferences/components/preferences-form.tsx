@@ -30,10 +30,12 @@ import CameraImage from "@/public/assests/tsx/cameraIcon";
 import UserIcon from "@/public/assests/tsx/userIcon";
 import EmailIcon from "@/public/assests/tsx/emailIcon";
 import AvatarIcon from "@/public/assests/tsx/avatar";
+import { useTheme } from "next-themes";
 
 export function PreferencesForm() {
   const [isLoading, setIsLoading] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
+  const { setTheme, theme } = useTheme();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -150,7 +152,12 @@ export function PreferencesForm() {
           <CardContent className="space-y-6">
             <div className="space-y-4">
               <div className="flex flex-wrap gap-6">
-                <RadioGroup defaultValue="system" className="flex w-full">
+                <RadioGroup
+                  defaultValue={theme}
+                  value={theme}
+                  className="flex w-full"
+                  onValueChange={(value) => setTheme(value)}
+                >
                   <div className="flex-1">
                     <div className="mb-3">
                       <img
@@ -160,16 +167,14 @@ export function PreferencesForm() {
                       />
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-2">
-                        <RadioGroupItem
-                          value="system"
-                          id="system-preference"
-                          className="text-[#7B57E0]"
-                        />
-                        <Label htmlFor="system-preference">
-                          System Preference
-                        </Label>
-                      </div>
+                      <RadioGroupItem
+                        value="system"
+                        id="system-preference"
+                        className="text-[#7B57E0]"
+                      />
+                      <Label htmlFor="system-preference">
+                        System Preference
+                      </Label>
                     </div>
                   </div>
 
@@ -182,14 +187,12 @@ export function PreferencesForm() {
                       />
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-2">
-                        <RadioGroupItem
-                          value="light"
-                          id="light"
-                          className="text-[#7B57E0]"
-                        />
-                        <Label htmlFor="light">Light</Label>
-                      </div>
+                      <RadioGroupItem
+                        value="light"
+                        id="light"
+                        className="text-[#7B57E0]"
+                      />
+                      <Label htmlFor="light">Light</Label>
                     </div>
                   </div>
 
@@ -202,14 +205,12 @@ export function PreferencesForm() {
                       />
                     </div>
                     <div className="flex items-center gap-2">
-                      <div className="flex items-center gap-2">
-                        <RadioGroupItem
-                          value="dark"
-                          id="dark"
-                          className="text-[#7B57E0]"
-                        />
-                        <Label htmlFor="dark">Dark</Label>
-                      </div>
+                      <RadioGroupItem
+                        value="dark"
+                        id="dark"
+                        className="text-[#7B57E0]"
+                      />
+                      <Label htmlFor="dark">Dark</Label>
                     </div>
                   </div>
                 </RadioGroup>
