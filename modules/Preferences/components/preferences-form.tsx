@@ -49,7 +49,7 @@ export function PreferencesForm({
   const [isSaving, setIsSaving] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [tempTheme, setTempTheme] = useState<string>("system");
-  const [selectedDashboard, setSelectedDashboard] = useState("automative");
+  const [selectedDashboard, setSelectedDashboard] = useState("automotive");
   const [hasChanges, setHasChanges] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   // Initialize theme when component mounts
@@ -71,33 +71,33 @@ export function PreferencesForm({
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
+    e.preventDefault()
+    setIsLoading(true)
 
     try {
       // Save preferences to localStorage
-      localStorage.setItem("theme", tempTheme);
-      localStorage.setItem("selectedDashboard", selectedDashboard);
-      setTheme(tempTheme);
+      localStorage.setItem("theme", tempTheme)
+      localStorage.setItem("selectedDashboard", selectedDashboard)
+      setTheme(tempTheme)
 
       setTimeout(() => {
-        setIsLoading(false);
+        setIsLoading(false)
         toast({
           title: "Preferences updated",
           description: "Your preferences have been saved successfully",
-        });
+        })
         // Navigate to dashboard
-        router.push("/dashboard");
-      }, 1500);
+        router.push("/dashboard")
+      }, 1500)
     } catch (error) {
-      setIsLoading(false);
+      setIsLoading(false)
       toast({
         title: "Error",
         description: "Failed to update preferences",
         variant: "destructive",
-      });
+      })
     }
-  };
+  }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -113,20 +113,43 @@ export function PreferencesForm({
   const handleThemeChange = (value: string) => {
     setTempTheme(value);
     setTheme(value);
+    localStorage.setItem("theme", value);  // Save immediately
     setHasChanges(true);
   };
 
   const handleDashboardChange = (value: string) => {
-    setSelectedDashboard(value);
-    setHasChanges(true);
+    if (value != '') {
+      setSelectedDashboard(value);
+      localStorage.setItem("selectedDashboard", value); // Save immediately
+      setHasChanges(true);
+    }
   };
 
+  useEffect(() => {
+    if (pathname === "/dashboard/preferences") {
+      const storedTheme = localStorage.getItem("theme");
+      const storedDashboard = localStorage.getItem("selectedDashboard");
+
+      if (storedTheme) {
+        setTempTheme(storedTheme);
+        setTheme(storedTheme);
+      }
+      if (storedDashboard) {
+        setSelectedDashboard(storedDashboard);
+      } else {
+        // If nothing in localStorage, fallback to default
+        setSelectedDashboard("automotive");
+      }
+    } else {
+      const currentTheme = theme || "system";
+      setTempTheme(currentTheme);
+    }
+  }, [pathname, setTheme, theme]);
   return (
     <form onSubmit={handleSubmit} className="flex-1 p-4 md:p-6">
       <div
-        className={`flex-1 p-4 md:p-6 ${
-          comeFrom === "register" && "border border-[#DCDCDD]"
-        }`}
+        className={`flex-1 p-4 md:p-6 ${comeFrom === "register" && "border border-[#DCDCDD]"
+          }`}
       >
         <h1 className="text-2xl font-bold tracking-tight text-[#7B57E0]">
           {title}
@@ -365,11 +388,10 @@ export function PreferencesForm({
 
         {/* Button area */}
         <div
-          className={`${
-            comeFrom === "register"
-              ? "p-6 flex justify-between w-full max-sm:flex-col max-sm:gap-4"
-              : "p-6 flex justify-end"
-          }`}
+          className={`${comeFrom === "register"
+            ? "p-6 flex justify-between w-full max-sm:flex-col max-sm:gap-4"
+            : "p-6 flex justify-end"
+            }`}
         >
           {comeFrom === "register" && (
             <Button
