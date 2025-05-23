@@ -7,8 +7,7 @@ import { NotificationsSidebar } from "@/modules/dashboard/components/notificatio
 function DashboardLayout({ children }: { children: React.ReactNode }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
   const [notificationsOpen, setNotificationsOpen] = useState(false)
-
-  // Check if sidebar is collapsed by checking its width
+  const [mobileOpen, setMobileOpen] = useState(false)
   useEffect(() => {
     const checkSidebarState = () => {
       const sidebarElement = document.querySelector('[class*="w-20"]')
@@ -30,13 +29,12 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
 
     return () => observer.disconnect()
   }, [])
-  console.log({ sidebarCollapsed });
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header setNotificationsOpen={setNotificationsOpen} />
+      <Header setNotificationsOpen={setNotificationsOpen} mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
       <div className="flex flex-1 relative">
-        <DashboardSidebar />
+        <DashboardSidebar mobileOpen={mobileOpen} setMobileOpen={setMobileOpen} />
         <main className={`flex-1 transition-margin duration-300 ${sidebarCollapsed ? "ml-16" : "sm:ml-64"}`}>
           {children}
         </main>

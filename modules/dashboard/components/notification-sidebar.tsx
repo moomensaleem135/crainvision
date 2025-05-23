@@ -4,7 +4,6 @@ import * as React from "react"
 import { Check } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
-import { Badge } from "@/components/ui/badge"
 import { cn } from "@/lib/utils"
 
 interface Notification {
@@ -29,7 +28,7 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
       id: "1",
       title: "New vehicle inventory update",
       description: "The Q2 vehicle inventory report is now available.",
-      timestamp: "3 hours ago",
+      timestamp: "2 hours ago",
       isRead: false,
       category: "inventory",
     },
@@ -37,7 +36,7 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
       id: "2",
       title: "New vehicle inventory update",
       description: "The Q2 vehicle inventory report is now available.",
-      timestamp: "3 hours ago",
+      timestamp: "2 hours ago",
       isRead: false,
       category: "inventory",
     },
@@ -45,7 +44,7 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
       id: "3",
       title: "New vehicle inventory update",
       description: "The Q2 vehicle inventory report is now available.",
-      timestamp: "3 hours ago",
+      timestamp: "2 hours ago",
       isRead: true,
       category: "inventory",
     },
@@ -77,7 +76,7 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
       id: "7",
       title: "New vehicle inventory update",
       description: "The Q2 vehicle inventory report is now available.",
-      timestamp: "3 hours ago",
+      timestamp: "2 hours ago",
       isRead: true,
       category: "inventory",
     },
@@ -85,7 +84,7 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
       id: "8",
       title: "New vehicle inventory update",
       description: "The Q2 vehicle inventory report is now available.",
-      timestamp: "3 hours ago",
+      timestamp: "2 hours ago",
       isRead: true,
       category: "inventory",
     },
@@ -136,8 +135,6 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
     }
   })
 
-  const unreadCount = notifications.filter((n) => !n.isRead).length
-
   const markAllAsRead = () => {
     // In a real app, this would update the notifications state
     console.log("Mark all as read")
@@ -145,23 +142,16 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
-      <SheetContent side="right" className="w-[400px] p-0">
+      <SheetContent side="right" className="w-[1200px] p-0">
         <div className="flex h-full flex-col">
           {/* Header */}
-          <SheetHeader className="flex flex-row items-center justify-between border-b p-4">
-            <div className="flex items-center gap-2">
-              <SheetTitle className="text-lg font-semibold">Notifications</SheetTitle>
-              {unreadCount > 0 && (
-                <Badge variant="secondary" className="bg-purple-100 text-purple-600">
-                  {unreadCount} New
-                </Badge>
-              )}
-            </div>
+          <SheetHeader className="flex flex-row items-center justify-between border-b p-6 space-y-0">
+            <SheetTitle className="text-xl font-semibold text-gray-900">Notifications</SheetTitle>
             <Button
               variant="default"
               size="sm"
               onClick={markAllAsRead}
-              className="bg-purple-600 text-white hover:bg-purple-700"
+              className="bg-[#5B25C0] text-white hover:bg-[#5B25C0] text-xs px-3 py-1 h-8"
             >
               <Check className="mr-1 h-3 w-3" />
               Mark all as Read
@@ -169,8 +159,8 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
           </SheetHeader>
 
           {/* Filter Tabs */}
-          <div className="border-b p-4">
-            <div className="flex gap-1">
+          <div className="border-b px-6 py-4">
+            <div className="flex gap-2">
               {[
                 { key: "all", label: "All" },
                 { key: "unread", label: "Unread" },
@@ -183,10 +173,10 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
                   size="sm"
                   onClick={() => setActiveFilter(filter.key as any)}
                   className={cn(
-                    "rounded-full",
+                    "rounded-full px-4 py-2 text-sm font-medium",
                     activeFilter === filter.key
-                      ? "bg-purple-600 text-white hover:bg-purple-700"
-                      : "text-gray-600 hover:bg-gray-100",
+                      ? "bg-[#5B25C0] text-white hover:bg-[#5B25C0]"
+                      : "text-gray-600 hover:bg-gray-100 bg-transparent",
                   )}
                 >
                   {filter.label}
@@ -198,19 +188,24 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
           {/* Notifications List */}
           <div className="flex-1 overflow-y-auto">
             {filteredNotifications.map((notification) => (
-              <div key={notification.id} className="flex items-start gap-3 border-b p-4 hover:bg-gray-50">
-                <div className="flex h-8 w-8 items-center justify-center rounded-md bg-purple-600 text-white">
-                  <span className="text-sm font-bold">C</span>
+              <div key={notification.id} className="flex items-start gap-3 border-b px-6 py-4 hover:bg-gray-50">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#5B25C0] text-white flex-shrink-0">
+                  <div className="relative">
+                    <div className="h-6 w-6 bg-[#5B25C0] rounded-sm"></div>
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <span className="text-xs font-bold text-white">C</span>
+                    </div>
+                  </div>
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h4 className="text-sm font-medium text-gray-900">{notification.title}</h4>
-                      <p className="mt-1 text-sm text-gray-500">{notification.description}</p>
+                    <div className="flex-1 pr-2">
+                      <h4 className="text-sm font-semibold text-gray-900 leading-tight">{notification.title}</h4>
+                      <p className="mt-1 text-sm text-gray-500 leading-relaxed">{notification.description}</p>
                     </div>
-                    <div className="flex items-center gap-2 ml-2">
-                      <span className="text-xs text-gray-400">{notification.timestamp}</span>
-                      {!notification.isRead && <div className="h-2 w-2 rounded-full bg-blue-500"></div>}
+                    <div className="flex items-center gap-2 flex-shrink-0">
+                      <span className="text-xs text-gray-400 whitespace-nowrap">{notification.timestamp}</span>
+                      {!notification.isRead && <div className="h-2 w-2 rounded-full bg-blue-500 flex-shrink-0"></div>}
                     </div>
                   </div>
                 </div>
@@ -219,8 +214,10 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
           </div>
 
           {/* Footer */}
-          <div className="border-t p-4">
-            <Button className="w-full bg-purple-600 text-white hover:bg-purple-700">Notification Settings</Button>
+          <div className="border-t p-6">
+            <Button className="w-full bg-[#5B25C0] text-white hover:bg-[#5B25C0] py-3 font-medium">
+              Notification Settings
+            </Button>
           </div>
         </div>
       </SheetContent>

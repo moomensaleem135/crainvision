@@ -17,9 +17,9 @@ interface NavItem {
   isActive?: boolean
 }
 
-export function DashboardSidebar() {
+export function DashboardSidebar({ mobileOpen, setMobileOpen }: { mobileOpen: any; setMobileOpen: any }) {
   const [collapsed, setCollapsed] = React.useState(false)
-  const [mobileOpen, setMobileOpen] = React.useState(false)
+//   const [mobileOpen, setMobileOpen] = React.useState(false)
   const pathname = usePathname()
   const router = useRouter()
 
@@ -106,6 +106,8 @@ export function DashboardSidebar() {
     return menuItem
   }
 
+  console.log({mobileOpen});
+  
   return (
     <TooltipProvider>
       {/* Desktop Sidebar */}
@@ -230,16 +232,6 @@ export function DashboardSidebar() {
         </div>
       </div>
 
-      {/* Mobile Trigger Button */}
-      <Button
-        variant="ghost"
-        size="icon"
-        className="fixed left-4 top-4 z-40 md:hidden"
-        onClick={() => setMobileOpen(true)}
-      >
-        <PanelLeft className="h-5 w-5" />
-      </Button>
-
       {/* Mobile Drawer */}
       <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
         <SheetContent side="left" className="w-64 p-0">
@@ -321,7 +313,7 @@ export function DashboardSidebar() {
                 <Image src="/svgs/log-out.svg" alt="Logout" height={15} width={15} className="mr-2 h-4 w-4" />
                 Logout Account
               </Link>
-              <button
+              {/* <button
                 onClick={() => {
                   toggleSidebar()
                   setMobileOpen(false)
@@ -330,7 +322,7 @@ export function DashboardSidebar() {
               >
                 <Image src="/svgs/collapse-a.svg" alt="Collapse" height={20} width={20} className="mr-2" />
                 Collapse Menu
-              </button>
+              </button> */}
             </div>
           </div>
         </SheetContent>
