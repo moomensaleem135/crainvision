@@ -76,9 +76,9 @@ export function DashboardSidebar({ mobileOpen, setMobileOpen }: { mobileOpen: an
       <Link
         href={item.href}
         className={cn(
-          "flex items-center rounded-md py-4 text-sm font-medium",
+          "flex items-center rounded-md py-4 text-sm font-medium hover:bg-brand-muted",
           collapsed ? "justify-center px-2" : "px-3",
-          item.isActive ? "bg-[#F4F0FF] text-[#7B57E0] font-bold" : "text-gray-700 hover:bg-gray-100",
+          item.isActive ? "bg-brand-muted text-brand font-bold" : "text-foreground hover:bg-brand-muted",
         )}
       >
         <Image
@@ -86,7 +86,7 @@ export function DashboardSidebar({ mobileOpen, setMobileOpen }: { mobileOpen: an
           alt={`${item.title} icon`}
           width={18}
           height={18}
-          className={cn(item.isActive ? "text-[#7B57E0] " : "text-gray-500", !collapsed && "mr-2")}
+          className={cn(item.isActive ? "text-brand " : "text-foreground", !collapsed && "mr-2")}
         />
         {!collapsed && item.title}
       </Link>
@@ -113,7 +113,7 @@ export function DashboardSidebar({ mobileOpen, setMobileOpen }: { mobileOpen: an
       {/* Desktop Sidebar */}
       <div
         className={cn(
-          "fixed inset-y-0 left-0 z-20 hidden h-full border-r border-t border-b rounded-tr-[1rem] rounded-br-[1rem] bg-white  md:flex md:flex-col",
+          "fixed inset-y-0 left-0 z-20 hidden h-full border-border border-r border-t border-b rounded-tr-[1rem] rounded-br-[1rem] bg-background  md:flex md:flex-col",
           collapsed ? "w-20" : "w-64",
         )}
       >
