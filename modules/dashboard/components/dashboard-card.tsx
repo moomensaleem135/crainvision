@@ -1,31 +1,26 @@
-import type { LucideIcon } from "lucide-react"
+import type * as React from "react"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import Image from "next/image"
 
 interface DashboardCardProps {
   title: string
   description: string
-  icon: LucideIcon
-  iconColor?: string
-  iconBgColor?: string
+  icon: string
+  height: number
+  width: number
 }
 
-export function DashboardCard({
-  title,
-  description,
-  icon: Icon,
-  iconColor = "text-primary",
-  iconBgColor = "bg-primary/10",
-}: DashboardCardProps) {
+export function DashboardCard({ title, description, icon, height, width }: DashboardCardProps) {
   return (
-    <Card className="h-full transition-all hover:shadow-md">
-      <CardHeader className="flex flex-row items-center justify-between pb-2">
-        <h3 className="text-base font-medium">{title}</h3>
-        <div className={`flex h-10 w-10 items-center justify-center rounded-full ${iconBgColor}`}>
-          <Icon className={`h-5 w-5 ${iconColor}`} />
+    <Card className="h-full transition-all hover:shadow-sm border">
+      <CardHeader className="flex flex-col items-center justify-center pb-2 pt-6 space-y-2">
+        <div className={`flex h-12 w-12 items-center justify-center rounded-full`}>
+            <Image src={icon} alt="" height={height} width={width}/> 
         </div>
+        <h3 className="text-lg font-semibold">{title}</h3>
       </CardHeader>
-      <CardContent>
-        <p className="text-sm text-muted-foreground">{description}</p>
+      <CardContent className="text-center pb-6">
+        <p className="text-sm font-light text-muted-foreground">{description}</p>
       </CardContent>
     </Card>
   )

@@ -1,14 +1,16 @@
 import type { LucideIcon } from "lucide-react"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
+import Image from "next/image"
 
 interface StatCardProps {
   title: string
   value: string
-  icon: LucideIcon
+  icon: string
   percentChange: number
   previousPeriod: string
-  iconColor?: string
   valueColor?: string
+  height?: number
+  width?: number
 }
 
 export function StatCard({
@@ -17,16 +19,18 @@ export function StatCard({
   icon: Icon,
   percentChange,
   previousPeriod,
-  iconColor = "text-primary",
   valueColor = "text-primary",
+  height = 30,
+  width = 30,
 }: StatCardProps) {
   const isPositive = percentChange >= 0
+console.log("Icon", Icon);
 
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <h3 className="text-sm font-medium">{title}</h3>
-        <Icon className={`h-5 w-5 ${iconColor}`} />
+        <Image src={Icon} alt="" height={height} width={width}  />
       </CardHeader>
       <CardContent>
         <div className={`text-2xl font-bold ${valueColor}`}>{value}</div>
