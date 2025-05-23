@@ -27,6 +27,7 @@ function DashboardLayout({ children }: { children: React.ReactNode }) {
 
     return () => observer.disconnect()
   }, [])
+console.log({sidebarCollapsed});
 
   return (
     <div className="flex min-h-screen">
