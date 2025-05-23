@@ -416,7 +416,7 @@ export function PreferencesForm({
           <Button
             type="submit"
             disabled={isLoading || !hasChanges}
-            className="bg-[#7B57E0] text-white px-6"
+            className="bg-[#7B57E0] text-white px-6 hover:bg-[#7B57E0]"
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Save Preferences
