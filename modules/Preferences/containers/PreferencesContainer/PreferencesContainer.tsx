@@ -13,8 +13,11 @@ const PreferencesContainer = ({
   comeFrom = "dashboard",
 }: PreferencesContainerProps) => {
   return (
- 
-      <PreferencesForm comeFrom={comeFrom} title={title} description={description}/>
+    <PreferencesForm
+      comeFrom={comeFrom}
+      title={title}
+      description={description}
+    />
   );
 };
 

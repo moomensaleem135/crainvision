@@ -1,15 +1,15 @@
-import { Card, CardContent } from "@/components/ui/card"
-import type { LucideIcon } from "lucide-react"
+import { Card, CardContent } from "@/components/ui/card";
+import type { LucideIcon } from "lucide-react";
 
 interface ServiceStatCardProps {
-  title: string
-  value: string
-  icon: LucideIcon
-  percentChange?: number
-  previousPeriod?: string
-  iconColor?: string
-  valueColor?: string
-  trend?: "up" | "down" | "neutral"
+  title: string;
+  value: string;
+  icon: LucideIcon;
+  percentChange?: number;
+  previousPeriod?: string;
+  iconColor?: string;
+  valueColor?: string;
+  trend?: "up" | "down" | "neutral";
 }
 
 export function ServiceStatCard({
@@ -32,18 +32,29 @@ export function ServiceStatCard({
             {percentChange !== undefined && (
               <div className="flex items-center space-x-1">
                 <span
-                  className={`text-xs ${trend === "up" ? "text-green-600" : trend === "down" ? "text-red-600" : "text-gray-500"}`}
+                  className={`text-xs ${
+                    trend === "up"
+                      ? "text-green-600"
+                      : trend === "down"
+                      ? "text-red-600"
+                      : "text-gray-500"
+                  }`}
                 >
-                  {trend === "up" ? "↑" : trend === "down" ? "↓" : ""} {Math.abs(percentChange)}% vs {previousPeriod}
+                  {trend === "up" ? "↑" : trend === "down" ? "↓" : ""}{" "}
+                  {Math.abs(percentChange)}% vs {previousPeriod}
                 </span>
               </div>
             )}
           </div>
-          <div className={`p-2 rounded-full ${iconColor === "text-purple-500" ? "bg-purple-100" : "bg-blue-100"}`}>
+          <div
+            className={`p-2 rounded-full ${
+              iconColor === "text-purple-500" ? "bg-purple-100" : "bg-blue-100"
+            }`}
+          >
             <Icon className={`h-5 w-5 ${iconColor}`} />
           </div>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

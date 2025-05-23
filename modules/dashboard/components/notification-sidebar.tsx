@@ -1,27 +1,37 @@
-"use client"
+"use client";
 
-import * as React from "react"
-import { Check } from "lucide-react"
-import { Button } from "@/components/ui/button"
-import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet"
-import { cn } from "@/lib/utils"
+import * as React from "react";
+import { Check } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import { cn } from "@/lib/utils";
 
 interface Notification {
-  id: string
-  title: string
-  description: string
-  timestamp: string
-  isRead: boolean
-  category: "inventory" | "service" | "general"
+  id: string;
+  title: string;
+  description: string;
+  timestamp: string;
+  isRead: boolean;
+  category: "inventory" | "service" | "general";
 }
 
 interface NotificationsSidebarProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
-export function NotificationsSidebar({ open, onOpenChange }: NotificationsSidebarProps) {
-  const [activeFilter, setActiveFilter] = React.useState<"all" | "unread" | "inventory" | "service">("all")
+export function NotificationsSidebar({
+  open,
+  onOpenChange,
+}: NotificationsSidebarProps) {
+  const [activeFilter, setActiveFilter] = React.useState<
+    "all" | "unread" | "inventory" | "service"
+  >("all");
 
   const notifications: Notification[] = [
     {
@@ -120,33 +130,31 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
       isRead: true,
       category: "inventory",
     },
-  ]
+  ];
 
   const filteredNotifications = notifications.filter((notification) => {
     switch (activeFilter) {
       case "unread":
-        return !notification.isRead
+        return !notification.isRead;
       case "inventory":
-        return notification.category === "inventory"
+        return notification.category === "inventory";
       case "service":
-        return notification.category === "service"
+        return notification.category === "service";
       default:
-        return true
+        return true;
     }
-  })
+  });
 
-  const markAllAsRead = () => {
-    // In a real app, this would update the notifications state
-    console.log("Mark all as read")
-  }
+  const markAllAsRead = () => {};
 
   return (
     <Sheet open={open} onOpenChange={onOpenChange}>
       <SheetContent side="right" className="w-[1200px] p-0">
         <div className="flex h-full flex-col">
-          {/* Header */}
           <SheetHeader className="flex flex-row items-center justify-between border-b p-6 space-y-0">
-            <SheetTitle className="text-xl font-semibold text-gray-900">Notifications</SheetTitle>
+            <SheetTitle className="text-xl font-semibold text-gray-900">
+              Notifications
+            </SheetTitle>
             <Button
               variant="default"
               size="sm"
@@ -158,7 +166,6 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
             </Button>
           </SheetHeader>
 
-          {/* Filter Tabs */}
           <div className="border-b px-6 py-4">
             <div className="flex gap-2">
               {[
@@ -176,7 +183,7 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
                     "rounded-full px-4 py-2 text-sm font-medium",
                     activeFilter === filter.key
                       ? "bg-[#5B25C0] text-white hover:bg-[#5B25C0]"
-                      : "text-gray-600 hover:bg-gray-100 bg-transparent",
+                      : "text-gray-600 hover:bg-gray-100 bg-transparent"
                   )}
                 >
                   {filter.label}
@@ -185,10 +192,12 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
             </div>
           </div>
 
-          {/* Notifications List */}
           <div className="flex-1 overflow-y-auto">
             {filteredNotifications.map((notification) => (
-              <div key={notification.id} className="flex items-start gap-3 border-b px-6 py-4 hover:bg-gray-50">
+              <div
+                key={notification.id}
+                className="flex items-start gap-3 border-b px-6 py-4 hover:bg-gray-50"
+              >
                 <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#5B25C0] text-white flex-shrink-0">
                   <div className="relative">
                     <div className="h-6 w-6 bg-[#5B25C0] rounded-sm"></div>
@@ -200,12 +209,20 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
                 <div className="flex-1 min-w-0">
                   <div className="flex items-start justify-between">
                     <div className="flex-1 pr-2">
-                      <h4 className="text-sm font-semibold text-gray-900 leading-tight">{notification.title}</h4>
-                      <p className="mt-1 text-sm text-gray-500 leading-relaxed">{notification.description}</p>
+                      <h4 className="text-sm font-semibold text-gray-900 leading-tight">
+                        {notification.title}
+                      </h4>
+                      <p className="mt-1 text-sm text-gray-500 leading-relaxed">
+                        {notification.description}
+                      </p>
                     </div>
                     <div className="flex items-center gap-2 flex-shrink-0">
-                      <span className="text-xs text-gray-400 whitespace-nowrap">{notification.timestamp}</span>
-                      {!notification.isRead && <div className="h-2 w-2 rounded-full bg-blue-500 flex-shrink-0"></div>}
+                      <span className="text-xs text-gray-400 whitespace-nowrap">
+                        {notification.timestamp}
+                      </span>
+                      {!notification.isRead && (
+                        <div className="h-2 w-2 rounded-full bg-blue-500 flex-shrink-0"></div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -213,7 +230,6 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
             ))}
           </div>
 
-          {/* Footer */}
           <div className="border-t p-6">
             <Button className="w-full bg-[#5B25C0] text-white hover:bg-[#5B25C0] py-3 font-medium">
               Notification Settings
@@ -222,5 +238,5 @@ export function NotificationsSidebar({ open, onOpenChange }: NotificationsSideba
         </div>
       </SheetContent>
     </Sheet>
-  )
+  );
 }

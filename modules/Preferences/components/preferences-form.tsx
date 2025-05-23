@@ -26,6 +26,7 @@ import EmailIcon from "@/public/assests/tsx/emailIcon";
 import AvatarIcon from "@/public/assests/tsx/avatar";
 import { usePathname, useRouter } from "next/navigation";
 import RightArrowIcon from "@/public/assests/tsx/rightArrowIcon";
+import DeleteIcon from "@/public/assests/tsx/deleteIcon";
 
 interface PreferencesFormProps {
   comeFrom?: string;
@@ -52,9 +53,8 @@ export function PreferencesForm({
   const [selectedDashboard, setSelectedDashboard] = useState("automotive");
   const [hasChanges, setHasChanges] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  // Initialize theme when component mounts
+
   useEffect(() => {
-    // Use the current theme or system preference
     const currentTheme = theme || "system";
     setTempTheme(currentTheme);
   }, [theme]);
@@ -64,40 +64,36 @@ export function PreferencesForm({
     if (storedUserData) {
       try {
         setUserData(JSON.parse(storedUserData));
-      } catch {
-        // ignore JSON parse errors
-      }
+      } catch {}
     }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     try {
-      // Save preferences to localStorage
-      localStorage.setItem("theme", tempTheme)
-      localStorage.setItem("selectedDashboard", selectedDashboard)
-      setTheme(tempTheme)
+      localStorage.setItem("theme", tempTheme);
+      localStorage.setItem("selectedDashboard", selectedDashboard);
+      setTheme(tempTheme);
 
       setTimeout(() => {
-        setIsLoading(false)
+        setIsLoading(false);
         toast({
           title: "Preferences updated",
           description: "Your preferences have been saved successfully",
-        })
-        // Navigate to dashboard
-        router.push("/dashboard")
-      }, 1500)
+        });
+        router.push("/dashboard");
+      }, 1500);
     } catch (error) {
-      setIsLoading(false)
+      setIsLoading(false);
       toast({
         title: "Error",
         description: "Failed to update preferences",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -113,16 +109,23 @@ export function PreferencesForm({
   const handleThemeChange = (value: string) => {
     setTempTheme(value);
     setTheme(value);
-    localStorage.setItem("theme", value);  // Save immediately
+    localStorage.setItem("theme", value);
     setHasChanges(true);
   };
 
   const handleDashboardChange = (value: string) => {
-    if (value != '') {
+    if (value != "") {
       setSelectedDashboard(value);
-      localStorage.setItem("selectedDashboard", value); // Save immediately
+      localStorage.setItem("selectedDashboard", value);
       setHasChanges(true);
     }
+  };
+
+  const handleDeleteImage = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setProfileImage(null);
+    localStorage.removeItem("profileImage");
   };
 
   useEffect(() => {
@@ -137,7 +140,6 @@ export function PreferencesForm({
       if (storedDashboard) {
         setSelectedDashboard(storedDashboard);
       } else {
-        // If nothing in localStorage, fallback to default
         setSelectedDashboard("automotive");
       }
     } else {
@@ -145,23 +147,22 @@ export function PreferencesForm({
       setTempTheme(currentTheme);
     }
   }, [pathname, setTheme, theme]);
+
   return (
     <form onSubmit={handleSubmit} className="flex-1 p-4 md:p-6">
       <div
-        className={`flex-1 p-4 md:p-6 ${comeFrom === "register" && "border border-[#DCDCDD]"
-          }`}
+        className={`flex-1 p-4 md:p-6 ${
+          comeFrom === "register" && "border border-[#DCDCDD]"
+        }`}
       >
         <h1 className="text-2xl font-bold tracking-tight text-[#7B57E0]">
           {title}
         </h1>
         <p className="text-muted-foreground">{description}</p>
       </div>
-      {/* Single Card containing everything */}
       <Card className="overflow-hidden">
-        {/* Main content area */}
         <CardContent className="p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {/* Left Column - Profile Information */}
             <div className="space-y-6">
               <h2 className="text-xl font-semibold text-[#7B57E0]">
                 Profile Information
@@ -170,14 +171,26 @@ export function PreferencesForm({
               <div className="flex flex-col items-center space-y-4">
                 <div className="relative">
                   <Avatar className="h-24 w-24">
-                    <AvatarImage src={profileImage || ""} alt="Profile" />
+                    <AvatarImage
+                      src={profileImage || undefined}
+                      alt="Profile"
+                    />
                     <AvatarFallback className="text-lg bg-[#F4F0FF]">
                       <AvatarIcon />
                     </AvatarFallback>
                   </Avatar>
-                  <label htmlFor="profile-image">
-                    <CameraImage className="absolute bottom-0 right-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-[#F4F0FF] text-white" />
-                  </label>
+                  {profileImage ? (
+                    <div
+                      className="absolute bottom-0 right-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-[#F4F0FF] text-white"
+                      onClick={handleDeleteImage}
+                    >
+                      <DeleteIcon />
+                    </div>
+                  ) : (
+                    <label htmlFor="profile-image">
+                      <CameraImage className="absolute bottom-0 right-0 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-[#F4F0FF] text-white" />
+                    </label>
+                  )}
                   <Input
                     id="profile-image"
                     type="file"
@@ -199,7 +212,7 @@ export function PreferencesForm({
                       placeholder="Daphne Smith"
                       defaultValue="Daphne Smith"
                       disabled={isSaving}
-                      className="pl-14 py-6"
+                      className="pl-14 py-6 bg-background border-border"
                       value={userData?.full_name || ""}
                     />
                   </div>
@@ -215,7 +228,7 @@ export function PreferencesForm({
                       placeholder="daphnesmith@gmail.com"
                       defaultValue="daphnesmith@gmail.com"
                       disabled={isSaving}
-                      className="pl-14 py-6"
+                      className="pl-14 py-6 bg-background border-border"
                       value={userData?.email || ""}
                     />
                   </div>
@@ -238,9 +251,7 @@ export function PreferencesForm({
               </div>
             </div>
 
-            {/* Right Column - Appearance & Preferences + Additional Settings */}
             <div className="space-y-4">
-              {/* Appearance & Preferences Section */}
               <div className="space-y-4">
                 <h2 className="text-xl font-semibold text-[#7B57E0]">
                   Appearance & Preferences
@@ -321,7 +332,7 @@ export function PreferencesForm({
                     value={selectedDashboard}
                     onValueChange={handleDashboardChange}
                   >
-                    <SelectTrigger id="default-dashboard" className="py-6">
+                    <SelectTrigger id="automotive" className="py-6">
                       <SelectValue placeholder="Select a dashboard" />
                     </SelectTrigger>
                     <SelectContent>
@@ -336,7 +347,6 @@ export function PreferencesForm({
                 </div>
               </div>
 
-              {/* Additional Settings Section */}
               <div className="space-y-4 mt-6">
                 <h2 className="text-xl font-semibold text-[#7B57E0]">
                   Additional Settings
@@ -388,10 +398,11 @@ export function PreferencesForm({
 
         {/* Button area */}
         <div
-          className={`${comeFrom === "register"
-            ? "p-6 flex justify-between w-full max-sm:flex-col max-sm:gap-4"
-            : "p-6 flex justify-end"
-            }`}
+          className={`${
+            comeFrom === "register"
+              ? "p-6 flex justify-between w-full max-sm:flex-col max-sm:gap-4"
+              : "p-6 flex justify-end"
+          }`}
         >
           {comeFrom === "register" && (
             <Button

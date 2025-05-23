@@ -1,27 +1,34 @@
 "use client";
 
 import type React from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
-import { Eye, EyeOff } from "lucide-react";
-export function RegisterForm({ userData, handleApiCall, setUserData }: { userData: any, handleApiCall: any, setUserData: any }) {
+export function RegisterForm({
+  userData,
+  handleApiCall,
+  setUserData,
+}: {
+  userData: any;
+  handleApiCall: any;
+  setUserData: any;
+}) {
   const [isLoading, setIsLoading] = useState(false);
   const [password, setPassword] = useState("");
-  const [passwordScore, setPasswordScore] = useState(0);
+  const [_passwordScore, setPasswordScore] = useState(0);
   const router = useRouter();
   const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    const { password, ...userDataWithoutPassword } = userData; 
+    const { password, ...userDataWithoutPassword } = userData;
     localStorage.setItem("userData", JSON.stringify(userDataWithoutPassword));
-    // Simulate authentication
     setTimeout(() => {
       setIsLoading(false);
       toast({
@@ -54,7 +61,6 @@ export function RegisterForm({ userData, handleApiCall, setUserData }: { userDat
           />
         </div>
 
-        {/* Welcome Text */}
         <div className="mb-8">
           <h1 className="text-3xl font-bold mb-2">
             👋 Welcome to <span className="text-[#7B57E0]">Crain Vision</span>
@@ -64,7 +70,6 @@ export function RegisterForm({ userData, handleApiCall, setUserData }: { userDat
           </p>
         </div>
 
-        {/* Form */}
         <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-2">
             <label htmlFor="fullName" className="block text-sm font-medium">
@@ -76,9 +81,10 @@ export function RegisterForm({ userData, handleApiCall, setUserData }: { userDat
                 type="text"
                 placeholder="Enter name"
                 className="pl-10 border border-gray-200 rounded-md focus:border-[#7B57E0] focus:ring-[#7B57E0]"
-                onChange={(e) => setUserData({ ...userData, full_name: e.target.value })}
+                onChange={(e) =>
+                  setUserData({ ...userData, full_name: e.target.value })
+                }
                 required
-                
               />
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                 <Image src={"/svgs/user.svg"} alt="" height={24} width={24} />
@@ -96,7 +102,9 @@ export function RegisterForm({ userData, handleApiCall, setUserData }: { userDat
                 type="email"
                 placeholder="Enter email address"
                 className="pl-10 border border-gray-200 rounded-md focus:border-[#7B57E0] focus:ring-[#7B57E0]"
-                onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+                onChange={(e) =>
+                  setUserData({ ...userData, email: e.target.value })
+                }
                 required
               />
               <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -130,7 +138,11 @@ export function RegisterForm({ userData, handleApiCall, setUserData }: { userDat
                 onClick={togglePasswordVisibility}
                 className="absolute inset-y-0 right-0 flex items-center pr-3 text-[#7B57E0] hover:text-[#7B57E0]"
               >
-                {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5" />
+                ) : (
+                  <Eye className="h-5 w-5" />
+                )}
               </button>
             </div>
 

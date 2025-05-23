@@ -20,7 +20,6 @@ export function Header({
 }) {
   return (
     <header className="flex h-16 items-center justify-between bg-background px-4 md:px-6 py-10">
-      {/* Hamburger menu - only visible on mobile */}
       <div className="md:hidden">
         <Button
           variant="ghost"
@@ -33,10 +32,8 @@ export function Header({
         </Button>
       </div>
 
-      {/* Empty space on desktop, hidden on mobile */}
       <div className="hidden md:block md:flex-1"></div>
 
-      {/* Search input - centered on all screens */}
       <div className="relative w-full sm:max-w-[20rem] md:max-w-md max-w-[10rem] mx-auto sm:ml-3 ml-2">
         <Image
           src={"/svgs/search.svg"}
@@ -52,7 +49,6 @@ export function Header({
         />
       </div>
 
-      {/* Right side buttons */}
       <div className="flex items-center gap-2 md:gap-4 ml-2 md:ml-4 flex-shrink-0 md:flex-1 justify-end">
         <Button
           variant="ghost"

@@ -1,7 +1,15 @@
-"use client"
+"use client";
 
-import { Card, CardContent } from "@/components/ui/card"
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts"
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 const data = [
   { name: "JAN", labor: 10000, parts: 8000, warranty: 5000 },
@@ -16,7 +24,7 @@ const data = [
   { name: "OCT", labor: 28000, parts: 20000, warranty: 12000 },
   { name: "NOV", labor: 33000, parts: 23000, warranty: 14000 },
   { name: "DEC", labor: 28000, parts: 19000, warranty: 11000 },
-]
+];
 
 export function ServiceRevenueChart() {
   return (
@@ -25,8 +33,12 @@ export function ServiceRevenueChart() {
         <div className="px-6 pt-6">
           <div className="flex justify-between items-start">
             <div>
-              <h3 className="text-lg font-semibold text-purple-600">Service Revenue Trend</h3>
-              <p className="text-sm text-muted-foreground">Monthly service revenue over the last 12 months</p>
+              <h3 className="text-lg font-semibold text-purple-600">
+                Service Revenue Trend
+              </h3>
+              <p className="text-sm text-muted-foreground">
+                Monthly service revenue over the last 12 months
+              </p>
             </div>
             <div className="flex items-center gap-4">
               <div className="flex items-center gap-1">
@@ -47,8 +59,16 @@ export function ServiceRevenueChart() {
 
         <div className="h-[300px] w-full">
           <ResponsiveContainer width="100%" height="100%">
-            <LineChart data={data} margin={{ top: 20, right: 30, left: 5, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" horizontal={true} vertical={true} stroke="#E5E7EB" />
+            <LineChart
+              data={data}
+              margin={{ top: 20, right: 30, left: 5, bottom: 5 }}
+            >
+              <CartesianGrid
+                strokeDasharray="3 3"
+                horizontal={true}
+                vertical={true}
+                stroke="#E5E7EB"
+              />
               <XAxis
                 dataKey="name"
                 axisLine={false}
@@ -62,13 +82,16 @@ export function ServiceRevenueChart() {
                 tick={{ fontSize: 12, fill: "#6B7280" }}
                 width={60}
                 tickFormatter={(value) => {
-                  if (value === 0) return "0"
-                  if (value >= 1000) return `$${value / 1000}K`
-                  return `$${value}`
+                  if (value === 0) return "0";
+                  if (value >= 1000) return `$${value / 1000}K`;
+                  return `$${value}`;
                 }}
                 tickMargin={5}
               />
-              <Tooltip formatter={(value) => [`$${value}`, ""]} labelFormatter={(label) => `${label}`} />
+              <Tooltip
+                formatter={(value) => [`$${value}`, ""]}
+                labelFormatter={(label) => `${label}`}
+              />
               <Line
                 type="monotone"
                 dataKey="labor"
@@ -104,5 +127,5 @@ export function ServiceRevenueChart() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }

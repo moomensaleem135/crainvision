@@ -24,16 +24,16 @@ const AvatarIcon: React.FC<AvatarProps> = ({
         rx="17.5"
         ry="8.75"
         stroke={fillColor}
-        stroke-width="3"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinejoin="round"
       />
       <circle
         cx="30.5"
         cy="17.5"
         r="10"
         stroke={fillColor}
-        stroke-width="3"
-        stroke-linejoin="round"
+        strokeWidth="3"
+        strokeLinejoin="round"
       />
     </svg>
   );

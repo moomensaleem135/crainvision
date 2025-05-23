@@ -1,15 +1,17 @@
-"use client"
+"use client";
 
-import { Calendar, Clock, DollarSign, Star } from "lucide-react"
-import { ServiceStatCard } from "../../components/service-stat-card"
-import { ServiceRevenueChart } from "../../components/service-revenue-chart"
-import { ServiceAppointmentsTable } from "../../components/service-appointments-table"
+import { Calendar, Clock, DollarSign, Star } from "lucide-react";
+import { ServiceStatCard } from "../../components/service-stat-card";
+import { ServiceRevenueChart } from "../../components/service-revenue-chart";
+import { ServiceAppointmentsTable } from "../../components/service-appointments-table";
 
 export default function ServiceDashboardContainer() {
   return (
     <main className="flex-1 p-4 md:p-6 overflow-hidden">
       <div className="mb-6">
-        <h1 className="text-xl md:text-2xl font-bold text-purple-600">Service Department Dashboard</h1>
+        <h1 className="text-xl md:text-2xl font-bold text-purple-600">
+          Service Department Dashboard
+        </h1>
         <p className="text-sm text-muted-foreground">
           Monitor service operations, appointments, and technician performance
         </p>
@@ -65,5 +67,5 @@ export default function ServiceDashboardContainer() {
         </div>
       </div>
     </main>
-  )
+  );
 }

@@ -9,6 +9,7 @@ const carouselSlides = [
   "Only see the data that matters — filtered by your assigned stores or corporate groups.",
   "Find dashboards by name or business use through a central search bar.",
 ];
+
 export default function RightSide() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -29,10 +30,11 @@ export default function RightSide() {
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 5000); 
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
+
   return (
     <div className="hidden lg:block w-2/4 relative bg-gradient-to-br from-purple-700 via-purple-600 to-purple-800 overflow-hidden rounded-l-[3rem]">
       <div className="absolute inset-0 bg-[url('/svgs/bg-image.svg')] bg-cover bg-center opacity-50"></div>
@@ -56,8 +58,9 @@ export default function RightSide() {
             {carouselSlides.map((text, index) => (
               <p
                 key={index}
-                className={`transition-opacity duration-500 absolute left-0 right-0 ${currentSlide === index ? "opacity-100" : "opacity-0"
-                  }`}
+                className={`transition-opacity duration-500 absolute left-0 right-0 ${
+                  currentSlide === index ? "opacity-100" : "opacity-0"
+                }`}
               >
                 {text}
               </p>
@@ -78,10 +81,11 @@ export default function RightSide() {
                 <button
                   key={index}
                   onClick={() => goToSlide(index)}
-                  className={`h-2 rounded-full transition-all ${index === currentSlide
+                  className={`h-2 rounded-full transition-all ${
+                    index === currentSlide
                       ? "w-6 bg-white"
                       : "w-2 bg-white/40 hover:bg-white/60"
-                    }`}
+                  }`}
                   aria-label={`Go to slide ${index + 1}`}
                 />
               ))}

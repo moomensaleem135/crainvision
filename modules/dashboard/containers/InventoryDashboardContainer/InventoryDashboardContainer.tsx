@@ -1,16 +1,20 @@
-"use client"
+"use client";
 
-import { Package, Clock, TrendingUp, DollarSign } from "lucide-react"
-import { InventoryStatCard } from "../../components/inventory-stat-card"
-import { InventoryAgeChart } from "../../components/inventory-age-chart"
-import { InventoryStockTable } from "../../components/inventory-stock-table"
+import { Package, Clock, TrendingUp, DollarSign } from "lucide-react";
+import { InventoryStatCard } from "../../components/inventory-stat-card";
+import { InventoryAgeChart } from "../../components/inventory-age-chart";
+import { InventoryStockTable } from "../../components/inventory-stock-table";
 
 export default function InventoryDashboardContainer() {
   return (
     <main className="flex-1 p-4 md:p-6 max-w-full">
       <div className="mb-6">
-        <h1 className="text-xl md:text-2xl font-bold text-purple-600">Inventory Management Dashboard</h1>
-        <p className="text-sm text-muted-foreground">Track vehicle inventory, stock levels, and aging analysis</p>
+        <h1 className="text-xl md:text-2xl font-bold text-purple-600">
+          Inventory Management Dashboard
+        </h1>
+        <p className="text-sm text-muted-foreground">
+          Track vehicle inventory, stock levels, and aging analysis
+        </p>
       </div>
 
       <div className="mb-8 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
@@ -57,5 +61,5 @@ export default function InventoryDashboardContainer() {
         <InventoryStockTable />
       </div>
     </main>
-  )
+  );
 }
