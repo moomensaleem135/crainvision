@@ -2,7 +2,7 @@ import { PreferencesContainer } from "@/modules/Preferences/containers/container
 
 export default function PreferencesPage() {
   return (
-    <div className="mx-auto max-w-4xl space-y-6">
+    <div className="flex-1 p-4 md:p-6">
       <PreferencesContainer />
     </div>
   );
