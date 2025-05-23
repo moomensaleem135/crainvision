@@ -42,7 +42,14 @@ export function RegisterForm() {
       <div className="max-w-xl mx-auto w-full">
         {/* Logo */}
         <div className="mb-16">
-          <Image src={"/svgs/logo.svg"} alt={""} height={250} width={250} />
+          <Image
+            src="/svgs/logo.svg"
+            alt="CrainVision Logo"
+            width={250}
+            height={80}
+            style={{ width:'auto',height: "auto" }}
+            priority
+          />
         </div>
 
         {/* Welcome Text */}
