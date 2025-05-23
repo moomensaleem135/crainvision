@@ -25,6 +25,7 @@ import UserIcon from "@/public/assests/tsx/userIcon";
 import EmailIcon from "@/public/assests/tsx/emailIcon";
 import AvatarIcon from "@/public/assests/tsx/avatar";
 import { useRouter } from "next/navigation";
+import RightArrowIcon from "@/public/assests/tsx/rightArrowIcon";
 
 interface PreferencesFormProps {
   comeFrom: string;
@@ -34,7 +35,7 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
   const { setTheme, theme } = useTheme();
   const { toast } = useToast();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [tempTheme, setTempTheme] = useState<string>("system");
 
@@ -47,7 +48,7 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsLoading(true);
+    setIsSaving(true);
 
     try {
       // Persist theme in localStorage
@@ -55,14 +56,14 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
       setTheme(tempTheme);
 
       setTimeout(() => {
-        setIsLoading(false);
+        setIsSaving(false);
         toast({
           title: "Preferences updated",
           description: "Your preferences have been saved successfully",
         });
       }, 1500);
     } catch (error) {
-      setIsLoading(false);
+      setIsSaving(false);
       toast({
         title: "Error",
         description: "Failed to update preferences",
@@ -118,7 +119,7 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
                     accept="image/*"
                     className="hidden"
                     onChange={handleImageChange}
-                    disabled={isLoading}
+                    disabled={isSaving}
                   />
                 </div>
               </div>
@@ -132,7 +133,7 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
                       id="name"
                       placeholder="Daphne Smith"
                       defaultValue="Daphne Smith"
-                      disabled={isLoading}
+                      disabled={isSaving}
                       className="pl-14 py-6"
                     />
                   </div>
@@ -147,7 +148,7 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
                       type="email"
                       placeholder="daphnesmith@gmail.com"
                       defaultValue="daphnesmith@gmail.com"
-                      disabled={isLoading}
+                      disabled={isSaving}
                       className="pl-14 py-6"
                     />
                   </div>
@@ -328,18 +329,19 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
             <Button
               variant="outline"
               onClick={() => router.push("/dashboard")}
-              disabled={isLoading}
+              type="button"
             >
               Skip for Now
             </Button>
           )}
           <Button
             type="submit"
-            disabled={isLoading}
+            disabled={isSaving}
             className="bg-[#7B57E0] text-white px-6"
           >
-            {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+            {isSaving && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
             Save Preferences
+            <RightArrowIcon className="!h-6 !w-6" />
           </Button>
         </div>
       </Card>
