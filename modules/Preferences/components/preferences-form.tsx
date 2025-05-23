@@ -41,19 +41,34 @@ export function PreferencesForm({
   const { setTheme, theme } = useTheme();
   const { toast } = useToast();
   const router = useRouter();
-   const pathname = usePathname();
+  const pathname = usePathname();
+  const [userData, setUserData] = useState<{
+    full_name?: string;
+    email?: string;
+  }>({});
   const [isSaving, setIsSaving] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [tempTheme, setTempTheme] = useState<string>("system");
-  const [selectedDashboard, setSelectedDashboard] = useState("automative")
-  const [hasChanges, setHasChanges] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [selectedDashboard, setSelectedDashboard] = useState("automative");
+  const [hasChanges, setHasChanges] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   // Initialize theme when component mounts
   useEffect(() => {
     // Use the current theme or system preference
     const currentTheme = theme || "system";
     setTempTheme(currentTheme);
   }, [theme]);
+
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("userData");
+    if (storedUserData) {
+      try {
+        setUserData(JSON.parse(storedUserData));
+      } catch {
+        // ignore JSON parse errors
+      }
+    }
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -96,19 +111,23 @@ export function PreferencesForm({
   };
 
   const handleThemeChange = (value: string) => {
-    setTempTheme(value)
-    setTheme(value)
-    setHasChanges(true)
-  }
+    setTempTheme(value);
+    setTheme(value);
+    setHasChanges(true);
+  };
 
   const handleDashboardChange = (value: string) => {
-    setSelectedDashboard(value)
-    setHasChanges(true)
-  }
+    setSelectedDashboard(value);
+    setHasChanges(true);
+  };
 
   return (
     <form onSubmit={handleSubmit} className="flex-1 p-4 md:p-6">
-      <div className={`flex-1 p-4 md:p-6 ${comeFrom === 'register' && 'border border-[#DCDCDD]'}`}>
+      <div
+        className={`flex-1 p-4 md:p-6 ${
+          comeFrom === "register" && "border border-[#DCDCDD]"
+        }`}
+      >
         <h1 className="text-2xl font-bold tracking-tight text-[#7B57E0]">
           {title}
         </h1>
@@ -174,7 +193,7 @@ export function PreferencesForm({
                       defaultValue="daphnesmith@gmail.com"
                       disabled={isSaving}
                       className="pl-14 py-6"
-                       value={userData?.email || ""}
+                      value={userData?.email || ""}
                     />
                   </div>
                 </div>
