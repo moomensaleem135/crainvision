@@ -150,7 +150,7 @@ export function RegisterForm() {
           </p>
         </div>
 
-        <div className="mt-6 flex items-center justify-center">
+        {/* <div className="mt-6 flex items-center justify-center">
           <div className="border-t border-gray-200 flex-grow mr-3"></div>
           <span className="text-sm text-[#7B57E0]">Or</span>
           <div className="border-t border-gray-200 flex-grow ml-3"></div>
@@ -162,7 +162,7 @@ export function RegisterForm() {
         >
           <Image src={"/svgs/google.svg"} alt="" height={23} width={23} />
           Sign in with Google
-        </button>
+        </button> */}
       </div>
     </div>
   );

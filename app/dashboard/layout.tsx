@@ -1,19 +1,35 @@
-import type React from "react"
-import { DashboardHeader } from "@/components/dashboard-header"
-import { DashboardSidebar } from "@/components/dashboard-sidebar"
+"use client"
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+import type React from "react"
+import { useState, useEffect } from "react"
+
+function DashbaordLayout({ children }: { children: React.ReactNode }) {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+
+  // Check if sidebar is collapsed by checking its width
+  useEffect(() => {
+    const checkSidebarState = () => {
+      const sidebarElement = document.querySelector('[class*="w-16"]')
+      setSidebarCollapsed(!!sidebarElement)
+    }
+
+    // Initial check
+    checkSidebarState()
+
+    // Set up a mutation observer to watch for class changes
+    const observer = new MutationObserver(checkSidebarState)
+    const sidebar = document.querySelector('div[class*="fixed inset-y-0 left-0"]')
+
+    if (sidebar) {
+      observer.observe(sidebar, { attributes: true, attributeFilter: ["class"] })
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
   return (
-    <div className="flex min-h-screen flex-col">
-      <DashboardHeader />
-      <div className="flex flex-1">
-        <DashboardSidebar />
-        <main className="flex-1 p-6">{children}</main>
-      </div>
-    </div>
+    <div className={`flex-1 transition-all duration-300 ${sidebarCollapsed ? "md:ml-16" : "md:ml-64"}`}>{children}</div>
   )
 }
+
+export default DashbaordLayout
