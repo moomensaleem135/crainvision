@@ -1,50 +1,18 @@
 "use client"
 
-import { Car, Users, Wrench, Building2, UserRound, DollarSign, LineChart, Truck } from "lucide-react"
-import { Input } from "@/components/ui/input"
-import { Bell, Search, User } from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { useState } from "react"
 import { StatCard } from "../../components/stat-card"
 import { DashboardCard } from "../../components/dashboard-card"
 import { NotificationsSidebar } from "../../components/notification-sidebar"
-import Image from "next/image"
+import { Header } from "../../components/header"
 
 export default function DashboardContainer() {
-  const [notificationsOpen, setNotificationsOpen] = useState(false)
+      const [notificationsOpen, setNotificationsOpen] = useState(false)
 
   return (
     <div className="flex min-h-screen flex-col">
       {/* Header */}
-       <header className="flex h-16 items-center justify-between  bg-background px-4 md:px-6 py-10">
-        <div className="flex-1"></div>
-        <div className="relative w-full max-w-2xl">
-          <Image src={'/svgs/search.svg'} alt="" className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" height={20} width={20}/>
-          <Input
-            type="search"
-            placeholder="Search Dashboard"
-            className="w-full border-gray-200 pl-9 pr-4 py-1 rounded-md h-14"
-          />
-        </div>
-        <div className="flex items-center gap-4 ml-4 flex-1 justify-end">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="border relative"
-            onClick={() => setNotificationsOpen(true)}
-          >
-            <Image src={'/svgs/noti.svg'} alt="" height={25} width={25}  />
-         
-          </Button>
-          <Button variant="ghost" size="icon" className="border">
-          <Image src={'/svgs/brightness.svg'} alt="" height={25} width={25} />
-          </Button>
-          <div className=" overflow-hidden rounded-full cursor-pointer">
-            <Image src={'/svgs/ellipse.svg'}  alt="User avatar"  height={25} width={25} className="h-full w-full object-cover" />
-          </div>
-        </div>
-      </header>
-
+      <Header setNotificationsOpen={setNotificationsOpen} />
       <main className="flex-1 p-4 md:p-6 ">
         <div className="mb-6">
           <h1 className="text-4xl font-bold text-[#7B57E0]">Automotive Dashboard</h1>
