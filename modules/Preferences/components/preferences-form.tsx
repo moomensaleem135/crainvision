@@ -24,7 +24,7 @@ import CameraImage from "@/public/assests/tsx/cameraIcon";
 import UserIcon from "@/public/assests/tsx/userIcon";
 import EmailIcon from "@/public/assests/tsx/emailIcon";
 import AvatarIcon from "@/public/assests/tsx/avatar";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import RightArrowIcon from "@/public/assests/tsx/rightArrowIcon";
 
 interface PreferencesFormProps {
@@ -35,12 +35,15 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
   const { setTheme, theme } = useTheme();
   const { toast } = useToast();
   const router = useRouter();
+   const pathname = usePathname();
   const [isSaving, setIsSaving] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [tempTheme, setTempTheme] = useState<string>("system");
-  const [selectedDashboard, setSelectedDashboard] = useState("automative")
+  const [selectedDashboard, setSelectedDashboard] = useState("automotive")
   const [hasChanges, setHasChanges] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
+  const [userData, setUserData] = useState<{ full_name?: string; email?: string }>({});
+
   // Initialize theme when component mounts
   useEffect(() => {
     // Use the current theme or system preference
@@ -88,16 +91,53 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
     }
   };
 
-  const handleThemeChange = (value: string) => {
-    setTempTheme(value)
-    setTheme(value)
-    setHasChanges(true)
-  }
+ const handleThemeChange = (value: string) => {
+  setTempTheme(value);
+  setTheme(value);
+  localStorage.setItem("theme", value);  // Save immediately
+  setHasChanges(true);
+};
 
   const handleDashboardChange = (value: string) => {
-    setSelectedDashboard(value)
-    setHasChanges(true)
+    if(value != ''){
+      setSelectedDashboard(value);
+      localStorage.setItem("selectedDashboard", value); // Save immediately
+      setHasChanges(true);
+    }
+};
+
+ useEffect(() => {
+  if (pathname === "/dashboard/preferences") {
+    const storedTheme = localStorage.getItem("theme");
+    const storedDashboard = localStorage.getItem("selectedDashboard");
+
+    if (storedTheme) {
+      setTempTheme(storedTheme);
+      setTheme(storedTheme);
+    }
+    if (storedDashboard) {
+      setSelectedDashboard(storedDashboard);
+    } else {
+      // If nothing in localStorage, fallback to default
+      setSelectedDashboard("automotive");
+    }
+  } else {
+    const currentTheme = theme || "system";
+    setTempTheme(currentTheme);
   }
+}, [pathname, setTheme, theme]);
+
+useEffect(() => {
+  const storedUserData = localStorage.getItem("userData");
+  if (storedUserData) {
+    try {
+      setUserData(JSON.parse(storedUserData));
+    } catch {
+      // ignore JSON parse errors
+    }
+  }
+}, []);
+
 
   return (
     <form onSubmit={handleSubmit} className="flex-1 p-4 md:p-6">
@@ -145,6 +185,7 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
                       defaultValue="Daphne Smith"
                       disabled={isSaving}
                       className="pl-14 py-6"
+                      value={userData?.full_name || ""}
                     />
                   </div>
                 </div>
@@ -160,6 +201,7 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
                       defaultValue="daphnesmith@gmail.com"
                       disabled={isSaving}
                       className="pl-14 py-6"
+                       value={userData?.email || ""}
                     />
                   </div>
                 </div>
@@ -265,7 +307,7 @@ export function PreferencesForm({ comeFrom }: PreferencesFormProps) {
                       <SelectValue placeholder="Select a dashboard" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="automative">Automative</SelectItem>
+                      <SelectItem value="automotive">Automative</SelectItem>
                       <SelectItem value="inventory">Inventory</SelectItem>
                       <SelectItem value="service">Services</SelectItem>
                     </SelectContent>

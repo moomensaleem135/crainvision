@@ -1,13 +1,13 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { Button } from "@/components/ui/button"
 import Image from "next/image"
 import { LogOut, Settings, SlidersHorizontal } from "lucide-react"
 
 interface UserProfileDropdownProps {
-  userName?: string
+  name?: string
   userEmail?: string
   userAvatar?: string
   onLogout?: () => void
@@ -16,14 +16,30 @@ interface UserProfileDropdownProps {
 }
 
 export function UserProfileDropdown({
-  userName = "Daphne Smith",
-  userEmail = "daphnesmith@gmail.com",
+  name: initialUserName = "Daphne Smith",
+  userEmail: initialUserEmail = "daphnesmith@gmail.com",
   userAvatar = "/svgs/ellipse.svg",
   onLogout = () => console.log("Logout clicked"),
   onProfileClick = () => console.log("Profile clicked"),
   onPreferenceClick = () => console.log("Preference clicked"),
 }: UserProfileDropdownProps) {
   const [open, setOpen] = useState(false)
+
+  const [userName, setUserName] = useState(initialUserName)
+  const [userEmail, setUserEmail] = useState(initialUserEmail)
+
+  useEffect(() => {
+    const storedUserData = localStorage.getItem("userData")
+    if (storedUserData) {
+      try {
+        const parsed = JSON.parse(storedUserData)
+        if (parsed.full_name) setUserName(parsed.full_name)
+        if (parsed.email) setUserEmail(parsed.email)
+      } catch {
+        // ignore JSON parse errors
+      }
+    }
+  }, [])
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
