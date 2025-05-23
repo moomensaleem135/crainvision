@@ -22,6 +22,7 @@ import TrolleyIcon from "@/public/assests/tsx/trolleyIcon";
 import BlackUserIcon from "@/public/assests/tsx/blackUserIcon";
 import FilterIcon from "@/public/assests/tsx/filterIcon";
 import SettingIcon from "@/public/assests/tsx/settingIcon";
+import LogoutIcon from "@/public/assests/tsx/logoutIcon";
 
 interface NavItem {
   title: string;
@@ -208,13 +209,7 @@ export function DashboardSidebar({
                   href="/logout"
                   className="flex items-center justify-center rounded-md py-2 text-sm font-medium text-[#FF3B30] hover:bg-gray-100 px-2"
                 >
-                  <Image
-                    src="/svgs/log-out.svg"
-                    alt="Logout"
-                    height={15}
-                    width={15}
-                    className="h-4 w-4"
-                  />
+                  <LogoutIcon />
                 </Link>
               </TooltipTrigger>
               <TooltipContent
@@ -229,13 +224,7 @@ export function DashboardSidebar({
               href="/logout"
               className="flex items-center rounded-md py-2 text-sm font-medium text-[#FF3B30] hover:bg-gray-100 px-3"
             >
-              <Image
-                src="/svgs/log-out.svg"
-                alt="Logout"
-                height={15}
-                width={15}
-                className="h-4 w-4 mr-2"
-              />
+              <LogoutIcon className="mr-2" />
               Logout Account
             </Link>
           )}

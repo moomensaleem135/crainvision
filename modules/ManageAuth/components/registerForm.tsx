@@ -1,14 +1,13 @@
 "use client";
 
-import type React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import PasswordStrengthBar from "react-password-strength-bar";
 import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
+
 export function RegisterForm({
   userData,
   handleApiCall,
@@ -22,22 +21,13 @@ export function RegisterForm({
   const [password, setPassword] = useState("");
   const [_passwordScore, setPasswordScore] = useState(0);
   const router = useRouter();
-  const { toast } = useToast();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     const { password, ...userDataWithoutPassword } = userData;
     localStorage.setItem("userData", JSON.stringify(userDataWithoutPassword));
-    setTimeout(() => {
-      setIsLoading(false);
-      toast({
-        title: "Registration successful",
-        description: "Welcome to CrainVision",
-      });
-
-      router.push("/preferences");
-    }, 1500);
+    router.push("/preferences");
   };
 
   const [showPassword, setShowPassword] = useState(false);
@@ -49,7 +39,6 @@ export function RegisterForm({
   return (
     <div className="flex-1 flex flex-col p-8 md:p-12 lg:p-16 justify-center h-[100vh]">
       <div className="max-w-xl mx-auto w-full">
-        {/* Logo */}
         <div className="mb-16">
           <Image
             src="/svgs/logo.svg"

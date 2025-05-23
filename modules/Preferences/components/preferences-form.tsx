@@ -77,14 +77,7 @@ export function PreferencesForm({
       localStorage.setItem("selectedDashboard", selectedDashboard);
       setTheme(tempTheme);
 
-      setTimeout(() => {
-        setIsLoading(false);
-        toast({
-          title: "Preferences updated",
-          description: "Your preferences have been saved successfully",
-        });
-        router.push("/dashboard");
-      }, 1500);
+      router.push("/dashboard");
     } catch (error) {
       setIsLoading(false);
       toast({
