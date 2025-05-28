@@ -151,7 +151,7 @@ export function PreferencesForm({
         <h1 className="text-2xl font-bold tracking-tight text-[#7B57E0]">
           {title}
         </h1>
-        <p className="text-muted-foreground">{description}</p>
+        <p className="text-foreground">{description}</p>
       </div>
       <Card className="overflow-hidden rounded-tl-none rounded-tr-none">
         <CardContent className="p-6 ">
@@ -351,7 +351,7 @@ export function PreferencesForm({
                       <Label htmlFor="push-notifications">
                         Enable Notifications
                       </Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm font-regular text-foreground">
                         Receive notifications about updates and alerts
                       </p>
                     </div>
@@ -368,7 +368,7 @@ export function PreferencesForm({
                       <Label htmlFor="email-notifications">
                         Email Notifications
                       </Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm font-regular text-foreground">
                         Get email to find out what's going on when you're not
                         online.
                       </p>
@@ -387,7 +387,7 @@ export function PreferencesForm({
         </CardContent>
 
         {/* Divider */}
-        <div className="border-t border-gray-200"></div>
+        <div className="border-t border-border"></div>
 
         {/* Button area */}
         <div
