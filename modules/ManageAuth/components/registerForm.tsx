@@ -155,7 +155,7 @@ export function RegisterForm({
         </form>
 
         <div className="mt-4 text-center">
-          <p className="text-sm text-black">
+          <p className="text-sm text-foreground">
             Already have an account?{" "}
             <Link
               href="/dashboard"
