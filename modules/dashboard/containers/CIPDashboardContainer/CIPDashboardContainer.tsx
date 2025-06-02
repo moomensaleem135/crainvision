@@ -66,6 +66,193 @@ import { CustomerDetailsDrawer } from "../../components/customer-details-drawer"
 // }
 // ]
 
+const mockCustomerDetails = {
+  deals: [
+    {
+      additionalInfo: {
+        accountNumber: "258157",
+        controlNumber: "258157",
+        dealDate: "2025-05-10",
+        dealNumber: "258157",
+        dealUrl: "Deal Info",
+        postingDate: null,
+        store: "Hyundai LR",
+        referenceNumber: "C",
+        bank: "CASH DEAL",
+        reynoldsRemarks: "JAMES HOWARD",
+        addNote: null,
+        amount: 0.0,
+        dealInfo: {
+          dealNumber: "258157",
+          status: "C",
+          date: "2025-05-10",
+          type: "USED",
+          category: null,
+          incentive: 0.0,
+          salePrice: 0.0,
+          cost: 2971.5,
+          frontend: -3202.27,
+          backend: 100.0,
+          totalGross: -3102.27
+        },
+        vehicleInfo: {
+          stockNumber: "5CT0825A",
+          newOrUsed: "USED",
+          vin: "",
+          year: 2014,
+          model: "ESCAPE",
+          salesPrice: 0.0,
+          daysOnLot: 0
+        },
+        customerInfo: {
+          customerNumber: "61961",
+          customerName: "JAMES HOWARD",
+          address: "",
+          address2: "",
+          city: "",
+          state: "",
+          zip: "",
+          personalPhone: "",
+          cellPhone: "",
+          business: "",
+          email: ""
+        },
+        salesTeam: {
+          salesPerson1: "JAMES HOWARD",
+          salesPerson2: "",
+          desk: "",
+          fandI: ""
+        },
+        bankInfo: {
+          bank: "CASH DEAL",
+          lienholder: "",
+          amount: 0.0,
+          buyRate: 0.0,
+          apr: 0.0,
+          cashDown: 10929.0,
+          term: 0
+        },
+        tradeInfo: {
+          trade1StockNumber: "",
+          trade1Value: 0.0,
+          trade2StockNumber: "",
+          trade2Value: 0.0,
+          trade3StockNumber: "",
+          trade3Value: 0.0
+        },
+        fandIProducts: {
+          finance: 0.0,
+          gap: 0.0,
+          vsc: 0.0,
+          maintenance: 0.0,
+          riftWarranty: 360.0,
+          etch: 0.0
+        }
+      }
+    },
+    {
+      additionalInfo: {
+        accountNumber: "258158",
+        controlNumber: "258158",
+        dealDate: "2025-05-11",
+        dealNumber: "258158",
+        dealUrl: "Deal Info",
+        postingDate: null,
+        store: "Hyundai LR",
+        referenceNumber: "C",
+        bank: "CASH DEAL",
+        reynoldsRemarks: "ANOTHER CUSTOMER",
+        addNote: null,
+        amount: 0.0,
+        dealInfo: {
+          dealNumber: "258157",
+          status: "C",
+          date: "2025-05-10",
+          type: "USED",
+          category: null,
+          incentive: 0.0,
+          salePrice: 0.0,
+          cost: 2971.5,
+          frontend: -3202.27,
+          backend: 100.0,
+          totalGross: -3102.27
+        },
+        vehicleInfo: {
+          stockNumber: "5CT0825A",
+          newOrUsed: "USED",
+          vin: "",
+          year: 2014,
+          model: "ESCAPE",
+          salesPrice: 0.0,
+          daysOnLot: 0
+        },
+        customerInfo: {
+          customerNumber: "61961",
+          customerName: "JAMES HOWARD",
+          address: "",
+          address2: "",
+          city: "",
+          state: "",
+          zip: "",
+          personalPhone: "",
+          cellPhone: "",
+          business: "",
+          email: ""
+        },
+        salesTeam: {
+          salesPerson1: "JAMES HOWARD",
+          salesPerson2: "",
+          desk: "",
+          fandI: ""
+        },
+        bankInfo: {
+          bank: "CASH DEAL",
+          lienholder: "",
+          amount: 0.0,
+          buyRate: 0.0,
+          apr: 0.0,
+          cashDown: 10929.0,
+          term: 0
+        },
+        tradeInfo: {
+          trade1StockNumber: "",
+          trade1Value: 0.0,
+          trade2StockNumber: "",
+          trade2Value: 0.0,
+          trade3StockNumber: "",
+          trade3Value: 0.0
+        },
+        fandIProducts: {
+          finance: 0.0,
+          gap: 0.0,
+          vsc: 0.0,
+          maintenance: 0.0,
+          riftWarranty: 360.0,
+          etch: 0.0
+        }
+      }
+    }
+  ],
+  notes: [
+    {
+      noteText: "First note for deal 258157",
+      noteDate: "2025-05-10",
+      noteAuthor: "John Doe"
+    },
+    {
+      noteText: "Second note for deal 258157",
+      noteDate: "2025-05-10",
+      noteAuthor: "Jane Smith"
+    },
+    {
+      noteText: "Note for deal 258158",
+      noteDate: "2025-05-11",
+      noteAuthor: "Bob Johnson"
+    }
+  ]
+};
+
+
 export default function CIPDashboardContainer() {
   const [customers, setCustomers] = useState<Customer[]>([])
   const [loading, setLoading] = useState(false)
@@ -128,14 +315,14 @@ export default function CIPDashboardContainer() {
 
   const fetchCustomerDetails = async (customerNumber: string) => {
     try {
-      setCustomerDetailsLoading(true)
-      const response = await axios.get(`/api/cip/customers/${customerNumber}`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        timeout: 10000,
-      })
-      setCustomerDetails(response.data)
+      // setCustomerDetailsLoading(true)
+      // const response = await axios.get(`/api/cip/customers/${customerNumber}`, {
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   timeout: 10000,
+      // })
+      setCustomerDetails(mockCustomerDetails)
     } catch (err: any) {
       console.error("Failed to fetch customer details:", err)
       setCustomerDetails(null)
