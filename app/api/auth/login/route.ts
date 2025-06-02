@@ -6,7 +6,6 @@ export async function POST(request: NextRequest) {
     const body = await request.json()
     const { email, password } = body
 
-    // Make request to your backend
     const apiUrl = process.env.NEXT_PUBLIC_API_URL
     const response = await fetch(`${apiUrl}auth/login`, {
       method: "POST",
@@ -23,31 +22,27 @@ export async function POST(request: NextRequest) {
 
     const data = await response.json()
 
-    // Extract JWT from backend response or Set-Cookie header
     const setCookieHeader = response.headers.get("set-cookie")
     let jwtToken = null
 
     if (setCookieHeader) {
-      // Parse the JWT from Set-Cookie header
       const jwtMatch = setCookieHeader.match(/jwt=([^;]+)/)
       if (jwtMatch) {
         jwtToken = jwtMatch[1]
       }
     }
 
-    // If JWT is in response body, use that instead
     if (data.token) {
       jwtToken = data.token
     }
 
     if (jwtToken) {
-      // Set the cookie in Next.js (Set cookie on server-side)
       const cookieStore = await cookies()
       cookieStore.set("jwt", jwtToken, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 7, // 7 days
+        maxAge: 60 * 60 * 24 * 7, 
         path: "/",
       })
     }

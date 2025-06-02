@@ -7,64 +7,64 @@ import { customerColumns, type Customer } from "../../components/customer-table-
 import { GroupedTable } from "../../components/reusable-grouped-table"
 import { CustomerDetailsDrawer } from "../../components/customer-details-drawer"
 
-const mockCustomers=[
-  {
-    "customerNumber": "258157",
-    "customerName": "JAMES HOWARD",
-    "notes": "-",
-    "dealerName": "Hyundai LR",
-    "age": 22,
-    "count": 1,
-    "amount": 0.0,
-    "days1To7": 7,
-    "days8To14": 0.0,
-    "days15Plus": 0.0,
-    "bankName": "CASH DEAL",
-    "dealDate": "2025-05-10"
-},
-{
-  "customerNumber": "258157",
-  "customerName": "Jahanzaib Islam",
-  "notes": "-",
-  "dealerName": "Hyundai LR",
-  "age": 28,
-  "count": 1,
-  "amount": 10,
-  "days1To7": 150,
-  "days8To14": 0.0,
-  "days15Plus": 0.0,
-  "bankName": "CASH DEAL",
-  "dealDate": "2025-05-10"
-},
-{
-    "customerNumber": "269102",
-    "customerName": "BRETT PARKER",
-    "notes": "-",
-    "dealerName": "Hyundai Fayetteville",
-    "age": 16,
-    "count": 1,
-    "amount": 10991.39,
-    "days1To7": 0.0,
-    "days8To14": 0.0,
-    "days15Plus": 10991.39,
-    "bankName": "CAPITAL ONE",
-    "dealDate": "2025-05-16"
-},
-{
-    "customerNumber": "275295",
-    "customerName": "JASON PEARSON",
-    "notes": "-",
-    "dealerName": "Ford LR",
-    "age": -13,
-    "count": 1,
-    "amount": 2498.5,
-    "days1To7": 2498.5,
-    "days8To14": 0.0,
-    "days15Plus": 0.0,
-    "bankName": "CASH DEAL",
-    "dealDate": "2025-06-15"
-}
-]
+// const mockCustomers=[
+//   {
+//     "customerNumber": "258157",
+//     "customerName": "JAMES HOWARD",
+//     "notes": "-",
+//     "dealerName": "Hyundai LR",
+//     "age": 22,
+//     "count": 1,
+//     "amount": 0.0,
+//     "days1To7": 7,
+//     "days8To14": 0.0,
+//     "days15Plus": 0.0,
+//     "bankName": "CASH DEAL",
+//     "dealDate": "2025-05-10"
+// },
+// {
+//   "customerNumber": "258157",
+//   "customerName": "Jahanzaib Islam",
+//   "notes": "-",
+//   "dealerName": "Hyundai LR",
+//   "age": 28,
+//   "count": 1,
+//   "amount": 10,
+//   "days1To7": 150,
+//   "days8To14": 0.0,
+//   "days15Plus": 0.0,
+//   "bankName": "CASH DEAL",
+//   "dealDate": "2025-05-10"
+// },
+// {
+//     "customerNumber": "269102",
+//     "customerName": "BRETT PARKER",
+//     "notes": "-",
+//     "dealerName": "Hyundai Fayetteville",
+//     "age": 16,
+//     "count": 1,
+//     "amount": 10991.39,
+//     "days1To7": 0.0,
+//     "days8To14": 0.0,
+//     "days15Plus": 10991.39,
+//     "bankName": "CAPITAL ONE",
+//     "dealDate": "2025-05-16"
+// },
+// {
+//     "customerNumber": "275295",
+//     "customerName": "JASON PEARSON",
+//     "notes": "-",
+//     "dealerName": "Ford LR",
+//     "age": -13,
+//     "count": 1,
+//     "amount": 2498.5,
+//     "days1To7": 2498.5,
+//     "days8To14": 0.0,
+//     "days15Plus": 0.0,
+//     "bankName": "CASH DEAL",
+//     "dealDate": "2025-06-15"
+// }
+// ]
 
 export default function CIPDashboardContainer() {
   const [customers, setCustomers] = useState<Customer[]>([])
@@ -76,59 +76,55 @@ export default function CIPDashboardContainer() {
   const [customerDetails, setCustomerDetails] = useState<any>(null)
   const [customerDetailsLoading, setCustomerDetailsLoading] = useState(false)
 
-  // useEffect(() => {
-  //   const fetchCustomers = async () => {
-  //     try {
-  //       setLoading(true)
-  //       setError(null)
+  useEffect(() => {
+    const fetchCustomers = async () => {
+      try {
+        setLoading(true)
+        setError(null)
 
-  //       // Simple call to our Next.js API route - no need for tokens here!
-  //       // The API route will handle authentication via cookies
-  //       const response = await axios.get("/api/cip/customers", {
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         timeout: 10000,
-  //       })
+        const response = await axios.get("/api/cip/customers", {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          timeout: 10000,
+        })
 
-  //       console.log("API Response:", response.data)
+        console.log("API Response:", response.data)
 
-  //       if (response.data && response.data.customers && Array.isArray(response.data.customers)) {
-  //         console.log("Found customers:", response.data.customers.length)
-  //         setCustomers(response.data.customers)
-  //       } else {
-  //         console.error("Unexpected response format:", response.data)
-  //         throw new Error(`Invalid response format. Expected {customers: []}, got: ${JSON.stringify(response.data)}`)
-  //       }
-  //     } catch (err: any) {
-  //       console.error("Full error object:", err)
+        if (response.data && response.data.customers && Array.isArray(response.data.customers)) {
+          console.log("Found customers:", response.data.customers.length)
+          setCustomers(response.data.customers)
+        } else {
+          console.error("Unexpected response format:", response.data)
+          throw new Error(`Invalid response format. Expected {customers: []}, got: ${JSON.stringify(response.data)}`)
+        }
+      } catch (err: any) {
+        console.error("Full error object:", err)
 
-  //       if (err.response) {
-  //         if (err.response.status === 401) {
-  //           setError("Authentication failed. Please log in again.")
-  //           // Optionally redirect to login
-  //           // window.location.href = "/login"
-  //         } else if (err.response.status === 404) {
-  //           setError("API endpoint not found.")
-  //         } else if (err.response.status >= 500) {
-  //           setError("Server error. Please try again later.")
-  //         } else {
-  //           setError(`Request failed: ${err.response?.data?.message || err.message}`)
-  //         }
-  //       } else if (err.request) {
-  //         setError("No response from server. Please check your connection.")
-  //       } else if (err.code === "ECONNABORTED") {
-  //         setError("Request timed out. Please try again.")
-  //       } else {
-  //         setError(`Request failed: ${err.message}`)
-  //       }
-  //     } finally {
-  //       setLoading(false)
-  //     }
-  //   }
+        if (err.response) {
+          if (err.response.status === 401) {
+            setError("Authentication failed. Please log in again.")
+          } else if (err.response.status === 404) {
+            setError("API endpoint not found.")
+          } else if (err.response.status >= 500) {
+            setError("Server error. Please try again later.")
+          } else {
+            setError(`Request failed: ${err.response?.data?.message || err.message}`)
+          }
+        } else if (err.request) {
+          setError("No response from server. Please check your connection.")
+        } else if (err.code === "ECONNABORTED") {
+          setError("Request timed out. Please try again.")
+        } else {
+          setError(`Request failed: ${err.message}`)
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
 
-  //   fetchCustomers()
-  // }, [])
+    fetchCustomers()
+  }, [])
 
   const fetchCustomerDetails = async (customerNumber: string) => {
     try {
@@ -171,12 +167,10 @@ export default function CIPDashboardContainer() {
     window.location.reload()
   }
 
-  // Calculate stats from actual customers data
-  const totalAmount = customers.reduce((sum, customer) => sum + customer.amount, 0)
-  const totalDays1To7 = customers.reduce((sum, customer) => sum + customer.days1To7, 0)
-  const totalDays8To14 = customers.reduce((sum, customer) => sum + customer.days8To14, 0)
-  const totalDays15Plus = customers.reduce((sum, customer) => sum + customer.days15Plus, 0)
-console.log({drawerOpen});
+  // const totalAmount = customers.reduce((sum, customer) => sum + customer.amount, 0)
+  // const totalDays1To7 = customers.reduce((sum, customer) => sum + customer.days1To7, 0)
+  // const totalDays8To14 = customers.reduce((sum, customer) => sum + customer.days8To14, 0)
+  // const totalDays15Plus = customers.reduce((sum, customer) => sum + customer.days15Plus, 0)
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -188,7 +182,7 @@ console.log({drawerOpen});
           </p>
         </div>
 
-        <div className="mb-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+        {/* <div className="mb-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <StatCard
             title="Total Customers"
             value={customers.length.toString()}
@@ -229,7 +223,7 @@ console.log({drawerOpen});
             height={35}
             width={35}
           />
-        </div>
+        </div> */}
 
         <div className="mb-4">
           <h2 className="text-xl font-bold text-brand">Customer Information</h2>
@@ -252,10 +246,10 @@ console.log({drawerOpen});
               Retry
             </button>
           </div>
-        ) : mockCustomers.length === 0 ? (
+        ) : customers.length === 0 ? (
           <div className="text-center p-8 text-muted-foreground">No customer data available</div>
         ) : (
-          <GroupedTable data={mockCustomers} columns={customerColumns} groupBy="dealerName" onRowClick={handleRowClick} />
+          <GroupedTable data={customers} columns={customerColumns} groupBy="dealerName" onRowClick={handleRowClick} />
         )}
         <CustomerDetailsDrawer
           isOpen={drawerOpen}

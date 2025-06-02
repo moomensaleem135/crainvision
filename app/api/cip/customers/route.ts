@@ -3,7 +3,6 @@ import { cookies } from "next/headers"
 
 export async function GET(request: NextRequest) {
   try {
-    // Get JWT from httpOnly cookie (add await here!)
     const cookieStore = await cookies()
     const jwtToken = cookieStore.get("jwt")?.value
 
@@ -11,7 +10,6 @@ export async function GET(request: NextRequest) {
       return NextResponse.json({ error: "Authentication required" }, { status: 401 })
     }
 
-    // Make request to your backend with the JWT
     const apiUrl = process.env.NEXT_PUBLIC_API_URL
     const response = await fetch(`${apiUrl}dealership/cit-report`, {
       method: "GET",

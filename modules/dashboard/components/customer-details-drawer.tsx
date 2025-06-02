@@ -44,17 +44,13 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
 
   return (
     <>
-      {/* Backdrop */}
       <div className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300" onClick={onClose} />
-
-      {/* Drawer */}
       <div
         className={`fixed left-0 top-0 h-full w-[800px] bg-background shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
         <div className="flex flex-col h-full">
-          {/* Header */}
           <div className="flex items-center justify-between p-6 border-b">
             <div>
               <h2 className="text-2xl font-bold text-brand">Customer Details</h2>
@@ -68,8 +64,6 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
               <X className="h-6 w-6" />
             </Button>
           </div>
-
-          {/* Content */}
           <div className="flex-1 overflow-y-auto p-6 space-y-6">
             {loading ? (
               <div className="flex justify-center items-center h-64">

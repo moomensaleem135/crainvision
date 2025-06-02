@@ -3,7 +3,6 @@ import { cookies } from "next/headers"
 
 export async function GET(request: NextRequest, { params }: { params: { customerNumber: string } }) {
   try {
-    // Get JWT from httpOnly cookie
     const cookieStore = await cookies()
     const jwtToken = cookieStore.get("jwt")?.value
 
@@ -13,7 +12,6 @@ export async function GET(request: NextRequest, { params }: { params: { customer
 
     const { customerNumber } = params
 
-    // Make request to your backend for customer details
     const apiUrl = process.env.NEXT_PUBLIC_API_URL
     const response = await fetch(`${apiUrl}customer/${customerNumber}/details`, {
       method: "GET",
@@ -23,7 +21,6 @@ export async function GET(request: NextRequest, { params }: { params: { customer
         "ngrok-skip-browser-warning": "true",
       },
     })
-   console.log({response});
    
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}))
