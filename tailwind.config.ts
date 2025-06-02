@@ -29,6 +29,7 @@ const config = {
         brand: {
           DEFAULT: "hsl(var(--brand))",
           muted:"hsl(var(--brand-muted))",
+          placeholder:"hsl(var(--brand-placeholder))",
         },
         primary: {
           DEFAULT: "hsl(var(--primary))",

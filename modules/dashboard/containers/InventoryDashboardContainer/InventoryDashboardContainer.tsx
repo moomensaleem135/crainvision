@@ -9,7 +9,7 @@ export default function InventoryDashboardContainer() {
   return (
     <main className="flex-1 p-4 md:p-6 max-w-full">
       <div className="mb-6">
-        <h1 className="text-xl md:text-2xl font-bold text-purple-600">
+        <h1 className="text-xl md:text-2xl font-bold text-brand">
           Inventory Management Dashboard
         </h1>
         <p className="text-sm text-muted-foreground">

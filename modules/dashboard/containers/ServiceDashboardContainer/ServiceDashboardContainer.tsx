@@ -9,7 +9,7 @@ export default function ServiceDashboardContainer() {
   return (
     <main className="flex-1 p-4 md:p-6 overflow-hidden">
       <div className="mb-6">
-        <h1 className="text-xl md:text-2xl font-bold text-purple-600">
+        <h1 className="text-xl md:text-2xl font-bold text-brand">
           Service Department Dashboard
         </h1>
         <p className="text-sm text-muted-foreground">
@@ -24,8 +24,8 @@ export default function ServiceDashboardContainer() {
           icon={Calendar}
           percentChange={1}
           previousPeriod="yesterday"
-          iconColor="text-purple-500"
-          valueColor="text-purple-600"
+          iconColor="text-brand"
+          valueColor="text-brand"
           trend="up"
         />
         <ServiceStatCard
@@ -34,8 +34,8 @@ export default function ServiceDashboardContainer() {
           icon={DollarSign}
           percentChange={15.2}
           previousPeriod="Previous month"
-          iconColor="text-purple-500"
-          valueColor="text-purple-600"
+          iconColor="text-brand"
+          valueColor="text-brand"
           trend="up"
         />
         <ServiceStatCard
@@ -44,8 +44,8 @@ export default function ServiceDashboardContainer() {
           icon={Clock}
           percentChange={2}
           previousPeriod="last month"
-          iconColor="text-purple-500"
-          valueColor="text-purple-600"
+          iconColor="text-brand"
+          valueColor="text-brand"
           trend="down"
         />
         <ServiceStatCard
@@ -54,8 +54,8 @@ export default function ServiceDashboardContainer() {
           icon={Star}
           percentChange={1}
           previousPeriod="Previous month"
-          iconColor="text-purple-500"
-          valueColor="text-purple-600"
+          iconColor="text-brand"
+          valueColor="text-brand"
           trend="up"
         />
       </div>

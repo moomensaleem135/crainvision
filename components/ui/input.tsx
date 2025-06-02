@@ -34,7 +34,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         defaultValue={!isControlled ? defaultValue : undefined}
         onChange={handleChange}
         className={cn(
-          "flex h-[64px] w-full rounded-lg border border-[#DCDCDD] bg-white px-3 py-2 text-base shadow-sm ring-offset-background placeholder:text-[#C0C0C0] focus-visible:outline-none focus-visible:border-crain-purple focus-visible:ring-1 focus-visible:ring-crain-purple focus:bg-[#F4F0FF] disabled:cursor-not-allowed disabled:opacity-50",
+          "flex h-[64px] w-full rounded-lg border border-[#DCDCDD] px-3 py-2 text-base shadow-sm ring-offset-background placeholder:text-placeholder focus-visible:outline-none focus-visible:border-brand focus-visible:ring-1 focus-visible:ring-crain-purple focus:bg-brand-muted disabled:cursor-not-allowed disabled:opacity-50",
           className
         )}
         {...props}

@@ -5,6 +5,7 @@ import { StatCard } from "../../components/stat-card";
 import { DashboardCard } from "../../components/dashboard-card";
 import InventoryDashboardContainer from "../InventoryDashboardContainer/InventoryDashboardContainer";
 import ServiceDashboardContainer from "../ServiceDashboardContainer/ServiceDashboardContainer";
+import CIPDashboardContainer from "../CIPDashboardContainer/CIPDashboardContainer";
 
 export default function DashboardContainer() {
   const [selectedDashboard, setSelectedDashboard] = useState("automative");
@@ -22,12 +23,14 @@ export default function DashboardContainer() {
         return <InventoryDashboardContainer />;
       case "service":
         return <ServiceDashboardContainer />;
+        case "cip":
+        return <CIPDashboardContainer />;
       default:
         return (
           <div className="flex min-h-screen flex-col">
             <main className="flex-1 p-4 md:p-6 ">
               <div className="mb-6">
-                <h1 className="text-4xl font-bold text-[#7B57E0]">
+                <h1 className="text-4xl font-bold text-brand">
                   Automotive Dashboard
                 </h1>
                 <p className="text-base text-muted-foreground ">
@@ -42,7 +45,7 @@ export default function DashboardContainer() {
                   icon={"/svgs/car.svg"}
                   percentChange={14}
                   previousPeriod="Previous month"
-                  valueColor="text-[#7B57E0]"
+                  valueColor="text-brand"
                   height={40}
                   width={40}
                 />
@@ -52,7 +55,7 @@ export default function DashboardContainer() {
                   icon={"/svgs/service.svg"}
                   percentChange={15.2}
                   previousPeriod="Previous month"
-                  valueColor="text-[#7B57E0]"
+                  valueColor="text-brand"
                   height={28}
                   width={28}
                 />
@@ -62,7 +65,7 @@ export default function DashboardContainer() {
                   icon={"/svgs/gross.svg"}
                   percentChange={-2.5}
                   previousPeriod="Previous month"
-                  valueColor="text-[#7B57E0]"
+                  valueColor="text-brand"
                   height={30}
                   width={30}
                 />
@@ -72,7 +75,7 @@ export default function DashboardContainer() {
                   icon={"/svgs/satisfaction.svg"}
                   percentChange={1.1}
                   previousPeriod="Previous month"
-                  valueColor="text-[#7B57E0]"
+                  valueColor="text-brand"
                   height={35}
                   width={35}
                 />

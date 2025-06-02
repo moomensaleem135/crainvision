@@ -1,53 +1,92 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import axios from "axios";
-import { RegisterForm } from "../../components/registerForm";
-import RightSide from "../../components/rightSide";
-import { useToast } from "@/hooks/use-toast";
+import { useState } from "react"
+import axios from "axios"
+import RightSide from "../../components/rightSide"
+import { useToast } from "@/hooks/use-toast"
+import { LoginForm } from "../../components/loginForm"
+import { useRouter } from "next/navigation"
 
 export default function AuthContainer() {
-  const { toast } = useToast();
-  const [_loading, setLoading] = useState(false);
-  const [_error, setError] = useState(null);
+  const { toast } = useToast()
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
   const [userData, setUserData] = useState({
-    full_name: "",
     email: "",
     password: "",
-  });
+  })
 
   const handleApiCall = async () => {
-    setLoading(true);
-    setError(null);
+    setLoading(true)
+    setError(null)
+
     try {
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-      if (!apiUrl) {
-        throw new Error("API URL is not defined in environment variables");
+      // Use Next.js API route instead of direct backend call
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: userData.email,
+          password: userData.password,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || "Login failed")
       }
 
-      const res = await axios.post(`${apiUrl}users/`, userData);
-      if (res) {
-        toast({
-          title: "Registration successful",
-          description: "Welcome to CrainVision",
-        });
+      // Store user email for preferences page
+      localStorage.setItem("userEmail", userData.email)
+
+      // Store any user data from response if available
+      if (data.user) {
+        localStorage.setItem("userSession", JSON.stringify(data.user))
+      }
+
+      toast({
+        title: "Login successful",
+        description: "Welcome back to CrainVision",
+      })
+
+      // Check if user has completed preferences
+      const hasCompletedPreferences = localStorage.getItem("userFullName")
+
+      // Use window.location for immediate navigation after cookie is set
+      if (hasCompletedPreferences) {
+        window.location.href = "/dashboard"
+      } else {
+        window.location.href = "/preferences"
       }
     } catch (err: any) {
-      setError(err.message || "Error occurred");
+      console.error("Login error:", err)
+
+      let errorMessage = "Login failed. Please try again."
+      if (err.message) {
+        errorMessage = err.message
+      }
+
+      setError(errorMessage)
+      toast({
+        title: "Login failed",
+        description: errorMessage,
+        variant: "destructive",
+      })
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
+
   return (
     <main className="flex min-h-screen">
       <div className="max-w-7xl flex-1 px-8">
-        <RegisterForm
-          userData={userData}
-          handleApiCall={handleApiCall}
-          setUserData={setUserData}
-        />
+        <LoginForm userData={userData} handleApiCall={handleApiCall} setUserData={setUserData} loading={loading} error={error} />
       </div>
       <RightSide />
     </main>
-  );
+  )
 }

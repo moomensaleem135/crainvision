@@ -43,10 +43,8 @@ export function PreferencesForm({
   const { toast } = useToast();
   const router = useRouter();
   const pathname = usePathname();
-  const [userData, setUserData] = useState<{
-    full_name?: string;
-    email?: string;
-  }>({});
+  const [fullName, setFullName] = useState("")
+  const [email, setEmail] = useState("")
   const [isSaving, setIsSaving] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [tempTheme, setTempTheme] = useState<string>("system");
@@ -60,11 +58,10 @@ export function PreferencesForm({
   }, [theme]);
 
   useEffect(() => {
-    const storedUserData = localStorage.getItem("userData");
-    if (storedUserData) {
-      try {
-        setUserData(JSON.parse(storedUserData));
-      } catch {}
+    // Load email from login
+    const userEmail = localStorage.getItem("userEmail")
+    if (userEmail) {
+      setEmail(userEmail)
     }
   }, []);
 
@@ -141,14 +138,17 @@ export function PreferencesForm({
     }
   }, [pathname, setTheme, theme]);
 
+  const handleFullNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFullName(e.target.value)
+  }
+
   return (
     <form onSubmit={handleSubmit} className="flex-1 p-4 md:p-6">
       <div
-        className={`flex-1 p-4 md:p-6 ${
-          comeFrom === "register" && "border-t border-l border-r rounded-tl-md rounded-tr-md"
-        }`}
+        className={`flex-1 p-4 md:p-6 ${comeFrom === "register" && "border-t border-l border-r rounded-tl-md rounded-tr-md"
+          }`}
       >
-        <h1 className="text-2xl font-bold tracking-tight text-[#7B57E0]">
+        <h1 className="text-2xl font-bold tracking-tight text-brand">
           {title}
         </h1>
         <p className="text-foreground">{description}</p>
@@ -157,7 +157,7 @@ export function PreferencesForm({
         <CardContent className="p-6 ">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="space-y-6">
-              <h2 className="text-xl font-semibold text-[#7B57E0]">
+              <h2 className="text-xl font-semibold text-brand">
                 Profile Information
               </h2>
 
@@ -206,7 +206,8 @@ export function PreferencesForm({
                       defaultValue="Daphne Smith"
                       disabled={isSaving}
                       className="pl-14 py-6 bg-background border-border"
-                      value={userData?.full_name || ""}
+                      value={fullName}
+                      onChange={handleFullNameChange}
                     />
                   </div>
                 </div>
@@ -222,7 +223,7 @@ export function PreferencesForm({
                       defaultValue="daphnesmith@gmail.com"
                       disabled={isSaving}
                       className="pl-14 py-6 bg-background border-border"
-                      value={userData?.email || ""}
+                      value={email}
                     />
                   </div>
                 </div>
@@ -246,7 +247,7 @@ export function PreferencesForm({
 
             <div className="space-y-4">
               <div className="space-y-4">
-                <h2 className="text-xl font-semibold text-[#7B57E0]">
+                <h2 className="text-xl font-semibold text-brand">
                   Appearance & Preferences
                 </h2>
 
@@ -332,16 +333,17 @@ export function PreferencesForm({
                       <SelectItem value="automotive">Automative</SelectItem>
                       <SelectItem value="inventory">Inventory</SelectItem>
                       <SelectItem value="service">Services</SelectItem>
+                      <SelectItem value="cip">CIP</SelectItem>
                     </SelectContent>
                   </Select>
-                  <p className="text-sm text-[#7B57E0]">
+                  <p className="text-sm text-brand">
                     This dashboard will be shown first when you log in.
                   </p>
                 </div>
               </div>
 
               <div className="space-y-4 mt-6">
-                <h2 className="text-xl font-semibold text-[#7B57E0]">
+                <h2 className="text-xl font-semibold text-brand">
                   Additional Settings
                 </h2>
 
@@ -368,7 +370,7 @@ export function PreferencesForm({
                       <Label htmlFor="email-notifications">
                         Email Notifications
                       </Label>
-                      <p className="text-sm font-regular text-foreground">
+                      <p className="text-sm text-muted-foreground">
                         Get email to find out what's going on when you're not
                         online.
                       </p>
@@ -391,11 +393,10 @@ export function PreferencesForm({
 
         {/* Button area */}
         <div
-          className={`${
-            comeFrom === "register"
+          className={`${comeFrom === "register"
               ? "p-6 flex justify-between w-full max-sm:flex-col max-sm:gap-4"
               : "p-6 flex justify-end"
-          }`}
+            }`}
         >
           {comeFrom === "register" && (
             <Button
@@ -408,7 +409,7 @@ export function PreferencesForm({
           )}
           <Button
             type="submit"
-            disabled={isLoading || !hasChanges}
+            disabled={isLoading || !hasChanges || fullName === ''}
             className="bg-[#7B57E0] text-white px-6 hover:bg-[#7B57E0]"
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

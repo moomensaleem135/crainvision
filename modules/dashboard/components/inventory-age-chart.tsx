@@ -24,7 +24,7 @@ export function InventoryAgeChart() {
   return (
     <Card className="col-span-full">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-purple-600">
+        <CardTitle className="text-lg font-semibold text-brand">
           Inventory Age Distribution
         </CardTitle>
         <p className="text-sm text-muted-foreground">

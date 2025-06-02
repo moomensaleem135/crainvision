@@ -120,18 +120,40 @@ export function DashboardSidebar({
         )}
       >
         <div className="flex items-center p-4 py-5">
-          {!collapsed && <LogoIcon fillColor={theme === "dark" ? "white" : "black"} />}
-          {collapsed && <CollapseLogo fillColor={theme === "dark" ? "white" : "black"} className="h-8 w-8 mx-auto" />}
+          {!collapsed && 
+          // <LogoIcon fillColor={theme === "dark" ? "white" : "black"} />
+          <Image
+          src="/crainLogo.png"
+          alt="CrainVision Logo"
+          width={240}
+          height={30}
+          priority
+          style={{ height: "30px", width: "auto" }}
+        />
+          }
+          {collapsed && 
+          // <CollapseLogo fillColor={theme === "dark" ? "white" : "black"} className="h-8 w-8 mx-auto" />
+          <div className="flex justify-center w-full">
+          <Image
+          src="/collapsedLogo.png"
+          alt="CrainVision Logo"
+          width={27}
+          height={30}
+          priority
+          style={{ height: "30px", width: "auto"}}
+          />
+          </div>
+          }
         </div>
 
         <div className="flex-1 px-3 py-2">
-          <div className="mb-2 text-xs font-medium text-[#7B57E0]">
+          <div className="mb-2 text-xs font-medium text-brand">
             {collapsed ? (
               <Tooltip>
                 <TooltipTrigger asChild>
                   <div className="text-center">Main</div>
                 </TooltipTrigger>
-                <TooltipContent side="right" className="bg-[#7B57E0] text-white border-none rounded-md py-2 px-3">
+                <TooltipContent side="right" className="bg-brand text-white border-none rounded-md py-2 px-3">
                   Main
                 </TooltipContent>
               </Tooltip>
@@ -150,7 +172,7 @@ export function DashboardSidebar({
             <div className="h-[1px] bg-gray-200"></div>
           </div>
 
-          <div className="mb-2 text-xs font-medium text-[#7B57E0]">
+          <div className="mb-2 text-xs font-medium text-brand">
             {collapsed ? (
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -206,7 +228,7 @@ export function DashboardSidebar({
               <TooltipTrigger asChild>
                 <button
                   onClick={toggleSidebar}
-                  className="mt-2 flex w-full items-center justify-center rounded-md bg-[#F4F0FF] py-3 text-sm font-medium text-[#7B57E0] px-2"
+                  className="mt-2 flex w-full items-center justify-center rounded-md bg-brand-muted py-3 text-sm font-medium text-[#7B57E0] px-2"
                 >
                   <Image src="/svgs/collapse-b.svg" alt="Expand" height={20} width={20} />
                 </button>
@@ -218,7 +240,7 @@ export function DashboardSidebar({
           ) : (
             <button
               onClick={toggleSidebar}
-              className="mt-2 flex w-full items-center rounded-md bg-[#F4F0FF] py-3 text-sm font-medium text-[#7B57E0] px-3"
+              className="mt-2 flex w-full items-center rounded-md bg-brand-muted py-3 text-sm font-medium text-brand px-3"
             >
               <Image src="/svgs/collapse-a.svg" alt="Collapse" height={20} width={20} className="mr-2" />
               Collapse Menu

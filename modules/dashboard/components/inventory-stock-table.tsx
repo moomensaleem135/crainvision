@@ -70,7 +70,7 @@ export function InventoryStockTable() {
   return (
     <Card className="col-span-full overflow-hidden">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-purple-600">
+        <CardTitle className="text-lg font-semibold text-brand">
           Current Inventory Stock
         </CardTitle>
         <p className="text-sm text-muted-foreground">

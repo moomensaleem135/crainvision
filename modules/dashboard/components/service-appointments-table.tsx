@@ -70,7 +70,7 @@ export function ServiceAppointmentsTable() {
   return (
     <Card className="col-span-full">
       <CardHeader className="pb-2">
-        <CardTitle className="text-lg font-semibold text-purple-600">
+        <CardTitle className="text-lg font-semibold text-brand">
           Today's Service Appointments
         </CardTitle>
         <p className="text-sm text-muted-foreground">

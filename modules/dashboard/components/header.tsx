@@ -44,7 +44,7 @@ export function Header({
         />
         <Input
           type="search"
-          placeholder="Search Dashboard"
+          placeholder="Search Apps"
           className="w-full border-gray-200 pl-9 pr-4 py-1 rounded-md md:h-14 h-12"
         />
       </div>
@@ -59,7 +59,7 @@ export function Header({
           <Image src={"/svgs/noti.svg"} alt="" height={25} width={25} />
           <span className="sr-only">Notifications</span>
         </Button>
-        <ThemeSwitcher />
+        {/* <ThemeSwitcher /> */}
         <UserProfileDropdown />
       </div>
     </header>
