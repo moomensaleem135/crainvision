@@ -10,12 +10,12 @@ import CIPDashboardContainer from "../CIPDashboardContainer/CIPDashboardContaine
 export default function DashboardContainer() {
   const [selectedDashboard, setSelectedDashboard] = useState("automative");
 
-  useEffect(() => {
-    const savedDashboard = localStorage.getItem("selectedDashboard");
-    if (savedDashboard) {
-      setSelectedDashboard(savedDashboard);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const savedDashboard = localStorage.getItem("selectedDashboard");
+  //   if (savedDashboard) {
+  //     setSelectedDashboard(savedDashboard);
+  //   }
+  // }, []);
 
   const renderDashboard = () => {
     switch (selectedDashboard) {

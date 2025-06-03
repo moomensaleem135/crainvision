@@ -6,6 +6,8 @@ import { StatCard } from "../../components/stat-card"
 import { customerColumns, type Customer } from "../../components/customer-table-columns"
 import { GroupedTable } from "../../components/reusable-grouped-table"
 import { CustomerDetailsDrawer } from "../../components/customer-details-drawer"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
 
 export default function CIPDashboardContainer() {
   const [customers, setCustomers] = useState<Customer[]>([])
@@ -16,7 +18,7 @@ export default function CIPDashboardContainer() {
   const [selectedCustomerNumber, setSelectedCustomerNumber] = useState<string | null>(null)
   const [customerDetails, setCustomerDetails] = useState<any>(null)
   const [customerDetailsLoading, setCustomerDetailsLoading] = useState(false)
-
+  const [accountFilter, setAccountFilter] = useState("payoff")
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
@@ -166,12 +168,32 @@ export default function CIPDashboardContainer() {
             width={35}
           />
         </div> */}
-
-        <div className="mb-4">
-          <h2 className="text-xl font-bold text-brand">Customer Information</h2>
-          <p className="text-sm text-muted-foreground text-brand">Click on a dealer row to expand and view customers</p>
+        <div className="flex justify-between items-center">
+          <div className="mb-4">
+            <h2 className="text-xl font-bold text-brand">Customer Information</h2>
+            <p className="text-sm text-muted-foreground text-brand">Click on a dealer row to expand and view customers</p>
+          </div>
+          <div className="mb-6">
+            <div className="flex items-center gap-4">
+              <div className="space-y-2">
+                <Label htmlFor="account-filter">Account Type</Label>
+                <Select value={accountFilter} onValueChange={setAccountFilter}>
+                  <SelectTrigger id="account-filter" className="w-[200px]">
+                    <SelectValue placeholder="Select account type" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">Select all</SelectItem>
+                    <SelectItem value="cit">CIT</SelectItem>
+                    <SelectItem value="cash-down">Cash Down</SelectItem>
+                    <SelectItem value="customer-deposit">Customer Deposit</SelectItem>
+                    <SelectItem value="payoff">Payoff</SelectItem>
+                    <SelectItem value="sales-tax">Sales Tax</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+          </div>
         </div>
-
         {loading ? (
           <div className="flex justify-center items-center p-8">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-brand"></div>
