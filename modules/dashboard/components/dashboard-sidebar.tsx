@@ -16,6 +16,7 @@ import BlackUserIcon from "@/public/assests/tsx/blackUserIcon"
 import FilterIcon from "@/public/assests/tsx/filterIcon"
 import SettingIcon from "@/public/assests/tsx/settingIcon"
 import LogoutIcon from "@/public/assests/tsx/logoutIcon"
+import CITIcon from "@/public/assests/tsx/citIcon"
 
 interface NavItem {
   title: string
@@ -40,8 +41,14 @@ export function DashboardSidebar({
     {
       title: "Overview",
       href: "/dashboard",
-      icon: <OverviewIcon fillColor={theme === "dark" ? "white" : "black"} />,
+      icon: <CITIcon fillColor={theme === "dark" ? "white" : "black"} />,
       isActive: pathname === "/dashboard",
+    },
+    {
+      title: "CIT Dashboard",
+      href: "/dashboard/cit",
+      icon: <OverviewIcon fillColor={theme === "dark" ? "white" : "black"} />,
+      isActive: pathname === "/dashboard/cit",
     },
     {
       title: "Inventory",

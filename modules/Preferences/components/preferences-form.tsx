@@ -48,7 +48,7 @@ export function PreferencesForm({
   const [isSaving, setIsSaving] = useState(false);
   const [profileImage, setProfileImage] = useState<string | null>(null);
   const [tempTheme, setTempTheme] = useState<string>("system");
-  const [selectedDashboard, setSelectedDashboard] = useState("automotive");
+  // const [selectedDashboard, setSelectedDashboard] = useState("automotive");
   const [hasChanges, setHasChanges] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -71,7 +71,7 @@ export function PreferencesForm({
 
     try {
       localStorage.setItem("theme", tempTheme);
-      localStorage.setItem("selectedDashboard", selectedDashboard);
+      // localStorage.setItem("selectedDashboard", selectedDashboard);
       setTheme(tempTheme);
 
       router.push("/dashboard");
@@ -100,16 +100,16 @@ export function PreferencesForm({
     setTempTheme(value);
     setTheme(value);
     localStorage.setItem("theme", value);
-    setHasChanges(true);
+    // setHasChanges(true);
   };
 
-  const handleDashboardChange = (value: string) => {
-    if (value != "") {
-      setSelectedDashboard(value);
-      localStorage.setItem("selectedDashboard", value);
-      setHasChanges(true);
-    }
-  };
+  // const handleDashboardChange = (value: string) => {
+  //   if (value != "") {
+  //     setSelectedDashboard(value);
+  //     localStorage.setItem("selectedDashboard", value);
+  //     setHasChanges(true);
+  //   }
+  // };
 
   const handleDeleteImage = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -121,17 +121,17 @@ export function PreferencesForm({
   useEffect(() => {
     if (pathname === "/dashboard/preferences") {
       const storedTheme = localStorage.getItem("theme");
-      const storedDashboard = localStorage.getItem("selectedDashboard");
+      // const storedDashboard = localStorage.getItem("selectedDashboard");
 
       if (storedTheme) {
         setTempTheme(storedTheme);
         setTheme(storedTheme);
       }
-      if (storedDashboard) {
-        setSelectedDashboard(storedDashboard);
-      } else {
-        setSelectedDashboard("automotive");
-      }
+      // if (storedDashboard) {
+      //   setSelectedDashboard(storedDashboard);
+      // } else {
+      //   setSelectedDashboard("automotive");
+      // }
     } else {
       const currentTheme = theme || "system";
       setTempTheme(currentTheme);
@@ -320,7 +320,7 @@ export function PreferencesForm({
                   </RadioGroup>
                 </div>
 
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <Label htmlFor="default-dashboard">Favorite Dashboard:</Label>
                   <Select
                     value={selectedDashboard}
@@ -333,13 +333,13 @@ export function PreferencesForm({
                       <SelectItem value="automotive">Automative</SelectItem>
                       <SelectItem value="inventory">Inventory</SelectItem>
                       <SelectItem value="service">Services</SelectItem>
-                      <SelectItem value="cip">CIP</SelectItem>
+                      <SelectItem value="cip">CIT</SelectItem>
                     </SelectContent>
                   </Select>
                   <p className="text-sm text-brand">
                     This dashboard will be shown first when you log in.
                   </p>
-                </div>
+                </div> */}
               </div>
 
               <div className="space-y-4 mt-6">
@@ -409,7 +409,7 @@ export function PreferencesForm({
           )}
           <Button
             type="submit"
-            disabled={isLoading || !hasChanges || fullName === ''}
+            disabled={isLoading || fullName === ''}
             className="bg-[#7B57E0] text-white px-6 hover:bg-[#7B57E0]"
           >
             {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
