@@ -11,14 +11,16 @@ import { Label } from "@/components/ui/label"
 
 export default function CIPDashboardContainer() {
   const [customers, setCustomers] = useState<Customer[]>([])
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [selectedCustomerNumber, setSelectedCustomerNumber] = useState<string | null>(null)
   const [customerDetails, setCustomerDetails] = useState<any>(null)
   const [customerDetailsLoading, setCustomerDetailsLoading] = useState(false)
+
   const [accountFilter, setAccountFilter] = useState("payoff")
+
   useEffect(() => {
     const fetchCustomers = async () => {
       try {
@@ -26,6 +28,9 @@ export default function CIPDashboardContainer() {
         setError(null)
 
         const response = await axios.get("/api/cip/customers", {
+          params: {
+            accountType: accountFilter === "all" ? "all" : accountFilter,
+          },
           headers: {
             "Content-Type": "application/json",
           },
@@ -67,18 +72,17 @@ export default function CIPDashboardContainer() {
     }
 
     fetchCustomers()
-  }, [])
+  }, [accountFilter])
 
   const fetchCustomerDetails = async (customerNumber: string) => {
     try {
       setCustomerDetailsLoading(true)
-      const response = await axios.get(`/api/cip/customers/${customerNumber}`, {
+      const response = await axios.get(`/api/cip/customer/${customerNumber}`, {
         headers: {
           "Content-Type": "application/json",
         },
         timeout: 10000,
       })
-      // setCustomerDetails(mockCustomerDetails)
       setCustomerDetails(response.data)
     } catch (err: any) {
       console.error("Failed to fetch customer details:", err)
@@ -88,14 +92,14 @@ export default function CIPDashboardContainer() {
     }
   }
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount)
-  }
+  // const formatCurrency = (amount: number) => {
+  //   return new Intl.NumberFormat("en-US", {
+  //     style: "currency",
+  //     currency: "USD",
+  //     minimumFractionDigits: 0,
+  //     maximumFractionDigits: 0,
+  //   }).format(amount)
+  // }
 
   const handleRowClick = (row: any) => {
     if (!row.getIsGrouped()) {
@@ -111,6 +115,7 @@ export default function CIPDashboardContainer() {
     window.location.reload()
   }
 
+  // Calculate stats from actual customers data
   // const totalAmount = customers.reduce((sum, customer) => sum + customer.amount, 0)
   // const totalDays1To7 = customers.reduce((sum, customer) => sum + customer.days1To7, 0)
   // const totalDays8To14 = customers.reduce((sum, customer) => sum + customer.days8To14, 0)
@@ -120,7 +125,7 @@ export default function CIPDashboardContainer() {
     <div className="flex min-h-screen flex-col">
       <main className="flex-1 p-4 md:p-6">
         <div className="mb-6">
-          <h1 className="text-4xl font-bold text-brand">CIT Dashboard</h1>
+          <h1 className="text-4xl font-bold text-brand">CIP Dashboard</h1>
           <p className="text-base text-muted-foreground">
             Customer Information Portal - Track and manage customer data
           </p>

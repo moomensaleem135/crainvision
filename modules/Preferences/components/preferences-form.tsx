@@ -63,6 +63,11 @@ export function PreferencesForm({
     if (userEmail) {
       setEmail(userEmail)
     }
+
+    const userName = localStorage.getItem("fullName")
+    if (userName) {
+      setFullName(userName)
+    }
   }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -72,6 +77,7 @@ export function PreferencesForm({
     try {
       localStorage.setItem("theme", tempTheme);
       // localStorage.setItem("selectedDashboard", selectedDashboard);
+      localStorage.setItem("fullName", fullName);
       setTheme(tempTheme);
 
       router.push("/dashboard");
