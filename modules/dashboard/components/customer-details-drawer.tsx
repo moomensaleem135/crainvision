@@ -340,9 +340,8 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
     <>
       <div className="fixed inset-0 bg-black/50 z-40 transition-opacity duration-300" onClick={onClose} />
       <div
-        className={`fixed left-0 top-0 h-full w-[980px] bg-background shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`fixed left-0 top-0 h-full w-[980px] bg-background shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between p-6 border-b bg-background z-10">
@@ -400,7 +399,7 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
                                   <TableHead>Reference#</TableHead>
                                   <TableHead>Bank</TableHead>
                                   <TableHead>Reynolds Remarks</TableHead>
-                                  <TableHead>Add Note</TableHead>
+                                  {/* <TableHead>Add Note</TableHead> */}
                                   <TableHead>Amount</TableHead>
                                 </TableRow>
                               </TableHeader>
@@ -438,9 +437,9 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
                                         <TableCell>{deal.additionalInfo?.referenceNumber}</TableCell>
                                         <TableCell>{deal.additionalInfo?.bank}</TableCell>
                                         <TableCell>{deal.additionalInfo?.reynoldsRemarks}</TableCell>
-                                        <TableCell>
+                                        {/* <TableCell>
                                           <span className="text-blue-600 underline cursor-pointer">Add Note</span>
-                                        </TableCell>
+                                        </TableCell> */}
                                         <TableCell>{formatCurrency(deal.additionalInfo?.amount || 0)}</TableCell>
                                       </TableRow>
 
@@ -470,7 +469,7 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
                       </div>
                     </CardHeader>
                     <CardContent>
-                      {showAddNote && (
+                      {/* {showAddNote && (
                         <div className="space-y-4 mb-4 p-4 bg-gray-50 rounded">
                           <div>
                             <Label htmlFor="new-note">Add New Note</Label>
@@ -491,7 +490,7 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
                             </Button>
                           </div>
                         </div>
-                      )}
+                      )} */}
 
                       <div className="space-y-2">
                         {customerDetails.notes && customerDetails.notes.length > 0 ? (
@@ -501,7 +500,7 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
                                 <TableRow className="text-xs">
                                   <TableHead>Note Author</TableHead>
                                   <TableHead>Note</TableHead>
-                                  <TableHead>Add Note</TableHead>
+                                  {/* <TableHead>Add Note</TableHead> */}
                                   <TableHead>Note Date</TableHead>
                                 </TableRow>
                               </TableHeader>
@@ -510,9 +509,9 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
                                   <TableRow key={index} className="text-xs">
                                     <TableCell>{note.noteAuthor || "-"}</TableCell>
                                     <TableCell>{note.noteText || "-"}</TableCell>
-                                    <TableCell>
+                                    {/* <TableCell>
                                       <span className="text-blue-600 underline cursor-pointer">Add Note</span>
-                                    </TableCell>
+                                    </TableCell> */}
                                     <TableCell>{formatDate(note.noteDate)}</TableCell>
                                   </TableRow>
                                 ))}

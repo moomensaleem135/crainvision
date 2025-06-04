@@ -59,17 +59,24 @@ export function GroupedTable<T>({ data, columns, groupBy, onRowClick }: GroupedT
           {table.getRowModel().rows.map((row, index) => (
             <TableRow
               key={row.id}
-              className={`${ row.getIsGrouped() ? "bg-muted/50 font-medium cursor-pointer hover:bg-muted/70" : "cursor-pointer hover:bg-muted/30"} ${index % 2 === 1 ? "bg-brand-muted" : "bg-background"} ` }
+              className={`${row.getIsGrouped() ? "bg-muted/50 font-medium cursor-pointer hover:bg-muted/70" : "hover:bg-muted/30"} ${index % 2 === 1 ? "bg-brand-muted" : "bg-background"} `}
               onClick={() => {
                 if (row.getIsGrouped()) {
                   row.toggleExpanded()
-                } else if (onRowClick) {
-                  onRowClick(row)
                 }
               }}
             >
+
               {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}>
+                <TableCell key={cell.id}
+                  onClick={() => {
+                    if (!row.getIsGrouped() && cell.column.id === "customerNumber" && onRowClick) {
+                      onRowClick(row)
+                    }
+                  }}
+                  className={cell.column.id === "customerNumber" ? "text-blue-600 underline cursor-pointer" : ""}
+
+                >
                   {cell.getIsGrouped() ? (
                     <div className="flex items-center gap-2">
                       <Button variant="ghost" size="icon" className="h-6 w-6 p-0">

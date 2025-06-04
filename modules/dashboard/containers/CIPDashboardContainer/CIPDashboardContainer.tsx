@@ -125,7 +125,7 @@ export default function CIPDashboardContainer() {
     <div className="flex min-h-screen flex-col">
       <main className="flex-1 p-4 md:p-6">
         <div className="mb-6">
-          <h1 className="text-4xl font-bold text-brand">CIP Dashboard</h1>
+          <h1 className="text-4xl font-bold text-brand">CIT Dashboard</h1>
           <p className="text-base text-muted-foreground">
             Customer Information Portal - Track and manage customer data
           </p>
