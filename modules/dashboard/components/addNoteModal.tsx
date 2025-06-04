@@ -64,13 +64,11 @@ export function AddNoteModal({ customerNumber, isOpen, onClose }: AddNoteModalPr
                 noteAuthor: userEmail,
             }
 
-            const res = await axios.post("https://www.crainvision.com/api/notes", payload, {
+            const res = await axios.post("/api/notes", payload, {
                 headers: {
                     "Content-Type": "application/json",
                 },
             })
-
-            console.log("Note saved:", res.data)
             onClose()
         } catch (err) {
             console.error("Failed to save note:", err)

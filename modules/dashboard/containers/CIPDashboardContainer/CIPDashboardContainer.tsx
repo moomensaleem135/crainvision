@@ -20,7 +20,7 @@ export default function CIPDashboardContainer() {
   const [customerDetails, setCustomerDetails] = useState<any>(null)
   const [customerDetailsLoading, setCustomerDetailsLoading] = useState(false)
   const [noteModalOpen, setNoteModalOpen] = useState(false)
-const [noteCustomerNumber, setNoteCustomerNumber] = useState<string | null>(null)
+  const [noteCustomerNumber, setNoteCustomerNumber] = useState<string | null>(null)
 
   const [accountFilter, setAccountFilter] = useState("payoff")
 
@@ -37,7 +37,7 @@ const [noteCustomerNumber, setNoteCustomerNumber] = useState<string | null>(null
           headers: {
             "Content-Type": "application/json",
           },
-          timeout: 20000 
+          timeout: 20000
         })
 
         console.log("API Response:", response.data)
@@ -82,11 +82,11 @@ const [noteCustomerNumber, setNoteCustomerNumber] = useState<string | null>(null
       const customEvent = e as CustomEvent<string>
       openNoteModal(customEvent.detail)
     }
-  
+
     window.addEventListener("open-note-modal", handler)
     return () => window.removeEventListener("open-note-modal", handler)
   }, [])
-  
+
 
   const fetchCustomerDetails = async (customerNumber: string) => {
     try {
@@ -95,7 +95,7 @@ const [noteCustomerNumber, setNoteCustomerNumber] = useState<string | null>(null
         headers: {
           "Content-Type": "application/json",
         },
-        timeout: 20000 
+        timeout: 20000
       })
       setCustomerDetails(response.data)
     } catch (err: any) {
@@ -134,10 +134,10 @@ const [noteCustomerNumber, setNoteCustomerNumber] = useState<string | null>(null
   return (
     <div className="flex min-h-screen flex-col">
       <AddNoteModal
-  isOpen={noteModalOpen}
-  customerNumber={noteCustomerNumber}
-  onClose={() => setNoteModalOpen(false)}
-/>
+        isOpen={noteModalOpen}
+        customerNumber={noteCustomerNumber}
+        onClose={() => setNoteModalOpen(false)}
+      />
 
       <main className="flex-1 p-4 md:p-6">
         <div className="mb-6">
@@ -234,7 +234,9 @@ const [noteCustomerNumber, setNoteCustomerNumber] = useState<string | null>(null
         ) : customers.length === 0 ? (
           <div className="text-center p-8 text-muted-foreground">No customer data available</div>
         ) : (
+          <div className="grid gap-6">
           <GroupedTable data={customers} columns={customerColumns} groupBy="dealerName" onRowClick={handleRowClick} />
+          </div>
         )}
         <CustomerDetailsDrawer
           isOpen={drawerOpen}
