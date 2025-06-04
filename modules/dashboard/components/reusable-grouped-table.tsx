@@ -44,7 +44,7 @@ export function GroupedTable<T>({ data, columns, groupBy, onRowClick }: GroupedT
   return (
     <Card className="overflow-hidden">
       <Table>
-        <TableHeader >
+        <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
@@ -56,47 +56,99 @@ export function GroupedTable<T>({ data, columns, groupBy, onRowClick }: GroupedT
           ))}
         </TableHeader>
         <TableBody>
-          {table.getRowModel().rows.map((row, index) => (
-            <TableRow
-              key={row.id}
-              className={`${row.getIsGrouped() ? "bg-muted/50 font-medium cursor-pointer hover:bg-muted/70" : "hover:bg-muted/30"} ${index % 2 === 1 ? "bg-brand-muted" : "bg-background"} `}
-              onClick={() => {
-                if (row.getIsGrouped()) {
-                  row.toggleExpanded()
-                }
-              }}
-            >
+          {table.getRowModel().rows.flatMap((row, index) => {
+            const isGroup = row.getIsGrouped()
+            const subHeader = (
+              <TableRow
+                key={`subheader-${row.id}`}
+                className="bg-muted/10 font-semibold text-sm text-muted-foreground"
+              >
+                {row.getVisibleCells().map((cell, idx) => {
+                  const colId = cell.column.id
+                  let label = ""
 
-              {row.getVisibleCells().map((cell) => (
-                <TableCell key={cell.id}
-                  onClick={() => {
-                    if (!row.getIsGrouped() && cell.column.id === "customerNumber" && onRowClick) {
-                      onRowClick(row)
-                    }
-                  }}
-                  className={cell.column.id === "customerNumber" ? "text-blue-600 underline cursor-pointer" : ""}
+                  switch (colId) {
+                    case "customerNumber":
+                      label = "Customer #"
+                      break
+                    case "customerName":
+                      label = "Customer Name"
+                      break
+                    case "notes":
+                      label = "Notes"
+                      break
+                    case "age":
+                      label = "Age"
+                      break
+                    case "count":
+                      label = ""
+                      break
+                    case "numericAmount":
+                      label = "Total Amount"
+                      break
+                    case "numericDays1To7":
+                      label = "1-7 Days"
+                      break
+                    case "numericDays8To14":
+                      label = "8-14 Days"
+                      break
+                    case "numericDays15Plus":
+                      label = "15+ Days"
+                      break
+                    default:
+                      label = ""
+                  }
 
-                >
-                  {cell.getIsGrouped() ? (
-                    <div className="flex items-center gap-2">
-                      <Button variant="ghost" size="icon" className="h-6 w-6 p-0">
-                        {row.getIsExpanded() ? (
-                          <ChevronDown className="h-4 w-4" />
-                        ) : (
-                          <ChevronRight className="h-4 w-4" />
-                        )}
-                      </Button>
-                      {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
-                    </div>
-                  ) : cell.getIsAggregated() ? (
-                    flexRender(cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell, cell.getContext())
-                  ) : cell.getIsPlaceholder() ? null : (
-                    flexRender(cell.column.columnDef.cell, cell.getContext())
-                  )}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
+                  return <TableCell key={`subheader-cell-${row.id}-${idx}`}>{label}</TableCell>
+                })}
+              </TableRow>
+            )
+
+            return [
+              <TableRow
+                key={`row-${row.id}`}
+                className={`${row.getIsGrouped()
+                    ? "bg-muted/50 font-medium cursor-pointer hover:bg-muted/70"
+                    : "hover:bg-muted/30"
+                  } ${index % 2 === 1 ? "bg-brand-muted" : "bg-background"}`}
+                onClick={() => {
+                  if (row.getIsGrouped()) {
+                    row.toggleExpanded()
+                  }
+                }}
+              >
+                {row.getVisibleCells().map((cell) => (
+                  <TableCell
+                    key={cell.id}
+                    onClick={() => {
+                      if (!row.getIsGrouped() && cell.column.id === "customerNumber" && onRowClick) {
+                        onRowClick(row)
+                      }
+                    }}
+                    className={cell.column.id === "customerNumber" ? "text-blue-600 underline cursor-pointer" : ""}
+                  >
+                    {cell.getIsGrouped() ? (
+                      <div className="flex items-center gap-2">
+                        <Button variant="ghost" size="icon" className="h-6 w-6 p-0">
+                          {row.getIsExpanded() ? (
+                            <ChevronDown className="h-4 w-4" />
+                          ) : (
+                            <ChevronRight className="h-4 w-4" />
+                          )}
+                        </Button>
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
+                      </div>
+                    ) : cell.getIsAggregated() ? (
+                      flexRender(cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell, cell.getContext())
+                    ) : cell.getIsPlaceholder() ? null : (
+                      flexRender(cell.column.columnDef.cell, cell.getContext())
+                    )}
+                  </TableCell>
+                ))}
+              </TableRow>,
+              ...(row.getIsGrouped() && row.getIsExpanded() ? [subHeader] : [])
+            ]
+          })}
         </TableBody>
       </Table>
     </Card>

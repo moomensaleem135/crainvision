@@ -43,16 +43,61 @@ export const customerColumns: ColumnDef<Customer>[] = [
   },
   {
     accessorKey: "customerNumber",
-    header: "Customer #",
+    header: () => null,
     cell: ({ getValue }) => getValue(),
     aggregatedCell: () => "",
   },
   {
     accessorKey: "customerName",
-    header: "Customer Name",
+    header: () => null,
     cell: ({ getValue }) => getValue(),
     aggregatedCell: () => "",
   },
+  // {
+  //   accessorKey: "notes",
+  //   header: () => null, // Hides from main header
+  //   cell: ({ row }) => {
+  //     // Only show button on sub-rows (not group rows)
+  //     if (row.getIsGrouped()) return null
+  
+  //     return (
+  //       <button
+  //         className="text-blue-600 underline hover:text-blue-800 text-sm"
+  //         onClick={() => {
+  //           const customer = row.original as Customer
+  //           alert(`Add Note for ${customer.customerName} (${customer.customerNumber})`)
+  //           // Or trigger a modal, toast, drawer, etc.
+  //         }}
+  //       >
+  //         Add Note
+  //       </button>
+  //     )
+  //   },
+  //   aggregatedCell: () => "",
+  // },
+  {
+    accessorKey: "notes",
+    header: () => null,
+    cell: ({ row }) => {
+      if (row.getIsGrouped()) return null
+      const customer = row.original as Customer
+  
+      return (
+        <button
+          className="text-blue-600 underline hover:text-blue-800 text-sm"
+          onClick={() => {
+            if (typeof window !== "undefined") {
+              const event = new CustomEvent("open-note-modal", { detail: customer.customerNumber })
+              window.dispatchEvent(event)
+            }
+          }}
+        >
+          Add Note
+        </button>
+      )
+    },
+    aggregatedCell: () => "",
+  },  
   {
     accessorKey: "age",
     header: "Age",

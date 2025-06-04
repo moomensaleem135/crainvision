@@ -8,6 +8,7 @@ import { GroupedTable } from "../../components/reusable-grouped-table"
 import { CustomerDetailsDrawer } from "../../components/customer-details-drawer"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Label } from "@/components/ui/label"
+import { AddNoteModal } from "../../components/addNoteModal"
 
 export default function CIPDashboardContainer() {
   const [customers, setCustomers] = useState<Customer[]>([])
@@ -18,6 +19,8 @@ export default function CIPDashboardContainer() {
   const [selectedCustomerNumber, setSelectedCustomerNumber] = useState<string | null>(null)
   const [customerDetails, setCustomerDetails] = useState<any>(null)
   const [customerDetailsLoading, setCustomerDetailsLoading] = useState(false)
+  const [noteModalOpen, setNoteModalOpen] = useState(false)
+const [noteCustomerNumber, setNoteCustomerNumber] = useState<string | null>(null)
 
   const [accountFilter, setAccountFilter] = useState("payoff")
 
@@ -34,7 +37,7 @@ export default function CIPDashboardContainer() {
           headers: {
             "Content-Type": "application/json",
           },
-          timeout: 10000,
+          timeout: 20000 
         })
 
         console.log("API Response:", response.data)
@@ -74,14 +77,25 @@ export default function CIPDashboardContainer() {
     fetchCustomers()
   }, [accountFilter])
 
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const customEvent = e as CustomEvent<string>
+      openNoteModal(customEvent.detail)
+    }
+  
+    window.addEventListener("open-note-modal", handler)
+    return () => window.removeEventListener("open-note-modal", handler)
+  }, [])
+  
+
   const fetchCustomerDetails = async (customerNumber: string) => {
     try {
       setCustomerDetailsLoading(true)
-      const response = await axios.get(`/api/cip/customer/${customerNumber}`, {
+      const response = await axios.get(`/api/cip/customers/${customerNumber}`, {
         headers: {
           "Content-Type": "application/json",
         },
-        timeout: 10000,
+        timeout: 20000 
       })
       setCustomerDetails(response.data)
     } catch (err: any) {
@@ -92,14 +106,10 @@ export default function CIPDashboardContainer() {
     }
   }
 
-  // const formatCurrency = (amount: number) => {
-  //   return new Intl.NumberFormat("en-US", {
-  //     style: "currency",
-  //     currency: "USD",
-  //     minimumFractionDigits: 0,
-  //     maximumFractionDigits: 0,
-  //   }).format(amount)
-  // }
+  const openNoteModal = (customerNumber: string) => {
+    setNoteCustomerNumber(customerNumber)
+    setNoteModalOpen(true)
+  }
 
   const handleRowClick = (row: any) => {
     if (!row.getIsGrouped()) {
@@ -123,6 +133,12 @@ export default function CIPDashboardContainer() {
 
   return (
     <div className="flex min-h-screen flex-col">
+      <AddNoteModal
+  isOpen={noteModalOpen}
+  customerNumber={noteCustomerNumber}
+  onClose={() => setNoteModalOpen(false)}
+/>
+
       <main className="flex-1 p-4 md:p-6">
         <div className="mb-6">
           <h1 className="text-4xl font-bold text-brand">CIT Dashboard</h1>
