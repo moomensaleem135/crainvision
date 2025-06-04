@@ -6,7 +6,7 @@ interface LogoutIconProps {
 }
 
 const LogoutIcon: React.FC<LogoutIconProps> = ({
-  fillColor = "#FF3B30",
+  fillColor = "#7B57E0",
   className = "",
 }) => {
   return (

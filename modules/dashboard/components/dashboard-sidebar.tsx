@@ -211,21 +211,21 @@ export function DashboardSidebar({
               <TooltipTrigger asChild>
                 <Link
                   href="/logout"
-                  className="flex items-center justify-center rounded-md py-2 text-sm font-medium text-[#FF3B30] hover:bg-gray-100 px-2"
+                  className="flex items-center justify-center rounded-md py-2 text-sm font-medium text-foreground hover:bg-gray-100 px-2"
                 >
-                  <LogoutIcon />
+                  <LogoutIcon fillColor={theme === "dark" ? "white" : "black"}/>
                 </Link>
               </TooltipTrigger>
-              <TooltipContent side="right" className="bg-[#7B57E0] text-white border-none rounded-md py-2 px-3">
+              <TooltipContent side="right" className="bg-[#7B57E0] text-foreground hover:hover:bg-brand-muted border-none rounded-md py-2 px-3">
                 Logout Account
               </TooltipContent>
             </Tooltip>
           ) : (
             <Link
               href="/logout"
-              className="flex items-center rounded-md py-2 text-sm font-medium text-[#FF3B30] hover:bg-gray-100 px-3"
+              className="flex items-center rounded-md py-2 text-sm font-medium text-foreground hover:hover:bg-brand-muted px-3"
             >
-              <LogoutIcon className="mr-2" />
+              <LogoutIcon className="mr-2" fillColor={theme === "dark" ? "white" : "black"} />
               Logout Account
             </Link>
           )}

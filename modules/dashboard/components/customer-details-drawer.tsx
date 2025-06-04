@@ -9,6 +9,7 @@ import { Separator } from "@/components/ui/separator"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { AddNoteModal } from "./addNoteModal"
 
 interface CustomerDetailsProps {
   isOpen: boolean
@@ -21,7 +22,8 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
   const [showAddNote, setShowAddNote] = useState(false)
   const [newNote, setNewNote] = useState("")
   const [expandedDeals, setExpandedDeals] = useState<Set<string>>(new Set())
-
+  const [noteModalOpen, setNoteModalOpen] = useState(false)
+  const [noteToEdit, setNoteToEdit] = useState<any>(null)
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat("en-US", {
       style: "currency",
@@ -407,9 +409,6 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
                                 {customerDetails.deals.map((deal: any, index: number) => {
                                   const dealNumber = deal.additionalInfo?.dealNumber || `deal-${index}`
                                   const isExpanded = expandedDeals.has(dealNumber)
-
-                                  console.log("Deal data for", dealNumber, ":", deal.additionalInfo)
-
                                   return (
                                     <React.Fragment key={`deal-fragment-${dealNumber}-${index}`}>
                                       <TableRow
@@ -500,8 +499,8 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
                                 <TableRow className="text-xs">
                                   <TableHead>Note Author</TableHead>
                                   <TableHead>Note</TableHead>
-                                  {/* <TableHead>Add Note</TableHead> */}
                                   <TableHead>Note Date</TableHead>
+                                  <TableHead></TableHead>
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
@@ -509,10 +508,18 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
                                   <TableRow key={index} className="text-xs">
                                     <TableCell>{note.noteAuthor || "-"}</TableCell>
                                     <TableCell>{note.noteText || "-"}</TableCell>
-                                    {/* <TableCell>
-                                      <span className="text-blue-600 underline cursor-pointer">Add Note</span>
-                                    </TableCell> */}
                                     <TableCell>{formatDate(note.noteDate)}</TableCell>
+                                    <TableCell onClick={() => {
+                                      setNoteToEdit({
+                                        customerNumber: customerNumber,
+                                        accountNumber: customerDetails.deals[0]?.additionalInfo?.accountNumber,
+                                        controlNumber: customerDetails.deals[0]?.additionalInfo?.controlNumber,
+                                        noteText: note.noteText
+                                      })
+                                      setNoteModalOpen(true)
+                                    }}>
+                                      <span className="text-blue-600 underline cursor-pointer">Edit Note</span>
+                                    </TableCell>
                                   </TableRow>
                                 ))}
                               </TableBody>
@@ -532,6 +539,15 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
           </div>
         </div>
       </div>
+      <AddNoteModal
+        isOpen={noteModalOpen}
+        existingAccountNumber={noteToEdit?.accountNumber}
+        customerNumber={noteToEdit?.customerNumber}
+        existingControlNumber={noteToEdit?.controlNumber}
+        existingNoteText={noteToEdit?.noteText}
+        isEdit={true}
+        onClose={() => setNoteModalOpen(false)}
+      />
     </>
   )
 }

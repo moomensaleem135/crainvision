@@ -7,14 +7,19 @@ import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
 import axios from "axios"
 import { Loader2 } from "lucide-react"
+import LoaderIcon from "@/public/assests/tsx/loaderIcon"
 
 interface AddNoteModalProps {
-    customerNumber: string | null
+    customerNumber?: string | null
+    existingAccountNumber?: string
+    existingControlNumber?: string
+    existingNoteText?: string
     isOpen: boolean
     onClose: () => void
+    isEdit?: boolean
 }
 
-export function AddNoteModal({ customerNumber, isOpen, onClose }: AddNoteModalProps) {
+export function AddNoteModal({ customerNumber, isOpen, onClose, isEdit = false, existingControlNumber, existingAccountNumber, existingNoteText }: AddNoteModalProps) {
     const [accountNumber, setAccountNumber] = useState("")
     const [controlNumber, setControlNumber] = useState("")
     const [userEmail, setUserEmail] = useState("")
@@ -26,7 +31,14 @@ export function AddNoteModal({ customerNumber, isOpen, onClose }: AddNoteModalPr
     useEffect(() => {
         const fetchCustomerData = async () => {
             if (!customerNumber) return
-
+            if (isEdit) {
+                setAccountNumber(existingAccountNumber || "")
+                setControlNumber(existingControlNumber || "")
+                setNote(existingNoteText || "")
+                const email = localStorage.getItem("userEmail") || ""
+                setUserEmail(email)
+                return
+            }
             setLoading(true)
             try {
                 const res = await axios.get(`/api/cip/customers/${customerNumber}`)
@@ -69,6 +81,7 @@ export function AddNoteModal({ customerNumber, isOpen, onClose }: AddNoteModalPr
                     "Content-Type": "application/json",
                 },
             })
+            console.log({ res });
             onClose()
         } catch (err) {
             console.error("Failed to save note:", err)
@@ -78,12 +91,11 @@ export function AddNoteModal({ customerNumber, isOpen, onClose }: AddNoteModalPr
         }
     }
 
-
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
             <DialogContent>
                 <DialogHeader>
-                    <DialogTitle>Add Note</DialogTitle>
+                    <DialogTitle>{isEdit ? 'Edit Note' : 'Add Note'}</DialogTitle>
                 </DialogHeader>
 
                 {loading ? (
@@ -121,26 +133,7 @@ export function AddNoteModal({ customerNumber, isOpen, onClose }: AddNoteModalPr
                         >
                             {isSaving ? (
                                 <span className="flex items-center">
-                                    <svg
-                                        className="animate-spin h-4 w-4 mr-2 text-white"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <circle
-                                            className="opacity-25"
-                                            cx="12"
-                                            cy="12"
-                                            r="10"
-                                            stroke="currentColor"
-                                            strokeWidth="4"
-                                        />
-                                        <path
-                                            className="opacity-75"
-                                            fill="currentColor"
-                                            d="M4 12a8 8 0 018-8v8H4z"
-                                        />
-                                    </svg>
+                                    <LoaderIcon />
                                     Saving...
                                 </span>
                             ) : (
