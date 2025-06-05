@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react"
 import axios from "axios"
-import { StatCard } from "../../components/stat-card"
 import { customerColumns, type Customer } from "../../components/customer-table-columns"
 import { GroupedTable } from "../../components/reusable-grouped-table"
 import { CustomerDetailsDrawer } from "../../components/customer-details-drawer"
@@ -40,10 +39,7 @@ export default function CIPDashboardContainer() {
           timeout: 20000
         })
 
-        console.log("API Response:", response.data)
-
         if (response.data && response.data.customers && Array.isArray(response.data.customers)) {
-          console.log("Found customers:", response.data.customers.length)
           setCustomers(response.data.customers)
         } else {
           console.error("Unexpected response format:", response.data)
@@ -114,7 +110,7 @@ export default function CIPDashboardContainer() {
   const handleRowClick = (row: any) => {
     if (!row.getIsGrouped()) {
       const customerNumber = row.original.customerNumber
-      console.log("Customer clicked:", row.original)
+      // console.log("Customer clicked:", row.original)
       setSelectedCustomerNumber(customerNumber)
       setDrawerOpen(true)
       fetchCustomerDetails(customerNumber)
@@ -124,12 +120,6 @@ export default function CIPDashboardContainer() {
   const handleRetry = () => {
     window.location.reload()
   }
-
-  // Calculate stats from actual customers data
-  // const totalAmount = customers.reduce((sum, customer) => sum + customer.amount, 0)
-  // const totalDays1To7 = customers.reduce((sum, customer) => sum + customer.days1To7, 0)
-  // const totalDays8To14 = customers.reduce((sum, customer) => sum + customer.days8To14, 0)
-  // const totalDays15Plus = customers.reduce((sum, customer) => sum + customer.days15Plus, 0)
 
   return (
     <div className="flex min-h-screen flex-col">
@@ -147,48 +137,6 @@ export default function CIPDashboardContainer() {
           </p>
         </div>
 
-        {/* <div className="mb-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <StatCard
-            title="Total Customers"
-            value={customers.length.toString()}
-            icon={"/svgs/people.svg"}
-            percentChange={5.2}
-            previousPeriod="Previous month"
-            valueColor="text-brand"
-            height={40}
-            width={40}
-          />
-          <StatCard
-            title="Total Amount"
-            value={formatCurrency(totalAmount)}
-            icon={"/svgs/doller.svg"}
-            percentChange={8.7}
-            previousPeriod="Previous month"
-            valueColor="text-brand"
-            height={28}
-            width={28}
-          />
-          <StatCard
-            title="1-7 Days"
-            value={formatCurrency(totalDays1To7)}
-            icon={"/svgs/gross.svg"}
-            percentChange={-3.2}
-            previousPeriod="Previous month"
-            valueColor="text-brand"
-            height={30}
-            width={30}
-          />
-          <StatCard
-            title="15+ Days"
-            value={formatCurrency(totalDays15Plus)}
-            icon={"/svgs/home.svg"}
-            percentChange={12.5}
-            previousPeriod="Previous month"
-            valueColor="text-brand"
-            height={35}
-            width={35}
-          />
-        </div> */}
         <div className="flex justify-between items-center">
           <div className="mb-4">
             <h2 className="text-xl font-bold text-brand">Customer Information</h2>

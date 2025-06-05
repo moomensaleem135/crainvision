@@ -128,7 +128,6 @@ export function DashboardSidebar({
       >
         <div className="flex items-center p-4 py-5">
           {!collapsed && 
-          // <LogoIcon fillColor={theme === "dark" ? "white" : "black"} />
           <Image
           src="/crainLogo.png"
           alt="CrainVision Logo"

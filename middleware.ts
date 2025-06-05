@@ -15,17 +15,12 @@ export function middleware(request: NextRequest) {
     "Middleware - All cookies:",
     request.cookies.getAll().map((c) => c.name),
   )
-  console.log({token});
-  
 
   // Check if the current path is a protected route
   const isProtectedRoute = protectedRoutes.some((route) => pathname.startsWith(route))
 
   // Check if the current path is a public route
   const isPublicRoute = publicRoutes.some((route) => pathname === route || pathname.startsWith(route))
-
-  console.log("Middleware - Is protected:", isProtectedRoute)
-  console.log("Middleware - Is public:", isPublicRoute)
 
   // If trying to access a protected route without a token
   if (isProtectedRoute && !token) {

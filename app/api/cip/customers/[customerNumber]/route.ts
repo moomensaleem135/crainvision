@@ -18,7 +18,6 @@ export async function GET(request: NextRequest, { params }: { params: { customer
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${jwtToken}`,
-        "ngrok-skip-browser-warning": "true",
       },
     })
    

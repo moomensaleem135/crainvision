@@ -136,7 +136,7 @@ export function GroupedTable<T>({ data, columns, groupBy, onRowClick }: GroupedT
                             <ChevronRight className="h-4 w-4" />
                           )}
                         </Button>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())} ({row.subRows.length})
+                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </div>
                     ) : cell.getIsAggregated() ? (
                       flexRender(cell.column.columnDef.aggregatedCell ?? cell.column.columnDef.cell, cell.getContext())

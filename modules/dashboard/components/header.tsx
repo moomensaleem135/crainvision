@@ -5,8 +5,10 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
-import { ThemeSwitcher } from "./theme-switcher";
 import { UserProfileDropdown } from "./user-profile-dropdown";
+import SearchIcon from "@/public/assests/tsx/searchIcon";
+import { useTheme } from "next-themes";
+import NotificationIcon from "@/public/assests/tsx/notificationIcon";
 
 export function Header({
   mobileOpen,
@@ -18,6 +20,7 @@ export function Header({
   onMenuClick?: () => void;
   setMobileOpen?: any;
 }) {
+  const { theme } = useTheme()
   return (
     <header className="flex h-16 items-center justify-between bg-background px-4 md:px-6 py-10">
       <div className="md:hidden">
@@ -35,13 +38,7 @@ export function Header({
       <div className="hidden md:block md:flex-1"></div>
 
       <div className="relative w-full sm:max-w-[20rem] md:max-w-md max-w-[10rem] mx-auto sm:ml-3 ml-2">
-        <Image
-          src={"/svgs/search.svg"}
-          alt=""
-          className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-          height={20}
-          width={20}
-        />
+        <SearchIcon fillColor={theme === "dark" ? "white" : "black"} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"/>
         <Input
           type="search"
           placeholder="Search Apps"
@@ -56,7 +53,7 @@ export function Header({
           className="border relative"
           onClick={() => setNotificationsOpen(true)}
         >
-          <Image src={"/svgs/noti.svg"} alt="" height={25} width={25} />
+          <NotificationIcon fillColor={theme === "dark" ? "white" : "black"} />
           <span className="sr-only">Notifications</span>
         </Button>
         {/* <ThemeSwitcher /> */}
