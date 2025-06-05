@@ -47,8 +47,6 @@ export function LoginForm({
       setFormErrors(errors)
       return
     }
-
-    // Call the API
     await handleApiCall()
   }
 

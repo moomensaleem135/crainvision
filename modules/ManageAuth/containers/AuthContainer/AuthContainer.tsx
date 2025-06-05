@@ -22,7 +22,6 @@ export default function AuthContainer() {
     setError(null)
 
     try {
-      // Use Next.js API route instead of direct backend call
       const response = await fetch("/api/auth/login", {
         method: "POST",
         headers: {
@@ -40,10 +39,8 @@ export default function AuthContainer() {
         throw new Error(data.error || "Login failed")
       }
 
-      // Store user email for preferences page
       localStorage.setItem("userEmail", userData.email)
 
-      // Store any user data from response if available
       if (data.user) {
         localStorage.setItem("userSession", JSON.stringify(data.user))
       }
@@ -53,10 +50,7 @@ export default function AuthContainer() {
         description: "Welcome back to CrainVision",
       })
 
-      // Check if user has completed preferences
-      const hasCompletedPreferences = localStorage.getItem("userFullName")
-
-      // Use window.location for immediate navigation after cookie is set
+      const hasCompletedPreferences = localStorage.getItem("fullName")
       if (hasCompletedPreferences) {
         window.location.href = "/dashboard"
       } else {

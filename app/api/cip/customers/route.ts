@@ -3,7 +3,6 @@ import { cookies } from "next/headers"
 
 export async function GET(request: NextRequest) {
   try {
-    // Get JWT from httpOnly cookie
     const cookieStore = await cookies()
     const jwtToken = cookieStore.get("jwt")?.value
 
