@@ -13,8 +13,8 @@ export async function POST(req: NextRequest) {
       accountNumber,
       noteAuthor: body.noteAuthor, 
     }
-
-    const response = await axios.post("https://www.crainvision.com/api/notes", payload, {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL
+    const response = await axios.post(`${apiUrl}notes`, payload, {
       headers: {
         "Content-Type": "application/json",
       },
