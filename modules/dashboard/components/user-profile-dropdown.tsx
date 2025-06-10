@@ -9,14 +9,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 interface UserProfileDropdownProps {
   name?: string;
   userEmail?: string;
   userAvatar?: string;
   onLogout?: () => void;
-  onProfileClick?: () => void;
-  onPreferenceClick?: () => void;
 }
 
 export function UserProfileDropdown({
@@ -24,12 +23,11 @@ export function UserProfileDropdown({
   userEmail: initialUserEmail = "daphnesmith@gmail.com",
   userAvatar = "/svgs/ellipse.svg",
   onLogout = () => {},
-  onProfileClick = () => {},
-  onPreferenceClick = () => {},
 }: UserProfileDropdownProps) {
   const [open, setOpen] = useState(false);
   const [userName, setUserName] = useState(initialUserName);
   const [userEmail, setUserEmail] = useState(initialUserEmail);
+  const router= useRouter()
 
   useEffect(() => {
     const storedUserData = localStorage.getItem("userData");
@@ -41,6 +39,21 @@ export function UserProfileDropdown({
       } catch {}
     }
   }, []);
+
+  const handlePreferenceClick = () => {
+    setOpen(false); 
+    setTimeout(() => {
+      router.push("/dashboard/preferences"); 
+    }, 0);
+  };
+  
+  const handleProfileClick = () => {
+    setOpen(false); 
+    setTimeout(() => {
+      router.push("/dashboard/profile"); 
+    }, 0);
+  };
+  
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -64,7 +77,7 @@ export function UserProfileDropdown({
           <Button
             variant="ghost"
             className="w-full justify-start px-2 py-2 h-auto"
-            onClick={onPreferenceClick}
+            onClick={handlePreferenceClick}
           >
             <div className="flex items-center">
               <div className="bg-gray-100 p-1 rounded-md mr-2">
@@ -76,7 +89,7 @@ export function UserProfileDropdown({
           <Button
             variant="ghost"
             className="w-full justify-start px-2 py-2 h-auto"
-            onClick={onProfileClick}
+            onClick={handleProfileClick}
           >
             <div className="flex items-center">
               <div className="bg-gray-100 p-1 rounded-md mr-2">
