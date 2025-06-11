@@ -42,7 +42,7 @@ export function Header({
         <Input
           type="search"
           placeholder="Search Apps"
-          className="w-full border-gray-200 pl-9 pr-4 py-1 rounded-md md:h-14 h-12"
+          className="w-full border border-border pl-9 pr-4 py-1 rounded-md md:h-14 h-12"
         />
       </div>
 
@@ -50,7 +50,7 @@ export function Header({
         <Button
           variant="ghost"
           size="icon"
-          className="border relative"
+          className="border border-border relative"
           onClick={() => setNotificationsOpen(true)}
         >
           <NotificationIcon fillColor={theme === "dark" ? "white" : "black"} />

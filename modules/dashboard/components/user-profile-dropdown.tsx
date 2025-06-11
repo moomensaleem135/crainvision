@@ -10,6 +10,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import LogoutIcon from "@/public/assests/tsx/logoutIcon";
+import { useTheme } from "next-themes";
+import SettingIcon from "@/public/assests/tsx/settingIcon";
+import PreferenceIcon from "@/public/assests/tsx/preferenceIcon";
 
 interface UserProfileDropdownProps {
   name?: string;
@@ -28,6 +32,7 @@ export function UserProfileDropdown({
   const [userName, setUserName] = useState(initialUserName);
   const [userEmail, setUserEmail] = useState(initialUserEmail);
   const router= useRouter()
+  const { theme } = useTheme()
 
   useEffect(() => {
     const storedUserData = localStorage.getItem("userData");
@@ -80,8 +85,8 @@ export function UserProfileDropdown({
             onClick={handlePreferenceClick}
           >
             <div className="flex items-center">
-              <div className="bg-gray-100 p-1 rounded-md mr-2">
-                <SlidersHorizontal className="h-5 w-5" />
+              <div className="mr-2">
+              <PreferenceIcon fillColor={theme === "dark" ? "white" : "black"} />
               </div>
               <span className="font-medium">Preference</span>
             </div>
@@ -92,20 +97,20 @@ export function UserProfileDropdown({
             onClick={handleProfileClick}
           >
             <div className="flex items-center">
-              <div className="bg-gray-100 p-1 rounded-md mr-2">
-                <Settings className="h-5 w-5" />
+              <div className="mr-2">
+              <SettingIcon fillColor={theme === "dark" ? "white" : "black"} />
               </div>
               <span className="font-medium">My Profile</span>
             </div>
           </Button>
           <Button
             variant="ghost"
-            className="w-full justify-start px-2 py-2 h-auto text-red-500"
+            className="w-full justify-start px-2 py-2 h-auto"
             onClick={onLogout}
           >
             <div className="flex items-center">
-              <div className="bg-red-50 p-1 rounded-md mr-2">
-                <LogOut className="h-5 w-5 text-red-500" />
+              <div className="mr-2">
+              <LogoutIcon fillColor={theme === "dark" ? "white" : "black"}/>
               </div>
               <span className="font-medium">Logout</span>
             </div>

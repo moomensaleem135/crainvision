@@ -7,13 +7,11 @@ import { cn } from "@/lib/utils"
 import { Sheet, SheetContent, SheetTitle, SheetHeader } from "@/components/ui/sheet"
 import Image from "next/image"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
-import LogoIcon from "@/public/assests/tsx/logo"
 import { useTheme } from "next-themes"
-import CollapseLogo from "@/public/assests/tsx/collapseLogo"
 import OverviewIcon from "@/public/assests/tsx/overviewIcon"
 import TrolleyIcon from "@/public/assests/tsx/trolleyIcon"
 import BlackUserIcon from "@/public/assests/tsx/blackUserIcon"
-import FilterIcon from "@/public/assests/tsx/filterIcon"
+import PreferenceIcon from "@/public/assests/tsx/preferenceIcon"
 import SettingIcon from "@/public/assests/tsx/settingIcon"
 import LogoutIcon from "@/public/assests/tsx/logoutIcon"
 import CITIcon from "@/public/assests/tsx/citIcon"
@@ -59,7 +57,7 @@ export function DashboardSidebar({
     {
       title: "Service",
       href: "/dashboard/service",
-      icon: <FilterIcon fillColor={theme === "dark" ? "white" : "black"} />,
+      icon: <PreferenceIcon fillColor={theme === "dark" ? "white" : "black"} />,
       isActive: pathname.startsWith("/dashboard/service"),
     },
     {
@@ -80,7 +78,7 @@ export function DashboardSidebar({
     {
       title: "Preference",
       href: "/dashboard/preferences",
-      icon: <FilterIcon fillColor={theme === "dark" ? "white" : "black"} />,
+      icon: <PreferenceIcon fillColor={theme === "dark" ? "white" : "black"} />,
       isActive: pathname === "/dashboard/preferences",
     },
   ]

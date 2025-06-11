@@ -500,7 +500,7 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
                                   <TableHead>Note Author</TableHead>
                                   <TableHead>Note</TableHead>
                                   <TableHead>Note Date</TableHead>
-                                  <TableHead></TableHead>
+                                  {/* <TableHead></TableHead> */}
                                 </TableRow>
                               </TableHeader>
                               <TableBody>
@@ -509,7 +509,7 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
                                     <TableCell>{note.noteAuthor || "-"}</TableCell>
                                     <TableCell>{note.noteText || "-"}</TableCell>
                                     <TableCell>{formatDate(note.noteDate)}</TableCell>
-                                    <TableCell onClick={() => {
+                                    {/* <TableCell onClick={() => {
                                       setNoteToEdit({
                                         customerNumber: customerNumber,
                                         accountNumber: customerDetails.deals[0]?.additionalInfo?.accountNumber,
@@ -519,7 +519,7 @@ export function CustomerDetailsDrawer({ isOpen, onClose, customerDetails, loadin
                                       setNoteModalOpen(true)
                                     }}>
                                       <span className="text-blue-600 underline cursor-pointer">Edit Note</span>
-                                    </TableCell>
+                                    </TableCell> */}
                                   </TableRow>
                                 ))}
                               </TableBody>
