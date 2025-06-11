@@ -15,6 +15,7 @@ import PreferenceIcon from "@/public/assests/tsx/preferenceIcon"
 import SettingIcon from "@/public/assests/tsx/settingIcon"
 import LogoutIcon from "@/public/assests/tsx/logoutIcon"
 import CITIcon from "@/public/assests/tsx/citIcon"
+import ServiceIcon from "@/public/assests/tsx/serviceIcon"
 
 interface NavItem {
   title: string
@@ -57,7 +58,7 @@ export function DashboardSidebar({
     {
       title: "Service",
       href: "/dashboard/service",
-      icon: <PreferenceIcon fillColor={theme === "dark" ? "white" : "black"} />,
+      icon: <ServiceIcon fillColor={theme === "dark" ? "white" : "black"} />,
       isActive: pathname.startsWith("/dashboard/service"),
     },
     {
